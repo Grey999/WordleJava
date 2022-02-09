@@ -1,0 +1,87 @@
+package wordle;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.*;
+import java.awt.*;
+
+
+
+
+public class WGView implements Observer
+{
+    private static final Dimension PANEL_SIZE = new Dimension(500,500);
+
+    private final WGModel model;
+    private final WGController controller;
+    private JFrame frame;
+    private JFrame inputframe;
+    private JPanel panel;
+    private JPanel inputpanel;
+    private GridView grid;
+    private KeyboardView keyboard;
+
+
+    public WGView(WGModel model, WGController controller)
+    {
+        this.model = model;
+        this.controller = controller;
+        grid = new GridView();
+        keyboard = new KeyboardView();
+        createControls();
+        controller.setView(this);
+
+        model.addObserver(this);
+        update(model,null);
+    }
+
+    public Dimension getPanelSize(){
+        return PANEL_SIZE;
+    }
+
+    private void createControls() {
+        frame = new JFrame("Wordle");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        Container contentPane = frame.getContentPane();
+        contentPane.setBackground(Color.black);
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+        createPanel();
+        contentPane.add(panel);
+
+        //recopier et adapter pour input control
+        Container contentPane2 = inputframe.getContentPane();
+        contentPane2.setBackground(Color.black);
+        contentPane2.setLayout(new BoxLayout(contentPane2, BoxLayout.X_AXIS));
+        createInputControl();
+        contentPane2.add(inputframe);
+
+
+        frame.pack();
+        frame.setResizable(false);
+        //revoir visible ou non
+        frame.setVisible(true);
+        inputframe.setVisible(true);
+    }
+
+    private void createInputControl()
+    {
+        inputpanel = new JPanel();
+        inputpanel.setLayout(new BoxLayout(inputpanel,BoxLayout.Y_AXIS));
+        inputpanel.setBackground(Color.black);
+        //gérer les différentes view en fonction de l'état
+        //voir notes
+    }
+
+    private void createPanel() {
+        panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(Color.black);
+        //voir méthode Frame
+        //panel.add(grid.getBasePanel());
+        //panel.add(keyboard.getBasePanel());
+    }
+
+    public void update(Observable o, Object arg) {
+        frame.repaint();
+    }
+}
