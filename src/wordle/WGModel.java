@@ -2,10 +2,8 @@ package wordle;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.Observable;
-import java.time.LocalDate;
 
 
 public class WGModel extends Observable {
@@ -38,9 +36,7 @@ public class WGModel extends Observable {
         }
         else
         {
-            LocalDate todaysDate = LocalDate.now();
-            number = (todaysDate.getMonthValue()+todaysDate.getDayOfMonth()+ todaysDate.getYear())*1000;
-            number = number%10657;
+            number = 1;
         }
         for (int i = 0; i < number; i++) {
             setWord(sc.nextLine());
@@ -75,7 +71,7 @@ public class WGModel extends Observable {
         }
         else
         {
-            GetColors();
+            ChangeColors();
             setGuess(getGuess() + 1);
             if(getGuess() == 6)
             {
@@ -89,7 +85,7 @@ public class WGModel extends Observable {
 
     }
 
-    public void GetColors()
+    public void ChangeColors()
     {
         colors = new int[5];
         for (int c = 0; c < 5; c++)
@@ -110,6 +106,7 @@ public class WGModel extends Observable {
             }
         }
     }
+    public int getColors(int colum, int line) { return colors[colum+line];}
 
     public boolean isValidword() {
         return validword;
