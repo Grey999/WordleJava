@@ -53,9 +53,7 @@ public class WGModel extends Observable {
 
     public void change() throws FileNotFoundException {
         while(!isValidword()) {
-            //textfield
-            //trouver comment récupérer input texfield
-            //ne pas oublier de virer Scanner scanner dans iswordcorrec()
+            //comment récupérer le mot taper ????
             Scanner scanner = new Scanner(System.in);
             File file = new File("common.txt");
             Scanner sc = new Scanner(file);

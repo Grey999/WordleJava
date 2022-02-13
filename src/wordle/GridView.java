@@ -27,10 +27,11 @@ public class GridView {
             gridpanel.add(letterscase[i]);
         }
     }
-    //Trouver comment changer label de la case en fonction du mot entrée
+
+
     public void changelabel(int colum, int line, String letter)
     {
-        //TODO
+        letterscase[colum+line].setText(letter);
     }
 
     public void changebackgroundcolor(int colum, int line, int state)

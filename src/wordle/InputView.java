@@ -22,6 +22,16 @@ public class InputView implements Observer{
 
     }
 
+    public void initialiseviex()
+    {
+        //TODO
+    }
+
+    public void endgame()
+    {
+        //TODO
+    }
+
     //regarder comment créer les buttons
     //ce qui doit être visible à l'initialisation ou pas
 
