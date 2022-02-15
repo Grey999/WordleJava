@@ -13,8 +13,11 @@ public class WGModel extends Observable {
     private boolean newgame;
     private boolean win;
 
+    //word to guess
     private String word;
     private int[] colors;
+
+    //word on try
     private String actualword;
     private int guess;
 
@@ -48,22 +51,27 @@ public class WGModel extends Observable {
     }
 
     public boolean iswordcorrect(Scanner scanner, Scanner sc) throws FileNotFoundException {
-        setActualword(scanner.next());
-        return getActualword().equals(sc.nextLine()) && sc.hasNextLine();
+        while(!getActualword().equals(sc.nextLine()) && sc.hasNextLine())
+        {
+            //continue
+        }
+        return sc.hasNextLine();
     }
 
     public void change() throws FileNotFoundException {
         while(!isValidword()) {
-            //how to get the word ??
-            //read label on the grid ???
-            //how to link the two ???
             Scanner scanner = new Scanner(System.in);
             File file = new File("common.txt");
             Scanner sc = new Scanner(file);
             setValidword(iswordcorrect(scanner, sc));
-            while (!isValidword())
+            if(!isValidword())
             {
-                setValidword(iswordcorrect(scanner,sc));
+                //try another word
+                //How to do that ?
+                //display message
+                //use those two ?
+                setChanged();
+                notifyObservers();
             }
         }
         if(getActualword().equals(getWord()))

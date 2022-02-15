@@ -11,7 +11,7 @@ public class WGView implements Observer
 {
     private static final Dimension PANEL_SIZE = new Dimension(500,500);
 
-    private final WGModel model;
+    final WGModel model;
     private final WGController controller;
     private JFrame frame;
     private JPanel panel;
@@ -29,8 +29,8 @@ public class WGView implements Observer
         createControls();
         controller.setView(this);
 
-        //createControls() ???
-        //createPanel() ??
+        createControls();
+
 
         model.addObserver(this);
         update(model,null);
@@ -86,4 +86,6 @@ public class WGView implements Observer
         }
         frame.repaint();
     }
+    
+    public WGController getController(){return controller;}
 }

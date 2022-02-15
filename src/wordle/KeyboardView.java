@@ -4,16 +4,23 @@ import jdk.jshell.spi.ExecutionControl;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Dictionary;
-import java.util.Hashtable;
+import java.awt.event.ActionEvent;
+import java.io.FileNotFoundException;
+import java.util.Locale;
 
 public class KeyboardView {
     private JButton[] keyboard;
     private JPanel keyboardpanel;
     private JPanel keygrid;
+    private int keycode;
+    private String keyText;
+    private WGView view;
+
     public KeyboardView(WGView view)
     {
+        this.view = view;
         keyboard = new JButton[28];
+        keyboardpanel = new JPanel();
         String qwerty = "QWERTYUIOPASDFGHJKL⌫ZXCVBNM";
         for(int i = 0; i < qwerty.length(); i++)
         {
@@ -40,16 +47,43 @@ public class KeyboardView {
         key.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
         key.setBackground(Color.WHITE);
         key.setOpaque(true);
+        switch (label)
+        {
+            case "Enter":
+                key.addActionListener((ActionEvent e) -> {
+                    try {
+                        view.getController().change();
+                    } catch (FileNotFoundException ex) {
+                        ex.printStackTrace();
+                    }
+                });
+                break;
+            case "⌫":
+                key.addActionListener((ActionEvent e) -> {view.model.setActualword(view.model.getActualword()+label.toLowerCase(Locale.ROOT));});
+                break;
+            default:
+
+                key.addActionListener((ActionEvent e) -> {view.model.setActualword(removeLastChar(view.model.getActualword()));});
+        }
+
+
+    }
+
+    public String removeLastChar(String s)
+    {
+        //returns the string after removing the last character
+        return s.substring(0, s.length() - 1);
     }
 
     public void addkeytogrid()
     {
         int length = keyboard.length;
-        for(int i = 0; i < length; i++)
-        {
-            keygrid.add(getkeyboard()[i]);
+        for(int i = 0; i < length; i++) {
+            keygrid.add(keyboard[i]);
         }
     }
+
+
 
     public JButton[] getkeyboard()
     {
