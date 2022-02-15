@@ -26,9 +26,9 @@ public class WGModel extends Observable {
         setValidword(false);
         setDisplay(false);
         setRandomword(false);
-        //change randomword
-        //Button
+        //how to link model to button ?
         setNewgame(false);
+        setWin(false);
         File file = new File("words.txt");
         Scanner sc = new Scanner(file);
         int number = 0;
@@ -54,7 +54,9 @@ public class WGModel extends Observable {
 
     public void change() throws FileNotFoundException {
         while(!isValidword()) {
-            //comment récupérer le mot taper ????
+            //how to get the word ??
+            //read label on the grid ???
+            //how to link the two ???
             Scanner scanner = new Scanner(System.in);
             File file = new File("common.txt");
             Scanner sc = new Scanner(file);

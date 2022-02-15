@@ -3,6 +3,8 @@ package wordle;
 import java.io.FileNotFoundException;
 
 public class WGController {
+    //is that really all ???
+    //ask the teacher
     private WGModel model;
     private WGView view;
 
