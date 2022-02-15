@@ -14,9 +14,8 @@ public class WGView implements Observer
     private final WGModel model;
     private final WGController controller;
     private JFrame frame;
-    private JFrame inputframe;
     private JPanel panel;
-    private JPanel inputpanel;
+    //private JPanel inputframe;
     private GridView grid;
     private KeyboardView keyboard;
 
@@ -29,6 +28,9 @@ public class WGView implements Observer
         keyboard = new KeyboardView(this);
         createControls();
         controller.setView(this);
+
+        //createControls() ???
+        //createPanel() ??
 
         model.addObserver(this);
         update(model,null);
@@ -48,29 +50,25 @@ public class WGView implements Observer
         createPanel();
         contentPane.add(panel);
 
-        //recopier et adapter pour input control
+        //revoir si inputframe nécessaire
+        /*
         Container contentPane2 = inputframe.getContentPane();
         contentPane2.setBackground(Color.black);
         contentPane2.setLayout(new BoxLayout(contentPane2, BoxLayout.X_AXIS));
         createInputControl();
         contentPane2.add(inputframe);
 
+         */
+
 
         frame.pack();
+        frame.setSize(500,500);
         frame.setResizable(false);
         //revoir visible ou non
         frame.setVisible(true);
-        inputframe.setVisible(true);
+        //inputframe.setVisible(true);
     }
 
-    private void createInputControl()
-    {
-        inputpanel = new JPanel();
-        inputpanel.setLayout(new BoxLayout(inputpanel,BoxLayout.Y_AXIS));
-        inputpanel.setBackground(Color.black);
-        //gérer les différentes view en fonction de l'état
-        //voir notes
-    }
 
     private void createPanel() {
         panel = new JPanel();

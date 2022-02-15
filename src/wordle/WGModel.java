@@ -11,6 +11,7 @@ public class WGModel extends Observable {
     private boolean display;
     private boolean randomword;
     private boolean newgame;
+    private boolean win;
 
     private String word;
     private int[] colors;
@@ -66,6 +67,7 @@ public class WGModel extends Observable {
         if(getActualword().equals(getWord()))
         {
             setNewgame(true);
+            setWin(true);
         }
         else
         {
@@ -73,7 +75,7 @@ public class WGModel extends Observable {
             setGuess(getGuess() + 1);
             if(getGuess() == 6)
             {
-                //GAME OVER
+                setWin(false);
                 setNewgame(true);
             }
         }
@@ -113,6 +115,10 @@ public class WGModel extends Observable {
     public void setValidword(boolean validword) {
         this.validword = validword;
     }
+
+    public boolean isWin(){return win; }
+
+    public void setWin(boolean win){this.win = win; }
 
     public boolean isDisplay() {
         return display;
