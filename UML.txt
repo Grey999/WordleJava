@@ -1,0 +1,28 @@
+//Wordle Game UML Diagram
+-------------------------------
+
+//UML Diagra
+[WGController]->[JavaApplication8]
+[WGView]->[JavaApplication8]
+[WGModel]->[JavaApplication8]
+[InputView]->[JavaApplication8]
+
+[WGView]->[KeyBoardView]
+[WGView]->[GridView]
+
+
+//Definition ViewClass
+[WGView|model;controller;frame;panel;grid;keyboard|createControls;createPanel;update;getController]
+[KeyBoardView|keyboard;keyboardpanel;keygrid;view|createKeys;removeLastChar;addKeyToGrid;getKeyboard]
+[GridView|lettercase;gridpanel|addLabelsView;changeLabel;changeBackgroundColor]
+
+[InputView|yes;no;newgame;model;frame;textondisplay|initialiseView;endgame;randomWord;update]
+
+//Definition Controller and Model
+[WGController|model;view|setView;change;initialise]
+[WGModel|validword;display;randomword;newgame;win;word;colors;actualword;guess|addObserver;initialise;isWordCorrect;change;changeColors]
+
+
+
+//Definition JavaApplicationClass
+[JavaApplication8|+main()]
