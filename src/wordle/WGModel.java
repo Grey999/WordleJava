@@ -28,8 +28,6 @@ public class WGModel extends Observable {
     public void initialise() throws FileNotFoundException {
         setValidword(false);
         setDisplay(false);
-        setRandomword(false);
-        //how to link model to button ?
         setNewgame(false);
         setWin(false);
         File file = new File("words.txt");

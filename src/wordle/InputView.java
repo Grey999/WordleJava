@@ -1,4 +1,5 @@
 package wordle;
+import java.awt.event.ActionEvent;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
@@ -34,10 +35,11 @@ public class InputView implements Observer{
 
     public void initialiseview()
     {
-        //TODO
         //initialise with two buttons
         this.yes  = new Button("Yes");
         this.no = new Button("No");
+        yes.addActionListener((ActionEvent e) -> randomword(true));
+        no.addActionListener((ActionEvent e) -> randomword(false));
         this.textondisplay = new TextArea("Do you want to have a random word ?");
         textondisplay.setEditable(false);
         textondisplay.setVisible(true);
@@ -46,7 +48,7 @@ public class InputView implements Observer{
         //place the button correctly
     }
 
-    public void endgame(boolean win)
+    public void endgame()
     {
         //how to link model to this function ?
         this.textondisplay = new TextArea();
@@ -72,11 +74,13 @@ public class InputView implements Observer{
         textondisplay.setVisible(false);
     }
 
-    //regarder comment créer les buttons
-    //ce qui doit être visible à l'initialisation ou pas
 
     @Override
     public void update(Observable o, Object arg) {
+        if(model.isNewgame())
+        {
+            endgame();
+        }
 
     }
 }

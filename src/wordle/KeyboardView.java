@@ -1,6 +1,6 @@
 package wordle;
 
-import jdk.jshell.spi.ExecutionControl;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,19 +50,20 @@ public class KeyboardView {
         switch (label)
         {
             case "Enter":
-                key.addActionListener((ActionEvent e) -> {
-                    try {
-                        view.getController().change();
-                    } catch (FileNotFoundException ex) {
-                        ex.printStackTrace();
-                    }
-                });
+                if(view.model.getActualword().length() == 5) {
+                    key.addActionListener((ActionEvent e) -> {
+                        try {
+                            view.getController().change();
+                        } catch (FileNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    });
+                }
                 break;
             case "⌫":
                 key.addActionListener((ActionEvent e) -> {view.model.setActualword(view.model.getActualword()+label.toLowerCase(Locale.ROOT));});
                 break;
             default:
-
                 key.addActionListener((ActionEvent e) -> {view.model.setActualword(removeLastChar(view.model.getActualword()));});
         }
 
