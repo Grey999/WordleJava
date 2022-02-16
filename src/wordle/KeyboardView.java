@@ -11,9 +11,7 @@ import java.util.Locale;
 public class KeyboardView {
     private JButton[] keyboard;
     private JPanel keyboardpanel;
-    private JPanel keygrid;
-    private int keycode;
-    private String keyText;
+    private JPanel keygrid;;
     private WGView view;
 
     public KeyboardView(WGView view)
@@ -24,22 +22,22 @@ public class KeyboardView {
         String qwerty = "QWERTYUIOPASDFGHJKL⌫ZXCVBNM";
         for(int i = 0; i < qwerty.length(); i++)
         {
-            createkeys(String.valueOf(qwerty.charAt(i)));
+            createKeys(String.valueOf(qwerty.charAt(i)));
         }
-        createkeys("Enter");
+        createKeys("Enter");
 
         keyboardpanel.setLayout(new BoxLayout(keyboardpanel, BoxLayout.Y_AXIS)); // cree le layout pour le gros panel
         keyboardpanel.setPreferredSize(new Dimension(650,160));
         keygrid = new JPanel();
         keygrid.setLayout(new GridBagLayout());
         keygrid.setOpaque(true);
-        addkeytogrid();
+        addKeyToGrid();
         //find a way for the placement (keyboard java GUI)
         keyboardpanel.add(keygrid);
 
     }
 
-    public void createkeys(String label)
+    public void createKeys(String label)
     {
         JButton key = new JButton(label);
         //condition size for enter button
@@ -76,7 +74,7 @@ public class KeyboardView {
         return s.substring(0, s.length() - 1);
     }
 
-    public void addkeytogrid()
+    public void addKeyToGrid()
     {
         int length = keyboard.length;
         for(int i = 0; i < length; i++) {
@@ -86,7 +84,7 @@ public class KeyboardView {
 
 
 
-    public JButton[] getkeyboard()
+    public JButton[] getKeyBoard()
     {
         return keyboard;
     }

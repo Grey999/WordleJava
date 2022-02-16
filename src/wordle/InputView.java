@@ -5,7 +5,11 @@ import java.util.Observer;
 import javax.swing.*;
 import java.awt.*;
 public class InputView implements Observer{
+
+    //Create method for the other flags (reread project paper)
+
     private Button yes;
+    private WGController controller;
     private Button no;
     private Button newgame;
     private WGModel model;
@@ -16,8 +20,9 @@ public class InputView implements Observer{
     //must handle: randomword, endgame screen
     //smaller panel in front of the game one
     //first frame visible at the beginning
-    public InputView(WGModel model)
+    public InputView(WGModel model, WGController controller)
     {
+        this.controller = controller;
         this.model = model;
         this.frame = new JFrame("Play Mode");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,20 +31,23 @@ public class InputView implements Observer{
         frame.setResizable(false);
         frame.setVisible(true);
 
-        initialiseview();
+        createFirstView(0);
 
         model.addObserver(this);
         update(model,null);
 
     }
 
-    public void initialiseview()
+    public void createFirstView(int viewnumber)
     {
+        //make a switch using view number
+        //just change the textondisplay in function of it
+        //and modify the method call by yes and no
         //initialise with two buttons
         this.yes  = new Button("Yes");
         this.no = new Button("No");
-        yes.addActionListener((ActionEvent e) -> randomword(true));
-        no.addActionListener((ActionEvent e) -> randomword(false));
+        yes.addActionListener((ActionEvent e) -> randomWord(true));
+        no.addActionListener((ActionEvent e) -> randomWord(false));
         this.textondisplay = new TextArea("Do you want to have a random word ?");
         textondisplay.setEditable(false);
         textondisplay.setVisible(true);
@@ -65,13 +73,20 @@ public class InputView implements Observer{
         //place button and text
     }
 
-    public void randomword(boolean random)
+    public void randomWord(boolean random)
     {
-        model.setRandomword(random);
-        frame.setVisible(false);
-        yes.setVisible(false);
-        no.setVisible(false);
-        textondisplay.setVisible(false);
+        controller.setRandom(random);
+        //call next view
+    }
+
+    public void debbugMode(boolean debbug)
+    {
+        //TODO
+    }
+
+    public void displayError(boolean error)
+    {
+        //TODO
     }
 
 

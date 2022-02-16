@@ -12,10 +12,10 @@ public class GridView {
         gridpanel = new JPanel();
         gridpanel.setLayout(new GridLayout(6,5));
         gridpanel.setPreferredSize(new Dimension(400,400));
-        addlabelsview();
+        addLabelsView();
     }
 
-    public void addlabelsview()
+    public void addLabelsView()
     {
         for(int i = 0; i < letterscase.length; i++)
         {
@@ -29,12 +29,12 @@ public class GridView {
     }
 
 
-    public void changelabel(int colum, int line, String letter)
+    public void changeLabel(int colum, int line, String letter)
     {
         letterscase[colum+line].setText(letter);
     }
 
-    public void changebackgroundcolor(int colum, int line, int state)
+    public void changeBackgroundColor(int colum, int line, int state)
     {
         switch (state)
         {

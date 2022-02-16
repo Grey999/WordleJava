@@ -15,6 +15,6 @@ public class Main {
         WGModel model = new WGModel();
         WGController controller = new WGController(model);
         WGView view = new WGView(model, controller);
-        InputView inputView = new InputView(model);
+        InputView inputView = new InputView(model, controller);
 }
 }

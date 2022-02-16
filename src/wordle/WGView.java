@@ -82,7 +82,7 @@ public class WGView implements Observer
     public void update(Observable o, Object arg) {
         for(int i = 0; i < 6; i++)
         {
-            grid.changebackgroundcolor(i,model.getGuess(),model.getColors(i,model.getGuess()));
+            grid.changeBackgroundColor(i,model.getGuess(),model.getColors(i,model.getGuess()));
         }
         frame.repaint();
     }

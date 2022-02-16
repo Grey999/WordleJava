@@ -20,6 +20,11 @@ public class WGController {
         model.change();
     }
 
+    public void setRandom(boolean random)
+    {
+        model.setRandomword(random);
+    }
+
     public void initialise() throws FileNotFoundException {
         model.initialise();
     }
