@@ -31,24 +31,36 @@ public class InputView implements Observer{
         frame.setResizable(false);
         frame.setVisible(true);
 
-        createFirstView(0);
+        displayView(0);
 
         model.addObserver(this);
         update(model,null);
 
     }
 
-    public void createFirstView(int viewnumber)
+    public void displayView(int viewnumber)
     {
-        //make a switch using view number
-        //just change the textondisplay in function of it
-        //and modify the method call by yes and no
-        //initialise with two buttons
         this.yes  = new Button("Yes");
         this.no = new Button("No");
-        yes.addActionListener((ActionEvent e) -> randomWord(true));
-        no.addActionListener((ActionEvent e) -> randomWord(false));
-        this.textondisplay = new TextArea("Do you want to have a random word ?");
+        switch (viewnumber)
+        {
+            case 0:
+                yes.addActionListener((ActionEvent e) -> randomWord(true));
+                no.addActionListener((ActionEvent e) -> randomWord(false));
+                this.textondisplay = new TextArea("Do you want to have a random word ?");
+                break;
+            case 1:
+                yes.addActionListener((ActionEvent e) -> debbugMode(true));
+                no.addActionListener((ActionEvent e) -> debbugMode(false));
+                this.textondisplay = new TextArea("Do you want to use the debbug mode ?");
+                break;
+            case 2:
+                yes.addActionListener((ActionEvent e) -> displayError(true));
+                no.addActionListener((ActionEvent e) -> displayError(false));
+                this.textondisplay = new TextArea("Do you want to play with the error mode?");
+
+        }
+
         textondisplay.setEditable(false);
         textondisplay.setVisible(true);
         yes.setVisible(true);
@@ -58,7 +70,6 @@ public class InputView implements Observer{
 
     public void endgame()
     {
-        //how to link model to this function ?
         this.textondisplay = new TextArea();
         if(model.isWin())
         {
@@ -76,12 +87,13 @@ public class InputView implements Observer{
     public void randomWord(boolean random)
     {
         controller.setRandom(random);
-        //call next view
+        displayView(1);
     }
 
     public void debbugMode(boolean debbug)
     {
         //TODO
+        displayView(2);
     }
 
     public void displayError(boolean error)
