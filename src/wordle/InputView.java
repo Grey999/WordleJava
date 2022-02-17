@@ -104,7 +104,7 @@ public class InputView implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        if(model.isNewgame())
+        if(model.isNewgame()) //changer pour controller
         {
             endgame();
         }

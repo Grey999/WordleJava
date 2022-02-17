@@ -10,7 +10,7 @@ public class WGModel extends Observable {
     private boolean validword;
     private boolean display;
 
-    //FLAGS (TODO)
+    //FLAGS
     private boolean randomword;
     private boolean debug;
     private boolean messagerror;

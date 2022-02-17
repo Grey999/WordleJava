@@ -7,23 +7,33 @@ public class WGCli {
     public static void main(String[] args) throws FileNotFoundException {
         //TODO
         //ASCII model + rules
-        initialiseWordle();
-        //is that all ?
+        mainScreen();
+        //initialiseWordle();
+        //boucle en fonction des guess
     }
 
-    public void mainScreen()
+    public static void mainScreen()
     {
-        System.out.print(" _        _  _        _\n" +
-                "\\ \\      / /\\ \\      / /\n" +
-                " \\ \\    / /  \\ \\    / /\n" +
-                "  \\ \\  / /    \\ \\  / /\n" +
-                "   \\_\\/_/      \\_\\/_/");
+        System.out.println("\n" +
+                "██╗    ██╗ ██████╗ ██████╗ ██████╗ ██╗     ███████╗\n" +
+                "██║    ██║██╔═══██╗██╔══██╗██╔══██╗██║     ██╔════╝\n" +
+                "██║ █╗ ██║██║   ██║██████╔╝██║  ██║██║     █████╗  \n" +
+                "██║███╗██║██║   ██║██╔══██╗██║  ██║██║     ██╔══╝  \n" +
+                "╚███╔███╔╝╚██████╔╝██║  ██║██████╔╝███████╗███████╗\n" +
+                " ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝\n" +
+                "                                                   \n");
+        System.out.println(" Welcome to Wordle ! \n Hope you enjoy your time with us. \n Are you ready to crack the word ?");
+        System.out.println(); //Add rules + Code for the error
+    }
+
+    public void prompt()
+    {
+        //TODO
     }
 
     public static void initialiseWordle() throws FileNotFoundException {
         WGModel model = new WGModel();
-        WGController controller = new WGController(model);
-        controller.initialise();
+        //setup flag
     }
 
 
