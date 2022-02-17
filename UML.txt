@@ -1,7 +1,7 @@
 //Wordle Game UML Diagram
 -------------------------------
 
-//UML Diagra
+//UML Diagram
 [WGController]->[JavaApplication8]
 [WGView]->[JavaApplication8]
 [WGModel]->[JavaApplication8]
@@ -10,6 +10,8 @@
 [WGView]->[KeyBoardView]
 [WGView]->[GridView]
 
+[VGView]^[Observable]
+[VGModel]^[Observer]
 
 //Definition ViewClass
 [WGView|model;controller;frame;panel;grid;keyboard|createControls;createPanel;update;getController]
