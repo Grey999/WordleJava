@@ -8,10 +8,12 @@ public class InputView implements Observer{
 
     //Create method for the other flags (reread project paper)
 
-    private Button yes;
+    private JButton yes;
+    private JButton no;
+    private JButton newgame;
+
     private WGController controller;
-    private Button no;
-    private Button newgame;
+
     private WGModel model;
     private JFrame frame;
     private TextArea textondisplay;
@@ -40,8 +42,8 @@ public class InputView implements Observer{
 
     public void displayView(int viewnumber)
     {
-        this.yes  = new Button("Yes");
-        this.no = new Button("No");
+        this.yes  = new JButton("Yes");
+        this.no = new JButton("No");
         switch (viewnumber)
         {
             case 0:
@@ -70,6 +72,8 @@ public class InputView implements Observer{
 
     public void endgame()
     {
+        frame.setVisible(true);
+        textondisplay.setVisible(true);
         this.textondisplay = new TextArea();
         if(model.isWin())
         {
@@ -79,7 +83,7 @@ public class InputView implements Observer{
         {
             textondisplay.setText("You lose ! \n Do you want to play again ?");
         }
-        this.newgame = new Button("New Game");
+        this.newgame = new JButton("New Game");
         newgame.setVisible(true);
         //place button and text
     }
@@ -92,13 +96,17 @@ public class InputView implements Observer{
 
     public void debbugMode(boolean debbug)
     {
-        //TODO
+        controller.setDebbug(debbug);
         displayView(2);
     }
 
     public void displayError(boolean error)
     {
-        //TODO
+        controller.setError(error);
+        frame.setVisible(false);
+        yes.setVisible(false);
+        no.setVisible(false);
+        textondisplay.setVisible(false);
     }
 
 

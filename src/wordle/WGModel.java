@@ -100,26 +100,26 @@ public class WGModel extends Observable {
 
     public void changeColors()
     {
-        colors = new int[5];
+        setColors(new int[5]);
         for (int c = 0; c < 5; c++)
         {
-            colors[c] = 0;
+            getColors()[c] = 0;
         }
         for (int i = 0; i < 5; i++) {
             if(actualword.indexOf(i) == word.indexOf(i))
             {
-                colors[i] = 1;
+                getColors()[i] = 1;
             }
             else {
                 for (int j = i + 1; j < 5; j++) {
                     if (actualword.indexOf(i) == word.indexOf(j)) {
-                        colors[i] = 2;
+                        getColors()[i] = 2;
                     }
                 }
             }
         }
     }
-    public int getColors(int colum, int line) { return colors[colum+line];}
+    public int getColors(int colum, int line) { return getColors()[colum+line];}
 
     public boolean isValidword() {
         return validword;
@@ -179,5 +179,29 @@ public class WGModel extends Observable {
 
     public void setGuess(int guess) {
         this.guess = guess;
+    }
+
+    public boolean isDebug() {
+        return debug;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
+    public boolean isMessagerror() {
+        return messagerror;
+    }
+
+    public void setMessagerror(boolean messagerror) {
+        this.messagerror = messagerror;
+    }
+
+    public int[] getColors() {
+        return colors;
+    }
+
+    public void setColors(int[] colors) {
+        this.colors = colors;
     }
 }

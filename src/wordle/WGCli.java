@@ -4,11 +4,11 @@ import java.io.FileNotFoundException;
 
 public class WGCli {
     //build the entire CLI version using only controller and model
+    private static WGModel model;
     public static void main(String[] args) throws FileNotFoundException {
-        //TODO
         //ASCII model + rules
         mainScreen();
-        //initialiseWordle();
+        model = initialiseWordle();
         //boucle en fonction des guess
     }
 
@@ -23,17 +23,25 @@ public class WGCli {
                 " ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝\n" +
                 "                                                   \n");
         System.out.println(" Welcome to Wordle ! \n Hope you enjoy your time with us. \n Are you ready to crack the word ?");
-        System.out.println(); //Add rules + Code for the error
+        System.out.println(" Codded by Thanatos ");
+        System.out.println("This game present different option:");
     }
 
     public void prompt()
     {
         //TODO
+        //The input line
     }
 
-    public static void initialiseWordle() throws FileNotFoundException {
+    public void setupflags(int number, String answer)
+    {
+        //TODO
+    }
+
+    public static WGModel initialiseWordle() throws FileNotFoundException {
         WGModel model = new WGModel();
         //setup flag
+        return model;
     }
 
 

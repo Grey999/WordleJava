@@ -24,6 +24,8 @@ public class WGController {
     {
         model.setRandomword(random);
     }
+    public void setDebbug(boolean debbug){model.setDebug(debbug);}
+    public void setError(boolean error){model.setMessagerror(error);}
 
     public void initialise() throws FileNotFoundException {
         model.initialise();
