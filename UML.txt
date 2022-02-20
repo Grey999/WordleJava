@@ -10,21 +10,24 @@
 [WGView]->[KeyBoardView]
 [WGView]->[GridView]
 
+[WGCli]->[WGModel]
+
 [VGView]^[Observable]
 [VGModel]^[Observer]
 
 //Definition ViewClass
-[WGView|model;controller;frame;panel;grid;keyboard|createControls;createPanel;update;getController]
-[KeyBoardView|keyboard;keyboardpanel;keygrid;view|createKeys;removeLastChar;addKeyToGrid;getKeyboard]
-[GridView|lettercase;gridpanel|addLabelsView;changeLabel;changeBackgroundColor]
+[WGView| WGModel model;WGController controller;JFrame frame;Jpanel panel; GridView grid;KeyBoardView keyboard|createControls();createPanel();update()]
+[KeyBoardView|JButton array keyboard;JPanel keyboardpanel;JPanel keygrid;WGView view|createKeys(String label);removeLastChar(String s);addKeyToGrid()]
+[GridView|JLabel array lettercase;JPanel gridpanel|addLabelsView();changeLabel(int colum, int line, String label);changeBackgroundColor(int colum, int line, int state)]
 
-[InputView|yes;no;newgame;model;frame;textondisplay|initialiseView;endgame;randomWord;update]
+[InputView|JButton yes;JButton no;JButton newgame;WGModel model;JFrame frame;TextArea textondisplay|displayView(int viewnumber);endgame();randomWord(boolean random); debbugMode(boolean debbug); displayError(boolean error);update(Observable o, Object arg)]
 
 //Definition Controller and Model
 [WGController|model;view|setView;change;initialise]
 [WGModel|validword;display;randomword;newgame;win;word;colors;actualword;guess|addObserver;initialise;isWordCorrect;change;changeColors]
 
-
+//Definition WGCli
+[WGCli|WGModel model| main(); mainScreen(); prompt(); initialiseWordle()|setUpFlag(int number, String answer)]
 
 //Definition JavaApplicationClass
 [JavaApplication8|+main()]
