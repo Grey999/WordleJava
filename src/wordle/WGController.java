@@ -3,8 +3,6 @@ package wordle;
 import java.io.FileNotFoundException;
 
 public class WGController {
-    //is that really all ???
-    //ask the teacher
     private WGModel model;
     private WGView view;
 
@@ -26,6 +24,14 @@ public class WGController {
     }
     public void setDebbug(boolean debbug){model.setDebug(debbug);}
     public void setError(boolean error){model.setMessagerror(error);}
+    public void setColors()
+    {
+        int[]colors = new int[5];
+        for(int i = 0; i < colors.length; i++)
+        {
+            colors[i] = 0;
+        }
+        model.setColors(colors);}
 
     public void initialise() throws FileNotFoundException {
         model.initialise();

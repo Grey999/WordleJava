@@ -44,6 +44,7 @@ public class WGModel extends Observable {
         for (int i = 0; i < number; i++) {
             setWord(sc.nextLine());
         }
+        colors = new int[5];
         setActualword("");
         setGuess(0);
         setChanged();

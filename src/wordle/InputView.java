@@ -7,7 +7,7 @@ import java.awt.*;
 public class InputView implements Observer{
 
     //Create method for the other flags (reread project paper)
-    private static final Dimension PANEL_SIZE = new Dimension(350,350);
+    private static final Dimension PANEL_SIZE = new Dimension(500,500);
     private JButton yes;
     private JButton no;
     private JButton newgame;
@@ -30,7 +30,7 @@ public class InputView implements Observer{
         this.setFrame(new JFrame("Play Mode"));
         getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getFrame().pack();
-        getFrame().setSize(400,400);
+        getFrame().setSize(450,450);
         getFrame().setResizable(false);
         getFrame().setVisible(true);
 

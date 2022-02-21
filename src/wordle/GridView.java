@@ -6,8 +6,10 @@ import java.awt.*;
 public class GridView {
     private JLabel[] letterscase;
     private JPanel gridpanel;
+    private WGView view;
     public GridView(WGView view)
     {
+        this.view = view;
         letterscase = new JLabel[28];
         gridpanel = new JPanel();
         gridpanel.setLayout(new GridLayout(6,5));
@@ -24,6 +26,7 @@ public class GridView {
             letterscase[i].setMaximumSize(new Dimension(10,10));
             letterscase[i].setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,2,true));
             letterscase[i].setOpaque(true);
+            letterscase[i].setHorizontalAlignment(SwingConstants.CENTER);
             gridpanel.add(letterscase[i]);
         }
     }
@@ -55,5 +58,8 @@ public class GridView {
             default:
                 letterscase[colum+line].setBackground(Color.GRAY);
         }
+
+        view.getController().setColors();
+
     }
 }

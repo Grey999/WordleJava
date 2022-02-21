@@ -84,7 +84,7 @@ public class KeyboardView {
                 break;
             case "⌫":
                 key.addActionListener((ActionEvent e) -> {
-                    if(view.getModel().getActualword() != null && view.getModel().getActualword().length() != 0)
+                    if(view.getModel().getActualword() != null && view.getModel().getActualword().length() > 0)
                     {
                         view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
                         view.getGrid().changeLabel(view.getModel().getActualword().length(),
@@ -95,7 +95,8 @@ public class KeyboardView {
                 break;
             default:
                 key.addActionListener((ActionEvent e) -> {
-                    if(view.getModel().getActualword() != null && view.getModel().getActualword().length() != 5) {
+                    if(view.getModel().getActualword() != null && view.getModel().getActualword().length() < 5)
+                    {
                         view.getModel().setActualword(view.getModel().getActualword() + label.toLowerCase(Locale.ROOT));
                         view.getGrid().changeLabel(view.getModel().getActualword().length(),
                                 view.getModel().getGuess(), label.toUpperCase(Locale.ROOT));

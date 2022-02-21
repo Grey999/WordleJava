@@ -54,7 +54,7 @@ public class WGView implements Observer
         contentPane.add(panel);
 
         getFrame().pack();
-        getFrame().setSize(500,500);
+        getFrame().setSize(1000,1000);
         getFrame().setResizable(false);
         getFrame().setVisible(true);
     }
@@ -70,10 +70,13 @@ public class WGView implements Observer
     }
 
     public void update(Observable o, Object arg) {
-        for(int i = 0; i < 6; i++)
-        {
-            getGrid().changeBackgroundColor(i, getModel().getGuess(), getModel().getColors(i, getModel().getGuess()));
+
+        if(model.getActualword() != null && model.getActualword().length() == 5) {
+            for (int i = 0; i < 5; i++) {
+                getGrid().changeBackgroundColor(i, getModel().getGuess(), getModel().getColors(i, getModel().getGuess()));
+            }
         }
+        //voir pour le changement de label
         getFrame().repaint();
     }
     
