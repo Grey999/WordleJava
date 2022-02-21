@@ -28,6 +28,11 @@ public class GridView {
         }
     }
 
+    public JPanel getPanel()
+    {
+        return gridpanel;
+    }
+
 
     public void changeLabel(int colum, int line, String letter)
     {

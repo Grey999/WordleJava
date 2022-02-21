@@ -31,38 +31,68 @@ public class KeyboardView {
         keygrid = new JPanel();
         keygrid.setLayout(new GridBagLayout());
         keygrid.setOpaque(true);
+
+        Container contentPane = view.getFrame().getContentPane();
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+        contentPane.add(keygrid);
+
         addKeyToGrid();
         //find a way for the placement (keyboard java GUI)
         keyboardpanel.add(keygrid);
 
     }
 
+    public JPanel getPanel()
+    {
+        return keyboardpanel;
+    }
+
     public void createKeys(String label)
     {
         JButton key = new JButton(label);
-        //condition size for enter button
-        key.setFont(new Font(Font.MONOSPACED, Font.BOLD, 30));
+        if(label == "Enter")
+        {
+            key.setFont(new Font(Font.MONOSPACED, Font.BOLD, 40));
+        }
+        else {
+            key.setFont(new Font(Font.MONOSPACED, Font.BOLD, 30));
+        }
         key.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
         key.setBackground(Color.WHITE);
         key.setOpaque(true);
         switch (label)
         {
             case "Enter":
-                if(view.model.getActualword().length() == 5) {
+                if (view.getModel().getActualword() != null && view.getModel().getActualword().length() == 0) {
                     key.addActionListener((ActionEvent e) -> {
-                        try {
-                            view.getController().change();
-                        } catch (FileNotFoundException ex) {
-                            ex.printStackTrace();
-                        }
+                        //ajouter ligne d'erreur
+                        //sleep for two second
                     });
+                }
+                else {
+                    if (view.getModel().getActualword() != null && view.getModel().getActualword().length() == 5) {
+                        key.addActionListener((ActionEvent e) -> {
+                            try {
+                                view.getController().change();
+                            } catch (FileNotFoundException ex) {
+                                ex.printStackTrace();
+                            }
+                        });
+                    }
                 }
                 break;
             case "⌫":
-                key.addActionListener((ActionEvent e) -> {view.model.setActualword(view.model.getActualword()+label.toLowerCase(Locale.ROOT));});
+                key.addActionListener((ActionEvent e) -> {
+                    view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
+                    view.getGrid().changeLabel(view.getModel().getActualword().length(), view.getModel().getGuess(), "");
+                });
                 break;
             default:
-                key.addActionListener((ActionEvent e) -> {view.model.setActualword(removeLastChar(view.model.getActualword()));});
+                key.addActionListener((ActionEvent e) -> {
+                    view.getModel().setActualword(view.getModel().getActualword()+label.toLowerCase(Locale.ROOT));
+                    view.getGrid().changeLabel(view.getModel().getActualword().length(),
+                            view.getModel().getGuess(), label.toUpperCase(Locale.ROOT));
+                });
         }
 
 
@@ -81,8 +111,6 @@ public class KeyboardView {
             keygrid.add(keyboard[i]);
         }
     }
-
-
 
     public JButton[] getKeyBoard()
     {

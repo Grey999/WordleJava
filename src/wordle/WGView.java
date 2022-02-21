@@ -11,11 +11,10 @@ public class WGView implements Observer
 {
     private static final Dimension PANEL_SIZE = new Dimension(500,500);
 
-    final WGModel model;
+    private final WGModel model;
     private final WGController controller;
     private JFrame frame;
     private JPanel panel;
-    //private JPanel inputframe;
     private GridView grid;
     private KeyboardView keyboard;
 
@@ -24,13 +23,17 @@ public class WGView implements Observer
     {
         this.model = model;
         this.controller = controller;
-        grid = new GridView(this);
-        keyboard = new KeyboardView(this);
+        setGrid(new GridView(this));
+
+
+        setFrame(new JFrame("Wordle"));
+        getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setKeyboard(new KeyboardView(this));
+
         createControls();
+
         controller.setView(this);
-
-        createControls();
-
 
         model.addObserver(this);
         update(model,null);
@@ -41,32 +44,19 @@ public class WGView implements Observer
     }
 
     private void createControls() {
-        frame = new JFrame("Wordle");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        Container contentPane = frame.getContentPane();
+
+        Container contentPane = getFrame().getContentPane();
         contentPane.setBackground(Color.black);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+
         createPanel();
         contentPane.add(panel);
 
-        //revoir si inputframe nécessaire
-        /*
-        Container contentPane2 = inputframe.getContentPane();
-        contentPane2.setBackground(Color.black);
-        contentPane2.setLayout(new BoxLayout(contentPane2, BoxLayout.X_AXIS));
-        createInputControl();
-        contentPane2.add(inputframe);
-
-         */
-
-
-        frame.pack();
-        frame.setSize(500,500);
-        frame.setResizable(false);
-        //revoir visible ou non
-        frame.setVisible(true);
-        //inputframe.setVisible(true);
+        getFrame().pack();
+        getFrame().setSize(500,500);
+        getFrame().setResizable(false);
+        getFrame().setVisible(true);
     }
 
 
@@ -75,17 +65,45 @@ public class WGView implements Observer
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(Color.black);
         //voir méthode Frame
-        //panel.add(grid.getBasePanel());
-        //panel.add(keyboard.getBasePanel());
+        panel.add(getGrid().getPanel());
+        panel.add(getKeyboard().getPanel());
     }
 
     public void update(Observable o, Object arg) {
         for(int i = 0; i < 6; i++)
         {
-            grid.changeBackgroundColor(i,model.getGuess(),model.getColors(i,model.getGuess()));
+            getGrid().changeBackgroundColor(i, getModel().getGuess(), getModel().getColors(i, getModel().getGuess()));
         }
-        frame.repaint();
+        getFrame().repaint();
     }
     
     public WGController getController(){return controller;}
+
+    public GridView getGrid() {
+        return grid;
+    }
+
+    public void setGrid(GridView grid) {
+        this.grid = grid;
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public void setFrame(JFrame frame) {
+        this.frame = frame;
+    }
+
+    public KeyboardView getKeyboard() {
+        return keyboard;
+    }
+
+    public void setKeyboard(KeyboardView keyboard) {
+        this.keyboard = keyboard;
+    }
+
+    public WGModel getModel() {
+        return model;
+    }
 }

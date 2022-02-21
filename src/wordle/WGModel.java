@@ -48,6 +48,7 @@ public class WGModel extends Observable {
         for (int i = 0; i < number; i++) {
             setWord(sc.nextLine());
         }
+        setActualword("");
         setGuess(0);
         setChanged();
         notifyObservers();

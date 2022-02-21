@@ -7,7 +7,7 @@ import java.awt.*;
 public class InputView implements Observer{
 
     //Create method for the other flags (reread project paper)
-
+    private static final Dimension PANEL_SIZE = new Dimension(350,350);
     private JButton yes;
     private JButton no;
     private JButton newgame;
@@ -16,6 +16,7 @@ public class InputView implements Observer{
 
     private WGModel model;
     private JFrame frame;
+    private JPanel panel;
     private TextArea textondisplay;
 
 
@@ -29,14 +30,35 @@ public class InputView implements Observer{
         this.frame = new JFrame("Play Mode");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
-        frame.setSize(200,200);
+        frame.setSize(400,400);
         frame.setResizable(false);
         frame.setVisible(true);
+
+        Container contentPane = frame.getContentPane();
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+        createPanel();
+        contentPane.add(panel);
 
         displayView(0);
 
         model.addObserver(this);
         update(model,null);
+
+    }
+
+    public void createPanel()
+    {
+        panel = new JPanel();
+        panel.setLayout(new GridLayout(4,2));
+
+        textondisplay.setEditable(false);
+        panel.add(yes);
+        panel.add(no);
+        panel.add(newgame);
+        panel.add(textondisplay);
+        //place button
+
+        panel.setPreferredSize(PANEL_SIZE);
 
     }
 
@@ -62,12 +84,10 @@ public class InputView implements Observer{
                 this.textondisplay = new TextArea("Do you want to play with the error mode?");
 
         }
-
-        textondisplay.setEditable(false);
         textondisplay.setVisible(true);
         yes.setVisible(true);
         no.setVisible(true);
-        //place the button correctly
+        frame.repaint();
     }
 
     public void endgame()
@@ -86,6 +106,7 @@ public class InputView implements Observer{
         this.newgame = new JButton("New Game");
         newgame.setVisible(true);
         //place button and text
+        frame.repaint();
     }
 
     public void randomWord(boolean random)
