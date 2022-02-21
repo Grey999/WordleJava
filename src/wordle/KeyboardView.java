@@ -22,11 +22,11 @@ public class KeyboardView {
         String qwerty = "QWERTYUIOPASDFGHJKL⌫ZXCVBNM";
         for(int i = 0; i < qwerty.length(); i++)
         {
-            createKeys(String.valueOf(qwerty.charAt(i)));
+            createKeys(String.valueOf(qwerty.charAt(i)), i);
         }
-        createKeys("Enter");
+        createKeys("Enter",27);
 
-        keyboardpanel.setLayout(new BoxLayout(keyboardpanel, BoxLayout.Y_AXIS)); // cree le layout pour le gros panel
+        keyboardpanel.setLayout(new BoxLayout(keyboardpanel, BoxLayout.Y_AXIS));
         keyboardpanel.setPreferredSize(new Dimension(650,160));
         keygrid = new JPanel();
         keygrid.setLayout(new GridBagLayout());
@@ -34,11 +34,11 @@ public class KeyboardView {
 
         Container contentPane = view.getFrame().getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
-        contentPane.add(keygrid);
+        contentPane.add(keyboardpanel);
+        keyboardpanel.add(keygrid);
 
         addKeyToGrid();
-        //find a way for the placement (keyboard java GUI)
-        keyboardpanel.add(keygrid);
+
 
     }
 
@@ -47,7 +47,7 @@ public class KeyboardView {
         return keyboardpanel;
     }
 
-    public void createKeys(String label)
+    public void createKeys(String label, int i)
     {
         JButton key = new JButton(label);
         if(label == "Enter")
@@ -63,9 +63,9 @@ public class KeyboardView {
         switch (label)
         {
             case "Enter":
-                if (view.getModel().getActualword() != null && view.getModel().getActualword().length() == 0) {
+                if (view.getModel().getActualword() != null && view.getModel().getActualword().length() < 5) {
                     key.addActionListener((ActionEvent e) -> {
-                        //ajouter ligne d'erreur
+                        //add error line
                         //sleep for two second
                     });
                 }
@@ -94,6 +94,7 @@ public class KeyboardView {
                             view.getModel().getGuess(), label.toUpperCase(Locale.ROOT));
                 });
         }
+        keyboard[i] = key;
 
 
     }
