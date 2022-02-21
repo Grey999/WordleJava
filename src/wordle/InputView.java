@@ -27,21 +27,27 @@ public class InputView implements Observer{
     {
         this.controller = controller;
         this.model = model;
-        this.frame = new JFrame("Play Mode");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setSize(400,400);
-        frame.setResizable(false);
-        frame.setVisible(true);
+        this.setFrame(new JFrame("Play Mode"));
+        getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getFrame().pack();
+        getFrame().setSize(400,400);
+        getFrame().setResizable(false);
+        getFrame().setVisible(true);
 
-        Container contentPane = frame.getContentPane();
+        Container contentPane = getFrame().getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+
+        this.yes  = new JButton("Yes");
+        this.no = new JButton("No");
+        this.newgame = new JButton("New Game");
+        this.textondisplay = new TextArea();
         createPanel();
         contentPane.add(panel);
 
+        model.addObserver(this);
+
         displayView(0);
 
-        model.addObserver(this);
         update(model,null);
 
     }
@@ -55,6 +61,7 @@ public class InputView implements Observer{
         panel.add(yes);
         panel.add(no);
         panel.add(newgame);
+        newgame.setVisible(false);
         panel.add(textondisplay);
         //place button
 
@@ -64,37 +71,38 @@ public class InputView implements Observer{
 
     public void displayView(int viewnumber)
     {
-        this.yes  = new JButton("Yes");
-        this.no = new JButton("No");
+
         switch (viewnumber)
         {
             case 0:
                 yes.addActionListener((ActionEvent e) -> randomWord(true));
                 no.addActionListener((ActionEvent e) -> randomWord(false));
-                this.textondisplay = new TextArea("Do you want to have a random word ?");
+                this.textondisplay.setText("Do you want to have a random word ?");
                 break;
             case 1:
                 yes.addActionListener((ActionEvent e) -> debbugMode(true));
                 no.addActionListener((ActionEvent e) -> debbugMode(false));
-                this.textondisplay = new TextArea("Do you want to use the debbug mode ?");
+                this.textondisplay.setText("Do you want to use the debbug mode ?");
                 break;
             case 2:
+                this.textondisplay.setText("Do you want to play with the error mode?");
                 yes.addActionListener((ActionEvent e) -> displayError(true));
                 no.addActionListener((ActionEvent e) -> displayError(false));
-                this.textondisplay = new TextArea("Do you want to play with the error mode?");
+                break;
+            default:
+                //never happen
 
         }
         textondisplay.setVisible(true);
         yes.setVisible(true);
         no.setVisible(true);
-        frame.repaint();
+        getFrame().repaint();
     }
 
     public void endgame()
     {
-        frame.setVisible(true);
+        getFrame().setVisible(true);
         textondisplay.setVisible(true);
-        this.textondisplay = new TextArea();
         if(model.isWin())
         {
             textondisplay.setText("You win ! \n Do you want to play again ?");
@@ -103,10 +111,9 @@ public class InputView implements Observer{
         {
             textondisplay.setText("You lose ! \n Do you want to play again ?");
         }
-        this.newgame = new JButton("New Game");
         newgame.setVisible(true);
         //place button and text
-        frame.repaint();
+        getFrame().repaint();
     }
 
     public void randomWord(boolean random)
@@ -124,10 +131,16 @@ public class InputView implements Observer{
     public void displayError(boolean error)
     {
         controller.setError(error);
-        frame.setVisible(false);
+        getFrame().setVisible(false);
         yes.setVisible(false);
         no.setVisible(false);
         textondisplay.setVisible(false);
+        startGame();
+    }
+
+    public void startGame()
+    {
+        WGView view = new WGView(model, controller);
     }
 
 
@@ -138,5 +151,13 @@ public class InputView implements Observer{
             endgame();
         }
 
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public void setFrame(JFrame frame) {
+        this.frame = frame;
     }
 }

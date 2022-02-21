@@ -31,10 +31,6 @@ public class WGModel extends Observable {
     }
 
     public void initialise() throws FileNotFoundException {
-        setValidword(false);
-        setDisplay(false);
-        setNewgame(false);
-        setWin(false);
         File file = new File("words.txt");
         Scanner sc = new Scanner(file);
         int number = 0;

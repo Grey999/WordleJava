@@ -14,7 +14,6 @@ public class Main {
     public static void createAndShowGUI() {
         WGModel model = new WGModel();
         WGController controller = new WGController(model);
-        WGView view = new WGView(model, controller);
         InputView inputView = new InputView(model, controller);
-}
+    }
 }

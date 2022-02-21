@@ -49,6 +49,7 @@ public class KeyboardView {
 
     public void createKeys(String label, int i)
     {
+        //review conditions for the keyboard
         JButton key = new JButton(label);
         if(label == "Enter")
         {
@@ -83,15 +84,22 @@ public class KeyboardView {
                 break;
             case "⌫":
                 key.addActionListener((ActionEvent e) -> {
-                    view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
-                    view.getGrid().changeLabel(view.getModel().getActualword().length(), view.getModel().getGuess(), "");
+                    if(view.getModel().getActualword() != null && view.getModel().getActualword().length() != 0)
+                    {
+                        view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
+                        view.getGrid().changeLabel(view.getModel().getActualword().length(),
+                                view.getModel().getGuess(), "");
+                    }
+
                 });
                 break;
             default:
                 key.addActionListener((ActionEvent e) -> {
-                    view.getModel().setActualword(view.getModel().getActualword()+label.toLowerCase(Locale.ROOT));
-                    view.getGrid().changeLabel(view.getModel().getActualword().length(),
-                            view.getModel().getGuess(), label.toUpperCase(Locale.ROOT));
+                    if(view.getModel().getActualword() != null && view.getModel().getActualword().length() != 5) {
+                        view.getModel().setActualword(view.getModel().getActualword() + label.toLowerCase(Locale.ROOT));
+                        view.getGrid().changeLabel(view.getModel().getActualword().length(),
+                                view.getModel().getGuess(), label.toUpperCase(Locale.ROOT));
+                    }
                 });
         }
         keyboard[i] = key;
