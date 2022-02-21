@@ -2,32 +2,33 @@
 //-------------------------------
 
 //UML Diagram
-[WGController]->[JavaApplication8]
-[WGView]->[JavaApplication8]
-[WGModel]->[JavaApplication8]
-[InputView]->[JavaApplication8]
+[WGController]->[Main]
+[WGView]->[Main]
+[WGModel]->[Main]
+[InputView]->[Main]
 
 [WGView]->[KeyBoardView]
 [WGView]->[GridView]
 
 [WGCli]->[WGModel]
 
-[VGView]^[Observable]
-[VGModel]^[Observer]
+[VGView]^[Observer]
+[InputView]^[Observer]
+[VGModel]^[Observable]
 
 //Definition ViewClass
-[WGView| WGModel model;WGController controller;JFrame frame;Jpanel panel; GridView grid;KeyBoardView keyboard|createControls();createPanel();update()]
-[KeyBoardView|JButton array keyboard;JPanel keyboardpanel;JPanel keygrid;WGView view|createKeys(String label);removeLastChar(String s);addKeyToGrid()]
-[GridView|JLabel array lettercase;JPanel gridpanel|addLabelsView();changeLabel(int colum, int line, String label);changeBackgroundColor(int colum, int line, int state)]
+[WGView| +WGModel model;+WGController controller;+JFrame frame;+Jpanel panel; +GridView grid;+KeyBoardView keyboard|+createControls();+createPanel();-update()]
+[KeyBoardView|+JButton array keyboard;+JPanel keyboardpanel;+JPanel keygrid;+WGView view|+createKeys(String label);+removeLastChar(String s);+addKeyToGrid()]
+[GridView|+JLabel array lettercase;+JPanel gridpanel;+WGView view|+addLabelsView();+changeLabel(int colum, int line, String label);+changeBackgroundColor(int colum, int line, int state)]
 
-[InputView|JButton yes;JButton no;JButton newgame;WGModel model;JFrame frame;TextArea textondisplay|displayView(int viewnumber);endgame();randomWord(boolean random); debbugMode(boolean debbug); displayError(boolean error);update(Observable o, Object arg)]
+[InputView|+JButton yes;+JButton no;+JButton newgame;+WGController controller; +WGModel model; +JFrame frame; +TextArea textondisplay|+createPanel();+displayView(int viewnumber);+endgame();+randomWord(boolean random); +debbugMode(boolean debbug); +displayError(boolean error); -update(Observable o, Object arg)]
 
 //Definition Controller and Model
-[WGController|model;view|setView;change;initialise]
-[WGModel|validword;display;randomword;newgame;win;word;colors;actualword;guess|addObserver;initialise;isWordCorrect;change;changeColors]
+[WGController|+WGModel model;+WGView view|+setView();+change();+setRandom(boolean random); +setDebbug(boolean debbug); +setError(boolean error);+setColors();+initialise()]
+[WGModel|+ boolean validword;+boolean display;+boolean randomword;+boolean debbug; +boolean messageerror; +boolean newgame;+boolean win;+String word;+int array colors;+String actualword;+int guess|-addObserver();+initialise();+isWordCorrect();+change();+changeColors()]
 
-//Definition WGCli
-[WGCli|WGModel model| main(); mainScreen(); prompt(); initialiseWordle()|setUpFlag(int number, String answer)]
+//Definition WGCli with a main function for the CLI mode
+[WGCli|+WGModel model| -main(String array args); +mainScreen(); +prompt(); +initialiseWordle()|+setUpFlag(int number, String answer)]
 
-//Definition JavaApplicationClass
-[JavaApplication8|+main()]
+//Definition Main class for GUI mode
+[Main|-main();-createAndShowGUI()]
