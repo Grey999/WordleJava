@@ -12,7 +12,7 @@ public class WGModel extends Observable {
 
     //FLAGS
     private boolean randomword;
-    private boolean debug;
+    private boolean debbug;
     private boolean messagerror;
 
     private boolean newgame;
@@ -30,16 +30,16 @@ public class WGModel extends Observable {
     public void addObserver(WGView wgView) {
     }
 
-    public void initialise() throws FileNotFoundException {
+    protected void initialise() throws FileNotFoundException {
         File file = new File("words.txt");
         Scanner sc = new Scanner(file);
-        int number = 0;
+        int number;
         if(randomword) {
-            number = (int) Math.random() * 10657;
+            number = (int) (Math.random() * 10657);
         }
         else
         {
-            number = 1;
+            number = 42;
         }
         for (int i = 0; i < number; i++) {
             setWord(sc.nextLine());
@@ -51,7 +51,7 @@ public class WGModel extends Observable {
         notifyObservers();
     }
 
-    public boolean isWordCorrect(Scanner scanner, Scanner sc) throws FileNotFoundException {
+    private boolean isWordCorrect(Scanner scanner, Scanner sc) throws FileNotFoundException {
         while(!getActualword().equals(sc.nextLine()) && sc.hasNextLine())
         {
             //continue
@@ -59,7 +59,7 @@ public class WGModel extends Observable {
         return sc.hasNextLine();
     }
 
-    public void change() throws FileNotFoundException {
+    protected void change() throws FileNotFoundException {
         while(!isValidword()) {
             Scanner scanner = new Scanner(System.in);
             File file = new File("common.txt");
@@ -96,7 +96,7 @@ public class WGModel extends Observable {
 
     }
 
-    public void changeColors()
+    private void changeColors()
     {
         setColors(new int[5]);
         for (int c = 0; c < 5; c++)
@@ -179,12 +179,12 @@ public class WGModel extends Observable {
         this.guess = guess;
     }
 
-    public boolean isDebug() {
-        return debug;
+    public boolean isDebbug() {
+        return debbug;
     }
 
-    public void setDebug(boolean debug) {
-        this.debug = debug;
+    public void setDebbug(boolean debbug) {
+        this.debbug = debbug;
     }
 
     public boolean isMessagerror() {

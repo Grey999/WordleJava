@@ -17,7 +17,7 @@ public class GridView {
         addLabelsView();
     }
 
-    public void addLabelsView()
+    private void addLabelsView()
     {
         for(int i = 0; i < letterscase.length; i++)
         {
@@ -37,12 +37,12 @@ public class GridView {
     }
 
 
-    public void changeLabel(int colum, int line, String letter)
+    protected void changeLabel(int colum, int line, String letter)
     {
         letterscase[colum+line].setText(letter);
     }
 
-    public void changeBackgroundColor(int colum, int line, int state)
+    protected void changeBackgroundColor(int colum, int line, int state)
     {
         switch (state)
         {

@@ -47,7 +47,7 @@ public class KeyboardView {
         return keyboardpanel;
     }
 
-    public void createKeys(String label, int i)
+    private void createKeys(String label, int i)
     {
         //review conditions for the keyboard
         JButton key = new JButton(label);
@@ -108,13 +108,13 @@ public class KeyboardView {
 
     }
 
-    public String removeLastChar(String s)
+    private String removeLastChar(String s)
     {
         //returns the string after removing the last character
         return s.substring(0, s.length() - 1);
     }
 
-    public void addKeyToGrid()
+    private void addKeyToGrid()
     {
         int length = keyboard.length;
         for(int i = 0; i < length; i++) {

@@ -8,11 +8,11 @@ public class WGCli {
     public static void main(String[] args) throws FileNotFoundException {
         //ASCII model + rules
         mainScreen();
-        model = initialiseWordle();
+        initialiseWordle();
         //boucle en fonction des guess
     }
 
-    public static void mainScreen()
+    private static void mainScreen()
     {
         System.out.println("\n" +
                 "██╗    ██╗ ██████╗ ██████╗ ██████╗ ██╗     ███████╗\n" +
@@ -27,21 +27,20 @@ public class WGCli {
         System.out.println("This game present different option:");
     }
 
-    public void prompt()
+    private void prompt()
     {
         //TODO
         //The input line
     }
 
-    public void setupflags(int number, String answer)
+    private void setupflags(int number, String answer)
     {
         //TODO
     }
 
-    public static WGModel initialiseWordle() throws FileNotFoundException {
-        WGModel model = new WGModel();
+    private static void initialiseWordle() throws FileNotFoundException {
+        model = new WGModel();
         //setup flag
-        return model;
     }
 
 

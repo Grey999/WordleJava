@@ -52,7 +52,7 @@ public class InputView implements Observer{
 
     }
 
-    public void createPanel()
+    private void createPanel()
     {
         panel = new JPanel();
         panel.setLayout(new GridLayout(4,2));
@@ -69,7 +69,7 @@ public class InputView implements Observer{
 
     }
 
-    public void displayView(int viewnumber)
+    private void displayView(int viewnumber)
     {
 
         switch (viewnumber)
@@ -99,7 +99,7 @@ public class InputView implements Observer{
         getFrame().repaint();
     }
 
-    public void endgame()
+    private void endgame()
     {
         getFrame().setVisible(true);
         textondisplay.setVisible(true);
@@ -116,19 +116,19 @@ public class InputView implements Observer{
         getFrame().repaint();
     }
 
-    public void randomWord(boolean random)
+    private void randomWord(boolean random)
     {
         controller.setRandom(random);
         displayView(1);
     }
 
-    public void debbugMode(boolean debbug)
+    private void debbugMode(boolean debbug)
     {
         controller.setDebbug(debbug);
         displayView(2);
     }
 
-    public void displayError(boolean error)
+    private void displayError(boolean error)
     {
         controller.setError(error);
         getFrame().setVisible(false);

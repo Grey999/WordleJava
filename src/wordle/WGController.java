@@ -10,21 +10,21 @@ public class WGController {
         this.model = model;
     }
 
-    public void setView(WGView  view) {
+    protected void setView(WGView  view) {
         this.view = view;
     }
 
-    public void change() throws FileNotFoundException {
+    protected void change() throws FileNotFoundException {
         model.change();
     }
 
-    public void setRandom(boolean random)
+    protected void setRandom(boolean random)
     {
         model.setRandomword(random);
     }
-    public void setDebbug(boolean debbug){model.setDebug(debbug);}
-    public void setError(boolean error){model.setMessagerror(error);}
-    public void setColors()
+    protected void setDebbug(boolean debbug){model.setDebbug(debbug);}
+    protected void setError(boolean error){model.setMessagerror(error);}
+    protected void setColors()
     {
         int[]colors = new int[5];
         for(int i = 0; i < colors.length; i++)
@@ -33,7 +33,7 @@ public class WGController {
         }
         model.setColors(colors);}
 
-    public void initialise() throws FileNotFoundException {
+    protected void initialise() throws FileNotFoundException {
         model.initialise();
     }
 }
