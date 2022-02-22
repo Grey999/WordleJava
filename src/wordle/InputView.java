@@ -7,17 +7,17 @@ import java.awt.*;
 public class InputView implements Observer{
 
     //Create method for the other flags (reread project paper)
-    private static final Dimension PANEL_SIZE = new Dimension(500,500);
-    private JButton yes;
-    private JButton no;
-    private JButton newgame;
+    private static final Dimension PANEL_SIZE = new Dimension(600,600);
+    private final JButton yes;
+    private final JButton no;
+    private final JButton newgame;
 
-    private WGController controller;
+    private final WGController controller;
 
-    private WGModel model;
+    private final WGModel model;
     private JFrame frame;
     private JPanel panel;
-    private TextArea textondisplay;
+    private final JLabel textondisplay;
 
 
     //must handle: randomword, endgame screen
@@ -29,20 +29,18 @@ public class InputView implements Observer{
         this.model = model;
         this.setFrame(new JFrame("Play Mode"));
         getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getFrame().pack();
-        getFrame().setSize(450,450);
+        getFrame().setSize(700,700);
         getFrame().setResizable(false);
+        getFrame().setLocationRelativeTo(null);
         getFrame().setVisible(true);
-
-        Container contentPane = getFrame().getContentPane();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 
         this.yes  = new JButton("Yes");
         this.no = new JButton("No");
         this.newgame = new JButton("New Game");
-        this.textondisplay = new TextArea();
+        this.textondisplay = new JLabel();
         createPanel();
-        contentPane.add(panel);
+        frame.setContentPane(panel);
+        frame.pack();
 
         model.addObserver(this);
 
@@ -54,49 +52,67 @@ public class InputView implements Observer{
 
     private void createPanel()
     {
-        panel = new JPanel();
-        panel.setLayout(new GridLayout(4,2));
+        this.panel = new JPanel();
+        JPanel panelnorth = new JPanel();
+        panelnorth.setLayout(new BorderLayout());
+        panelnorth.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        textondisplay.setEditable(false);
-        panel.add(yes);
-        panel.add(no);
-        panel.add(newgame);
+        JPanel panelsouth = new JPanel();
+        panelsouth.setLayout(new BorderLayout());
+        panelsouth.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+
+        panel.add(panelnorth, BorderLayout.CENTER);
+        panel.add(panelsouth,BorderLayout.SOUTH);
+
+
+        panelnorth.add(textondisplay,BorderLayout.CENTER);
+
+
+        panelsouth.add(yes, BorderLayout.WEST);
+
+
+        panelsouth.add(no,BorderLayout.EAST);
+
+
+        panelsouth.add(newgame,BorderLayout.CENTER);
         newgame.setVisible(false);
-        panel.add(textondisplay);
-        //place button
 
-        panel.setPreferredSize(PANEL_SIZE);
+        panelnorth.setPreferredSize(PANEL_SIZE);
 
     }
 
     private void displayView(int viewnumber)
     {
 
-        switch (viewnumber)
-        {
-            case 0:
-                yes.addActionListener((ActionEvent e) -> randomWord(true));
-                no.addActionListener((ActionEvent e) -> randomWord(false));
-                this.textondisplay.setText("Do you want to have a random word ?");
-                break;
-            case 1:
-                yes.addActionListener((ActionEvent e) -> debbugMode(true));
-                no.addActionListener((ActionEvent e) -> debbugMode(false));
-                this.textondisplay.setText("Do you want to use the debbug mode ?");
-                break;
-            case 2:
-                this.textondisplay.setText("Do you want to play with the error mode?");
-                yes.addActionListener((ActionEvent e) -> displayError(true));
-                no.addActionListener((ActionEvent e) -> displayError(false));
-                break;
-            default:
-                //never happen
-
-        }
         textondisplay.setVisible(true);
         yes.setVisible(true);
         no.setVisible(true);
-        getFrame().repaint();
+        switch (viewnumber) {
+            case 0 -> {
+                yes.addActionListener((ActionEvent e) -> randomWord(true));
+                no.addActionListener((ActionEvent e) -> randomWord(false));
+                this.textondisplay.setText("Do you want to have a random word ?");
+                getFrame().repaint();
+            }
+            case 1 -> {
+                yes.addActionListener((ActionEvent e) -> debbugMode(true));
+                no.addActionListener((ActionEvent e) -> debbugMode(false));
+                this.textondisplay.setText("Do you want to use the debbug mode ?");
+                getFrame().repaint();
+            }
+            case 2 -> {
+                yes.addActionListener((ActionEvent e) -> displayError(true));
+                no.addActionListener((ActionEvent e) -> displayError(false));
+                this.textondisplay.setText("Do you want to use the error mode ?");
+                getFrame().repaint();
+            }
+            default -> {
+                this.textondisplay.setText("Problem");
+            }
+
+
+        }
+
     }
 
     private void endgame()
@@ -112,7 +128,6 @@ public class InputView implements Observer{
             textondisplay.setText("You lose ! \n Do you want to play again ?");
         }
         newgame.setVisible(true);
-        //place button and text
         getFrame().repaint();
     }
 

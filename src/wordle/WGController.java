@@ -1,6 +1,8 @@
 package wordle;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class WGController {
     private WGModel model;
@@ -13,6 +15,33 @@ public class WGController {
     protected void setView(WGView  view) {
         this.view = view;
     }
+
+    private boolean isWordCorrect(Scanner scanner, Scanner sc) throws FileNotFoundException {
+        boolean found = false;
+        while(!found && sc.hasNextLine())
+        {
+            found = model.getActualword().equals(sc.nextLine());
+        }
+        return found;
+    }
+
+    protected void isValidWord() throws FileNotFoundException {
+        Scanner scanner = new Scanner(System.in);
+        File file = new File("common.txt");
+        Scanner sc = null;
+        sc = new Scanner(file);
+        if(isWordCorrect(scanner, sc))
+        {
+            model.change();
+        }
+        else
+        {
+            //view
+        }
+
+    }
+
+    protected WGView getView(){return view;}
 
     protected void change() throws FileNotFoundException {
         model.change();
@@ -27,10 +56,6 @@ public class WGController {
     protected void setColors()
     {
         int[]colors = new int[5];
-        for(int i = 0; i < colors.length; i++)
-        {
-            colors[i] = 0;
-        }
         model.setColors(colors);}
 
     protected void initialise() throws FileNotFoundException {

@@ -51,30 +51,10 @@ public class WGModel extends Observable {
         notifyObservers();
     }
 
-    private boolean isWordCorrect(Scanner scanner, Scanner sc) throws FileNotFoundException {
-        while(!getActualword().equals(sc.nextLine()) && sc.hasNextLine())
-        {
-            //continue
-        }
-        return sc.hasNextLine();
-    }
+
 
     protected void change() throws FileNotFoundException {
-        while(!isValidword()) {
-            Scanner scanner = new Scanner(System.in);
-            File file = new File("common.txt");
-            Scanner sc = new Scanner(file);
-            setValidword(isWordCorrect(scanner, sc));
-            if(!isValidword())
-            {
-                //try another word
-                //How to do that ?
-                //display message
-                //use those two ?
-                setChanged();
-                notifyObservers();
-            }
-        }
+       //actual word send by the controller
         if(getActualword().equals(getWord()))
         {
             setNewgame(true);

@@ -19,17 +19,28 @@ public class GridView {
 
     private void addLabelsView()
     {
+        GridBagConstraints gbc = new GridBagConstraints();
+        int colum = 0;
         for(int i = 0; i < letterscase.length; i++)
         {
+            gbc.gridx = i;
+            gbc.gridy = colum;
             letterscase[i] = new JLabel("",SwingConstants.CENTER);
-            letterscase[i].setBackground(Color.GRAY);
-            letterscase[i].setMaximumSize(new Dimension(10,10));
+            letterscase[i].setBackground(Color.WHITE);
+            letterscase[i].setMaximumSize(new Dimension(8,8));
             letterscase[i].setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,2,true));
             letterscase[i].setOpaque(true);
             letterscase[i].setHorizontalAlignment(SwingConstants.CENTER);
-            gridpanel.add(letterscase[i]);
+            letterscase[i].setText(Integer.toString(i));
+            gridpanel.add(letterscase[i], gbc);
+            if(i%6 == 0)
+            {
+                colum++;
+            }
         }
     }
+
+
 
     public JPanel getPanel()
     {
