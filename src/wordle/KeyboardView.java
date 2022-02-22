@@ -64,14 +64,14 @@ public class KeyboardView {
         switch (label)
         {
             case "Enter":
-                if (view.getModel().getActualword() != null && view.getModel().getActualword().length() < 5) {
+                if (view.getModel().getActualword() != "" && view.getModel().getActualword().length() < 5) {
                     key.addActionListener((ActionEvent e) -> {
                         //add error line
                         //sleep for two second
                     });
                 }
                 else {
-                    if (view.getModel().getActualword() != null && view.getModel().getActualword().length() == 5) {
+                    if (view.getModel().getActualword() != "" && view.getModel().getActualword().length() == 5) {
                         key.addActionListener((ActionEvent e) -> {
                             try {
                                 view.getController().change();
@@ -84,7 +84,7 @@ public class KeyboardView {
                 break;
             case "⌫":
                 key.addActionListener((ActionEvent e) -> {
-                    if(view.getModel().getActualword() != null && view.getModel().getActualword().length() > 0)
+                    if(view.getModel().getActualword() != "" && view.getModel().getActualword().length() > 0)
                     {
                         view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
                         view.getGrid().changeLabel(view.getModel().getActualword().length(),
@@ -95,7 +95,7 @@ public class KeyboardView {
                 break;
             default:
                 key.addActionListener((ActionEvent e) -> {
-                    if(view.getModel().getActualword() != null && view.getModel().getActualword().length() < 5)
+                    if(view.getModel().getActualword() != "" && view.getModel().getActualword().length() < 5)
                     {
                         view.getModel().setActualword(view.getModel().getActualword() + label.toLowerCase(Locale.ROOT));
                         view.getGrid().changeLabel(view.getModel().getActualword().length(),

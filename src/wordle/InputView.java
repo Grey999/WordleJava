@@ -20,7 +20,7 @@ public class InputView implements Observer{
     private final JLabel textondisplay;
 
 
-    //must handle: randomword, endgame screen
+    //must handle: flags, endgame screen
     //smaller panel in front of the game one
     //first frame visible at the beginning
     public InputView(WGModel model, WGController controller)
@@ -37,7 +37,7 @@ public class InputView implements Observer{
         this.yes  = new JButton("Yes");
         this.no = new JButton("No");
         this.newgame = new JButton("New Game");
-        this.textondisplay = new JLabel();
+        this.textondisplay = new JLabel("", SwingConstants.CENTER);
         createPanel();
         frame.setContentPane(panel);
         frame.pack();
@@ -64,16 +64,11 @@ public class InputView implements Observer{
 
         panel.add(panelnorth, BorderLayout.NORTH);
         panel.add(panelsouth,BorderLayout.SOUTH);
+        panelsouth.add(new JPanel().add(yes), BorderLayout.WEST);
+        panelsouth.add(new JPanel().add(no), BorderLayout.EAST);
 
 
         panelnorth.add(textondisplay,BorderLayout.CENTER);
-
-
-        panelsouth.add(yes, BorderLayout.WEST);
-
-
-        panelsouth.add(no,BorderLayout.EAST);
-
 
         panelsouth.add(newgame,BorderLayout.CENTER);
         newgame.setVisible(false);

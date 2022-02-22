@@ -10,7 +10,7 @@ public class GridView {
     public GridView(WGView view)
     {
         this.view = view;
-        letterscase = new JLabel[28];
+        letterscase = new JLabel[25];
         gridpanel = new JPanel();
         gridpanel.setLayout(new GridLayout(6,5));
         gridpanel.setPreferredSize(new Dimension(400,400));
