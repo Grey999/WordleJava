@@ -7,7 +7,7 @@ import java.awt.*;
 public class InputView implements Observer{
 
     //Create method for the other flags (reread project paper)
-    private static final Dimension PANEL_SIZE = new Dimension(600,600);
+    private static final Dimension PANEL_SIZE = new Dimension(250,250);
     private final JButton yes;
     private final JButton no;
     private final JButton newgame;
@@ -29,7 +29,7 @@ public class InputView implements Observer{
         this.model = model;
         this.setFrame(new JFrame("Play Mode"));
         getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        getFrame().setSize(700,700);
+        getFrame().setSize(300,300);
         getFrame().setResizable(false);
         getFrame().setLocationRelativeTo(null);
         getFrame().setVisible(true);
@@ -53,15 +53,16 @@ public class InputView implements Observer{
     private void createPanel()
     {
         this.panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel panelnorth = new JPanel();
         panelnorth.setLayout(new BorderLayout());
-        panelnorth.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        panelnorth.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 
         JPanel panelsouth = new JPanel();
         panelsouth.setLayout(new BorderLayout());
-        panelsouth.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        panelsouth.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 
-        panel.add(panelnorth, BorderLayout.CENTER);
+        panel.add(panelnorth, BorderLayout.NORTH);
         panel.add(panelsouth,BorderLayout.SOUTH);
 
 
