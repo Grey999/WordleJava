@@ -18,16 +18,19 @@ public class WGCli {
                 System.out.println("Enter you word:");
                 prompt();
                 model.setActualword(sc.next());
+                //model.setActualword(removeLastChar(model.getActualword()));
                 if (model.getActualword().equals("display") && model.isDebbug()) {
                     System.out.println(model.getWord());
                     prompt();
                     model.setActualword(sc.next());
+                    //model.setActualword(removeLastChar(model.getActualword()));
                 }
                 if (model.isMessagerror()) {
                     while (!isValidWord()) {
                         System.out.println("Invalid word. Try again");
                         prompt();
                         model.setActualword(sc.next());
+                        //model.setActualword(removeLastChar(model.getActualword()));
                     }
                 }
                 model.change();
@@ -36,6 +39,12 @@ public class WGCli {
             newgame();
         }
         System.out.println("Thank you for playing with us!");
+    }
+
+    private static String removeLastChar(String s)
+    {
+        //returns the string after removing the last character
+        return s.substring(0, s.length() - 1);
     }
 
     private static void applyColors()
@@ -51,10 +60,11 @@ public class WGCli {
                 default -> System.out.print("Houston, got a problem");
             }
         }
+        System.out.println();
     }
 
     private static boolean isValidWord() throws FileNotFoundException {
-        File file = new File("C:\\Users\\colin\\Wordle\\src\\wordle\\common.txt");
+        File file = new File("common.txt");
         Scanner sc;
         sc = new Scanner(file);
         return isWordCorrect(sc);
@@ -77,8 +87,7 @@ public class WGCli {
                 "██║ █╗ ██║██║   ██║██████╔╝██║  ██║██║     █████╗  \n" +
                 "██║███╗██║██║   ██║██╔══██╗██║  ██║██║     ██╔══╝  \n" +
                 "╚███╔███╔╝╚██████╔╝██║  ██║██████╔╝███████╗███████╗\n" +
-                " ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝\n" +
-                "                                                   \n");
+                " ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝\n" );
         System.out.println(" Welcome to Wordle ! \n Hope you enjoy your time with us. \n Are you ready Player One?");
         System.out.println(" Codded by Thanatos ");
         System.out.println(" This game present different option: \n First, you can choose to have a random word" +

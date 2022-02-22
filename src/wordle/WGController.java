@@ -27,7 +27,7 @@ public class WGController {
 
     protected void isValidWord() throws FileNotFoundException {
         Scanner scanner = new Scanner(System.in);
-        File file = new File("C:\\Users\\colin\\Wordle\\src\\wordle\\common.txt");
+        File file = new File("common.txt");
         Scanner sc = null;
         sc = new Scanner(file);
         if(isWordCorrect(scanner, sc))

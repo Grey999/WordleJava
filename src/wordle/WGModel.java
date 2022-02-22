@@ -31,7 +31,7 @@ public class WGModel extends Observable {
     }
 
     protected void initialise() throws FileNotFoundException {
-        File file = new File("C:\\Users\\colin\\Wordle\\src\\wordle\\words.txt");
+        File file = new File("words.txt");
         Scanner sc = new Scanner(file);
         int number;
         if(randomword) {
