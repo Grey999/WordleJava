@@ -53,10 +53,17 @@ public class WGCli {
         {
             switch (model.getColors()[i]) {
                 case 0 ->
-                        //see for the change of colors
-                        System.out.print(0);
-                case 1 -> System.out.print(1);
-                case 2 -> System.out.print(2);
+                        System.out.print(model.getActualword().charAt(i));
+                case 1 -> {
+                    System.out.print(CColor.YELLOW_BOLD);
+                    System.out.print(model.getActualword().charAt(i));
+                    System.out.print(CColor.RESET);
+                }
+                case 2 -> {
+                    System.out.print(CColor.RED);
+                    System.out.print(model.getActualword().charAt(i));
+                    System.out.print(CColor.RESET);
+                }
                 default -> System.out.print("Houston, got a problem");
             }
         }
@@ -81,6 +88,7 @@ public class WGCli {
 
     private static void mainScreen()
     {
+        System.out.print(CColor.YELLOW);
         System.out.println("\n" +
                 "██╗    ██╗ ██████╗ ██████╗ ██████╗ ██╗     ███████╗\n" +
                 "██║    ██║██╔═══██╗██╔══██╗██╔══██╗██║     ██╔════╝\n" +
@@ -88,7 +96,8 @@ public class WGCli {
                 "██║███╗██║██║   ██║██╔══██╗██║  ██║██║     ██╔══╝  \n" +
                 "╚███╔███╔╝╚██████╔╝██║  ██║██████╔╝███████╗███████╗\n" +
                 " ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝\n" );
-        System.out.println(" Welcome to Wordle ! \n Hope you enjoy your time with us. \n Are you ready Player One?");
+        System.out.print(CColor.RESET);
+        System.out.print(" Welcome to Wordle ! \n Hope you enjoy your time with us. \n Are you ready Player One ?");
         System.out.println(" Codded by Thanatos ");
         System.out.println(" This game present different option: \n First, you can choose to have a random word" +
                 "or to use the pre-selected word (I'm not gonna give it to you :) ) \n" +
@@ -155,11 +164,49 @@ public class WGCli {
         if(model.isWin())
         {
             System.out.println("Congratulation ! You won !");
+            System.out.print(CColor.YELLOW_BRIGHT);
+            System.out.println("                              .''.       \n" +
+                    "       .''.      .        *''*    :_\\/_:     . \n" +
+                    "      :_\\/_:   _\\(/_  .:.*_\\/_*   : /\\ :  .'.:.'.\n" +
+                    "  .''.: /\\ :   ./)\\   ':'* /\\ * :  '..'.  -=:o:=-\n" +
+                    " :_\\/_:'.:::.    ' *''*    * '.\\'/.' _\\(/_'.':'.'\n" +
+                    " : /\\ : :::::     *_\\/_*     -= o =-  /)\\    '  *\n" +
+                    "  '..'  ':::'     * /\\ *     .'/.\\'.   '\n" +
+                    "      *            *..*         :\n" +
+                    "       *\n" +
+                    "        *");
         }
         else
         {
             System.out.println("I'm sorry, you lost...");
+            System.out.print(CColor.RED);
+            System.out.println("┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼\n" +
+                    "███▀▀▀██┼███▀▀▀███┼███▀█▄█▀███┼██▀▀▀\n" +
+                    "██┼┼┼┼██┼██┼┼┼┼┼██┼██┼┼┼█┼┼┼██┼██┼┼┼\n" +
+                    "██┼┼┼▄▄▄┼██▄▄▄▄▄██┼██┼┼┼▀┼┼┼██┼██▀▀▀\n" +
+                    "██┼┼┼┼██┼██┼┼┼┼┼██┼██┼┼┼┼┼┼┼██┼██┼┼┼\n" +
+                    "███▄▄▄██┼██┼┼┼┼┼██┼██┼┼┼┼┼┼┼██┼██▄▄▄\n" +
+                    "┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼\n" +
+                    "███▀▀▀███┼▀███┼┼██▀┼██▀▀▀┼██▀▀▀▀██▄┼\n" +
+                    "██┼┼┼┼┼██┼┼┼██┼┼██┼┼██┼┼┼┼██┼┼┼┼┼██┼\n" +
+                    "██┼┼┼┼┼██┼┼┼██┼┼██┼┼██▀▀▀┼██▄▄▄▄▄▀▀┼\n" +
+                    "██┼┼┼┼┼██┼┼┼██┼┼█▀┼┼██┼┼┼┼██┼┼┼┼┼██┼\n" +
+                    "███▄▄▄███┼┼┼─▀█▀┼┼─┼██▄▄▄┼██┼┼┼┼┼██▄\n" +
+                    "┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼\n" +
+                    "┼┼┼┼┼┼┼┼██┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼██┼┼┼┼┼┼┼┼┼\n" +
+                    "┼┼┼┼┼┼████▄┼┼┼▄▄▄▄▄▄▄┼┼┼▄████┼┼┼┼┼┼┼\n" +
+                    "┼┼┼┼┼┼┼┼┼▀▀█▄█████████▄█▀▀┼┼┼┼┼┼┼┼┼┼\n" +
+                    "┼┼┼┼┼┼┼┼┼┼┼█████████████┼┼┼┼┼┼┼┼┼┼┼┼\n" +
+                    "┼┼┼┼┼┼┼┼┼┼┼██▀▀▀███▀▀▀██┼┼┼┼┼┼┼┼┼┼┼┼\n" +
+                    "┼┼┼┼┼┼┼┼┼┼┼██┼┼┼███┼┼┼██┼┼┼┼┼┼┼┼┼┼┼┼\n" +
+                    "┼┼┼┼┼┼┼┼┼┼┼█████▀▄▀█████┼┼┼┼┼┼┼┼┼┼┼┼\n" +
+                    "┼┼┼┼┼┼┼┼┼┼┼┼███████████┼┼┼┼┼┼┼┼┼┼┼┼┼\n" +
+                    "┼┼┼┼┼┼┼┼▄▄▄██┼┼█▀█▀█┼┼██▄▄▄┼┼┼┼┼┼┼┼┼\n" +
+                    "┼┼┼┼┼┼┼┼▀▀██┼┼┼┼┼┼┼┼┼┼┼██▀▀┼┼┼┼┼┼┼┼┼\n" +
+                    "┼┼┼┼┼┼┼┼┼┼▀▀┼┼┼┼┼┼┼┼┼┼┼▀▀┼┼┼┼┼┼┼┼┼┼┼\n" +
+                    "┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼\n");
         }
+        System.out.print(CColor.RESET);
         System.out.println("Do you want to play again ?(y/n)");
         prompt();
         String input = sc.next();
