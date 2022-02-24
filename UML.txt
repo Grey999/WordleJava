@@ -12,9 +12,9 @@
 
 [WGCli]->[WGModel]
 
-[VGView]^[Observer]
+[WGView]^[Observer]
 [InputView]^[Observer]
-[VGModel]^[Observable]
+[WGModel]^[Observable]
 
 //Definition ViewClass
 [WGView| +WGModel model;+WGController controller;+JFrame frame;+Jpanel panel; +GridView grid;+KeyBoardView keyboard|+createControls();+createPanel();-update()]
@@ -25,7 +25,7 @@
 
 //Definition Controller and Model
 [WGController|+WGModel model;+WGView view|+setView();+change();+setRandom(boolean random); +setDebbug(boolean debbug); +setError(boolean error);+setColors();+initialise()]
-[WGModel|+ boolean validword;+boolean display;+boolean randomword;+boolean debbug; +boolean messageerror; +boolean newgame;+boolean win;+String word;+int array colors;+String actualword;+int guess|-addObserver();+initialise();+isWordCorrect();+change();+changeColors()]
+[WGModel|+boolean display;+boolean randomword;+boolean debbug; +boolean messageerror; +boolean newgame;+boolean win;+String word;+int array colors;+String actualword;+int guess|-addObserver();+initialise();+isWordCorrect();+change();+changeColors()]
 
 //Definition WGCli with a main function for the CLI mode
 [WGCli|+WGModel model| -main(String array args); +mainScreen(); +prompt(); +initialiseWordle()|+setUpFlag(int number, String answer)]
