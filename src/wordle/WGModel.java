@@ -9,6 +9,7 @@ import java.util.Observable;
 public class WGModel extends Observable {
     private boolean validword;
     private boolean display;
+    static final double GUESS=6;
 
     //FLAGS
     private boolean randomword;
@@ -65,7 +66,7 @@ public class WGModel extends Observable {
         {
             changeColors();
             setGuess(getGuess() + 1);
-            if(getGuess() == 6)
+            if(getGuess() == GUESS)
             {
                 setWin(false);
                 setNewgame(true);
@@ -75,6 +76,29 @@ public class WGModel extends Observable {
         setChanged();
         notifyObservers();
 
+    }
+
+    protected boolean isValidWord() throws FileNotFoundException {
+        File file = new File("common.txt");
+        Scanner sc = new Scanner(file);
+        boolean found = isWordCorrect(sc);
+        if(!found)
+        {
+            file = new File("words.txt");
+            sc = new Scanner(file);
+            found = isWordCorrect(sc);
+        }
+        return found;
+    }
+
+    private  boolean isWordCorrect(Scanner sc) throws FileNotFoundException {
+        boolean found = false;
+        while(!found && sc.hasNextLine())
+        {
+            found = getActualword().equals(sc.nextLine());
+        }
+        sc.close();
+        return found;
     }
 
     private void changeColors()
@@ -99,14 +123,6 @@ public class WGModel extends Observable {
         }
     }
     public int getColors(int colum, int line) { return getColors()[colum+line];}
-
-    public boolean isValidword() {
-        return validword;
-    }
-
-    public void setValidword(boolean validword) {
-        this.validword = validword;
-    }
 
     public boolean isWin(){return win; }
 

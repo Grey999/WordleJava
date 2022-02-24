@@ -26,7 +26,7 @@ public class WGCli {
                     //model.setActualword(removeLastChar(model.getActualword()));
                 }
                 if (model.isMessagerror()) {
-                    while (!isValidWord()) {
+                    while (!model.isValidWord()) {
                         System.out.println("Invalid word. Try again");
                         prompt();
                         model.setActualword(sc.next());
@@ -73,29 +73,6 @@ public class WGCli {
         System.out.println();
     }
 
-    //problem with one of them
-    private static boolean isValidWord() throws FileNotFoundException {
-        File file = new File("common.txt");
-        Scanner sc = new Scanner(file);
-        boolean found = isWordCorrect(sc);
-        if(!found)
-        {
-            file = new File("words.txt");
-            sc = new Scanner(file);
-            found = isWordCorrect(sc);
-        }
-        return found;
-    }
-
-    private static boolean isWordCorrect(Scanner sc) throws FileNotFoundException {
-        boolean found = false;
-        while(!found && sc.hasNextLine())
-        {
-            found = model.getActualword().equals(sc.nextLine());
-        }
-        sc.close();
-        return found;
-    }
 
     private static void mainScreen()
     {
