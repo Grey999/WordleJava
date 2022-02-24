@@ -9,10 +9,10 @@ import java.io.FileNotFoundException;
 import java.util.Locale;
 
 public class KeyboardView {
-    private JButton[] keyboard;
-    private JPanel keyboardpanel;
-    private JPanel keygrid;;
-    private WGView view;
+    private final JButton[] keyboard;
+    private final JPanel keyboardpanel;
+    private final JPanel keygrid;;
+    private final WGView view;
 
     public KeyboardView(WGView view)
     {
@@ -51,7 +51,7 @@ public class KeyboardView {
     {
         //review conditions for the keyboard
         JButton key = new JButton(label);
-        if(label == "Enter")
+        if(label.equals("Enter"))
         {
             key.setFont(new Font(Font.MONOSPACED, Font.BOLD, 40));
         }
@@ -67,6 +67,8 @@ public class KeyboardView {
                 if (!view.getModel().getActualword().equals("") && view.getModel().getActualword().length() < 5) {
                     key.addActionListener((ActionEvent e) -> {
                         //add error line
+                        //new panel only for error ???
+                        //How to manage the disposition ?
                         //sleep for two second
                     });
                 }
@@ -117,8 +119,8 @@ public class KeyboardView {
     private void addKeyToGrid()
     {
         int length = keyboard.length;
-        for(int i = 0; i < length; i++) {
-            keygrid.add(keyboard[i]);
+        for (JButton jButton : keyboard) {
+            keygrid.add(jButton);
         }
     }
 

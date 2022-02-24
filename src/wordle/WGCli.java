@@ -52,15 +52,18 @@ public class WGCli {
         for(int i = 0; i < 5; i++)
         {
             switch (model.getColors()[i]) {
-                case 0 ->
-                        System.out.print(model.getActualword().charAt(i));
+                case 0 -> {
+                    System.out.print(CColor.RED_BOLD);
+                    System.out.print(model.getActualword().charAt(i));
+                    System.out.print(CColor.RESET);
+                }
                 case 1 -> {
-                    System.out.print(CColor.YELLOW_BOLD);
+                    System.out.print(CColor.GREEN_BOLD);
                     System.out.print(model.getActualword().charAt(i));
                     System.out.print(CColor.RESET);
                 }
                 case 2 -> {
-                    System.out.print(CColor.RED);
+                    System.out.print(CColor.YELLOW_BOLD);
                     System.out.print(model.getActualword().charAt(i));
                     System.out.print(CColor.RESET);
                 }
@@ -70,11 +73,18 @@ public class WGCli {
         System.out.println();
     }
 
+    //problem with one of them
     private static boolean isValidWord() throws FileNotFoundException {
         File file = new File("common.txt");
-        Scanner sc;
-        sc = new Scanner(file);
-        return isWordCorrect(sc);
+        Scanner sc = new Scanner(file);
+        boolean found = isWordCorrect(sc);
+        if(!found)
+        {
+            file = new File("words.txt");
+            sc = new Scanner(file);
+            found = isWordCorrect(sc);
+        }
+        return found;
     }
 
     private static boolean isWordCorrect(Scanner sc) throws FileNotFoundException {
@@ -83,19 +93,22 @@ public class WGCli {
         {
             found = model.getActualword().equals(sc.nextLine());
         }
+        sc.close();
         return found;
     }
 
     private static void mainScreen()
     {
         System.out.print(CColor.YELLOW);
-        System.out.println("\n" +
-                "██╗    ██╗ ██████╗ ██████╗ ██████╗ ██╗     ███████╗\n" +
-                "██║    ██║██╔═══██╗██╔══██╗██╔══██╗██║     ██╔════╝\n" +
-                "██║ █╗ ██║██║   ██║██████╔╝██║  ██║██║     █████╗  \n" +
-                "██║███╗██║██║   ██║██╔══██╗██║  ██║██║     ██╔══╝  \n" +
-                "╚███╔███╔╝╚██████╔╝██║  ██║██████╔╝███████╗███████╗\n" +
-                " ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝\n" );
+        System.out.println("""
+
+                ██╗    ██╗ ██████╗ ██████╗ ██████╗ ██╗     ███████╗
+                ██║    ██║██╔═══██╗██╔══██╗██╔══██╗██║     ██╔════╝
+                ██║ █╗ ██║██║   ██║██████╔╝██║  ██║██║     █████╗ \s
+                ██║███╗██║██║   ██║██╔══██╗██║  ██║██║     ██╔══╝ \s
+                ╚███╔███╔╝╚██████╔╝██║  ██║██████╔╝███████╗███████╗
+                 ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝
+                """);
         System.out.print(CColor.RESET);
         System.out.print(" Welcome to Wordle ! \n Hope you enjoy your time with us. \n Are you ready Player One ?");
         System.out.println(" Codded by Thanatos ");

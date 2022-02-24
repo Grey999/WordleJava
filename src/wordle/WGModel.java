@@ -85,13 +85,13 @@ public class WGModel extends Observable {
             getColors()[c] = 0;
         }
         for (int i = 0; i < 5; i++) {
-            if(actualword.indexOf(i) == word.indexOf(i))
+            if(actualword.charAt(i) == word.charAt(i))
             {
                 getColors()[i] = 1;
             }
             else {
                 for (int j = i + 1; j < 5; j++) {
-                    if (actualword.indexOf(i) == word.indexOf(j)) {
+                    if (actualword.charAt(i) == word.charAt(j)) {
                         getColors()[i] = 2;
                     }
                 }

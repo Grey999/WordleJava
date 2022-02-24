@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class WGController {
-    private WGModel model;
+    private final WGModel model;
     private WGView view;
 
     public WGController(WGModel model) {
@@ -47,11 +47,8 @@ public class WGController {
         model.change();
     }
 
-    protected void setRandom(boolean random)
-    {
-        model.setRandomword(random);
-    }
-    protected void setDebbug(boolean debbug){model.setDebbug(debbug);}
+    protected void setRandom(boolean random) {model.setRandomword(random);}
+    protected void setDebbug(boolean debbug) {model.setDebbug(debbug);}
     protected void setError(boolean error){model.setMessagerror(error);}
     protected void setColors()
     {

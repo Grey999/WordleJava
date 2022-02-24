@@ -76,7 +76,6 @@ public class WGView implements Observer
                 getGrid().changeBackgroundColor(i, getModel().getGuess(), getModel().getColors(i, getModel().getGuess()));
             }
         }
-        //voir pour le changement de label
         getFrame().repaint();
     }
     
