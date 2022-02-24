@@ -7,7 +7,6 @@ import java.util.Observable;
 
 
 public class WGModel extends Observable {
-    private boolean validword;
     private boolean display;
     static final double GUESS=6;
 
@@ -45,6 +44,7 @@ public class WGModel extends Observable {
         for (int i = 0; i < number; i++) {
             setWord(sc.nextLine());
         }
+        //don't fortget to erase that line
         System.out.println("The word is: "+word);
         colors = new int[5];
         setActualword("");

@@ -9,32 +9,36 @@ public class WGCli {
     //build the entire CLI version using only controller and model
     private static WGModel model;
     private static boolean endgame;
+    protected static int[] letters;
     public static void main(String[] args) throws FileNotFoundException {
+        //declaration variable and rules of the game
         mainScreen();
+        letters = new int[26];
         Scanner sc = new Scanner(System.in);
+        //first loop to play as many game as you want
         while(!endgame) {
+            //initialisation of the model
             initialiseWordle();
-            while (model.getGuess() < 6 || !model.isNewgame()) {
+            //second loop to play a game
+            while (model.getGuess() < 6 && !model.isNewgame()) {
                 System.out.println("Enter you word:");
                 prompt();
                 model.setActualword(sc.next());
-                //model.setActualword(removeLastChar(model.getActualword()));
                 if (model.getActualword().equals("display") && model.isDebbug()) {
                     System.out.println(model.getWord());
                     prompt();
                     model.setActualword(sc.next());
-                    //model.setActualword(removeLastChar(model.getActualword()));
                 }
                 if (model.isMessagerror()) {
                     while (!model.isValidWord()) {
                         System.out.println("Invalid word. Try again");
                         prompt();
                         model.setActualword(sc.next());
-                        //model.setActualword(removeLastChar(model.getActualword()));
                     }
                 }
                 model.change();
                 applyColors();
+                displayletters();
             }
             newgame();
         }
@@ -45,6 +49,61 @@ public class WGCli {
     {
         //returns the string after removing the last character
         return s.substring(0, s.length() - 1);
+    }
+
+    private static void displayletters()
+    {
+        System.out.println("The letter you haven't use yet: ");
+        displaytheletter(0);
+        System.out.println();
+        System.out.println("The letters that belong to the word and are in the right place:");
+        System.out.print(CColor.GREEN);
+        displaytheletter(1);
+        System.out.println();
+        System.out.print(CColor.RESET);
+        System.out.println("The letters that belong to the word but are not in the right place: ");
+        System.out.print(CColor.YELLOW);
+        displaytheletter(3);
+        System.out.println();
+        System.out.print(CColor.RESET);
+        System.out.print("The letter that doesn't belong tot the word");
+        System.out.print(CColor.RED);
+        displaytheletter(2);
+        System.out.println();
+        System.out.print(CColor.RESET);
+    }
+
+    //review this part
+    private static void displaytheletter(int value)
+    {
+        char current;
+        for(int i =0; i < letters.length; i++)
+        {
+            if(letters[i] == value)
+            {
+                current = (char)(i+60);
+                System.out.print(current);
+            }
+        }
+    }
+
+    private static void changeletters()
+    {
+        int current;
+        for(int i = 0; i < model.getActualword().length(); i++)
+        {
+            current = model.getActualword().charAt(i);
+            if(letters[current] == 0)
+            {
+                if(model.getColors()[i] != 0) {
+                    letters[current] = model.getColors()[i];
+                }
+                else
+                {
+                    letters[current] = 3;
+                }
+            }
+        }
     }
 
     private static void applyColors()
@@ -150,6 +209,9 @@ public class WGCli {
 
     private static void newgame()
     {
+        System.out.println();
+        System.out.println();
+        System.out.println();
         Scanner sc = new Scanner(System.in);
         if(model.isWin())
         {
@@ -206,6 +268,5 @@ public class WGCli {
         }
         endgame = input.equals("n");
     }
-
 
 }
