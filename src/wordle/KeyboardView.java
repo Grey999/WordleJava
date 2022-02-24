@@ -42,10 +42,7 @@ public class KeyboardView {
 
     }
 
-    public JPanel getPanel()
-    {
-        return keyboardpanel;
-    }
+
 
     private void createKeys(String label, int i)
     {
@@ -127,5 +124,9 @@ public class KeyboardView {
     public JButton[] getKeyBoard()
     {
         return keyboard;
+    }
+    public JPanel getPanel()
+    {
+        return keyboardpanel;
     }
 }

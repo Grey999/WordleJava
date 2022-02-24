@@ -16,29 +16,8 @@ public class WGController {
         this.view = view;
     }
 
-    private boolean isWordCorrect(Scanner scanner, Scanner sc) throws FileNotFoundException {
-        boolean found = false;
-        while(!found && sc.hasNextLine())
-        {
-            found = model.getActualword().equals(sc.nextLine());
-        }
-        return found;
-    }
-
-    protected void isValidWord() throws FileNotFoundException {
-        Scanner scanner = new Scanner(System.in);
-        File file = new File("common.txt");
-        Scanner sc = null;
-        sc = new Scanner(file);
-        if(isWordCorrect(scanner, sc))
-        {
-            model.change();
-        }
-        else
-        {
-            //view
-        }
-
+    protected boolean isValidWord() throws FileNotFoundException {
+        return model.isValidWord();
     }
 
     protected WGView getView(){return view;}

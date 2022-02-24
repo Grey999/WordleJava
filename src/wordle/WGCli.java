@@ -1,8 +1,6 @@
 package wordle;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
 public class WGCli {
@@ -43,12 +41,6 @@ public class WGCli {
             newgame();
         }
         System.out.println("Thank you for playing with us!");
-    }
-
-    private static String removeLastChar(String s)
-    {
-        //returns the string after removing the last character
-        return s.substring(0, s.length() - 1);
     }
 
     private static void displayletters()
@@ -156,7 +148,7 @@ public class WGCli {
         System.out.println(" Ready to crack the word ?\n");
     }
 
-    private static void inputFlag()
+    private static void inputFlags()
     {
         System.out.println("Do you want to have a random word ?(y/n)");
         prompt();
@@ -203,7 +195,7 @@ public class WGCli {
 
     private static void initialiseWordle() throws FileNotFoundException {
         model = new WGModel();
-        inputFlag();
+        inputFlags();
         model.initialise();
     }
 
