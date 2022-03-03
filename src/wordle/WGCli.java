@@ -138,8 +138,8 @@ public class WGCli {
                  ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝
                 """);
         System.out.print(CColor.RESET);
-        System.out.print(" Welcome to Wordle ! \n Hope you enjoy your time with us. \n Are you ready Player One ?");
-        System.out.println(" Codded by Thanatos ");
+        System.out.println(" Welcome to Wordle ! \n Hope you enjoy your time with us. \n Are you ready Player One ?");
+        System.out.println(" Coded by Thanatos ");
         System.out.println(" This game present different option: \n First, you can choose to have a random word" +
                 "or to use the pre-selected word (I'm not gonna give it to you :) ) \n" +
                 " Then, you can choose to have a display mode: the selected word will be prompt on the console when you" +

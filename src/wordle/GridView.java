@@ -10,7 +10,7 @@ public class GridView {
     public GridView(WGView view)
     {
         this.view = view;
-        letterscase = new JLabel[25];
+        letterscase = new JLabel[30];
         gridpanel = new JPanel();
         gridpanel.setLayout(new GridLayout(6,5));
         gridpanel.setPreferredSize(new Dimension(400,400));
@@ -50,7 +50,7 @@ public class GridView {
 
     protected void changeLabel(int colum, int line, String letter)
     {
-        letterscase[colum+line].setText(letter);
+        letterscase[colum+line-1].setText(letter);
     }
 
     protected void changeBackgroundColor(int colum, int line, int state)

@@ -24,17 +24,11 @@ public class WGView implements Observer
         this.model = model;
         this.controller = controller;
         setGrid(new GridView(this));
-
-
         setFrame(new JFrame("Wordle"));
         getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         setKeyboard(new KeyboardView(this));
-
         createControls();
-
         controller.setView(this);
-
         model.addObserver(this);
         update(model,null);
     }
@@ -64,7 +58,10 @@ public class WGView implements Observer
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(Color.black);
-
+        JLabel title = new JLabel("WORDLE", SwingConstants.CENTER);
+        title.setBackground(Color.WHITE);
+        title.setSize(new Dimension(40,40));
+        panel.add(title);
         panel.add(getGrid().getPanel());
         panel.add(getKeyboard().getPanel());
     }
