@@ -22,24 +22,23 @@
 
 [WGView]^[Observer]
 [InputView]^[Observer]
-[WGModel]^[Observable]
 
 //Definition ViewClass
-[WGView| +WGModel model;+WGController controller;+JFrame frame;+Jpanel panel; +GridView grid;+KeyBoardView keyboard|+createControls();+createPanel();-update()]
+[WGView| -WGModel model;-WGController controller;-JFrame frame;-Jpanel panel; -GridView grid;-KeyBoardView keyboard|-createControls();-createPanel();+update()]
 
-[KeyBoardView|+JButton array keyboard;+JPanel keyboardpanel;+JPanel keygrid;+WGView view|+createKeys(String label);+removeLastChar(String s);+addKeyToGrid()]
+[KeyBoardView|-JButton array keyboard;-JPanel keyboardpanel;-JPanel keygrid;-WGView view|-createKeys(String label);-removeLastChar(String s);-addKeyToGrid()]
 
-[GridView|+JLabel array lettercase;+JPanel gridpanel;+WGView view|+addLabelsView();+changeLabel(int colum, int line, String label);+changeBackgroundColor(int colum, int line, int state)]
+[GridView|-JLabel array lettercase;-JPanel gridpanel;-WGView view|-addLabelsView();-changeLabel(int colum, int line, String label);-changeBackgroundColor(int colum, int line, int state)]
 
-[InputView|+JButton yes;+JButton no;+JButton newgame;+WGController controller; +WGModel model; +JFrame frame; +TextArea textondisplay|+createPanel();+displayView(int viewnumber);+endgame();+randomWord(boolean random); +debbugMode(boolean debbug); +displayError(boolean error); -startGame(); -update(Observable o, Object arg)]
+[InputView|-JButton yes;-JButton no;-JButton newgame;-WGController controller; -WGModel model; -JFrame frame; -TextArea textondisplay|-createPanel();-displayView(int viewnumber);-endgame();-randomWord(boolean random); -debbugMode(boolean debbug); -displayError(boolean error); +startGame(); +update(Observable o, Object arg)]
 
 //Definition Controller and Model
-[WGController|+WGModel model;+WGView view|+change();+isValidWord();+setRandom(boolean random); +setDebbug(boolean debbug); +setError(boolean error);+setColors();+initialise()]
+[WGController|-WGModel model;-WGView view|-change();-isValidWord();-initialise()]
 
-[WGModel|+boolean display;+boolean randomword;+boolean debbug; +boolean messagerror; +boolean newgame;+boolean win;+String word;+int array colors;+String actualword;+int guess|-addObserver();+initialise();+isValidWord();+isWordCorrect();+change();+changeColors()]
+[WGModel|-boolean display;-boolean randomword;-boolean debbug; -boolean messagerror; -boolean newgame;-boolean win;-String word;-int array colors;-String actualword;-int guess|+addObserver();-initialise();-isValidWord();-isWordCorrect();-change();-changeColors()]
 
 //Definition WGCli with a main function for the CLI mode
-[WGCli|+WGModel model;boolean endgame;int array letters| -main(String array args); +displayletters();+displaytheletter();+changeletters();+applyColors(); +mainScreen(); +prompt(); +inputFlags();+getInput();+initialiseWordle()|+setUpFlag(int number, String answer);+newgame()]
+[WGCli|-WGModel model;-boolean endgame;-int array letters| +main(String array args); -displayletters();-displaytheletter();-changeletters();-applyColors(); -mainScreen(); -prompt(); -inputFlags();-getInput();-initialiseWordle()|-setUpFlag(int number, String answer);-newgame()]
 
 //Definition Main class for GUI mode
-[Main|-main();-createAndShowGUI()]
+[Main|+main();+createAndShowGUI()]
