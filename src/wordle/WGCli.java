@@ -45,9 +45,11 @@ public class WGCli {
         }
         for(int i = 0; i < model.getActualword().length(); i++)
         {
-            if(model.getActualword().charAt(i) < 65 || model.getActualword().charAt(i) > 91 && model.getActualword().charAt(i) < 97 || model.getActualword().charAt(i) > 123)
+            int current = model.getActualword().charAt(i);
+            if(current < 65 || current > 91 && current < 97 || current > 123)
             {
                 System.out.println("Error: the game only accept letters.");
+                return false;
             }
         }
         if (model.isMessagerror()) {
