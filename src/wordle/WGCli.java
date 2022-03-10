@@ -36,6 +36,7 @@ public class WGCli {
                 }
                 model.change();
                 applyColors();
+                changeletters();
                 displayletters();
             }
             newgame();
@@ -55,12 +56,12 @@ public class WGCli {
         System.out.print(CColor.RESET);
         System.out.println("The letters that belong to the word but are not in the right place: ");
         System.out.print(CColor.YELLOW);
-        displaytheletter(3);
+        displaytheletter(2);
         System.out.println();
         System.out.print(CColor.RESET);
-        System.out.print("The letter that doesn't belong tot the word");
+        System.out.println("The letter that doesn't belong tot the word");
         System.out.print(CColor.RED);
-        displaytheletter(2);
+        displaytheletter(3);
         System.out.println();
         System.out.print(CColor.RESET);
     }
@@ -73,7 +74,7 @@ public class WGCli {
         {
             if(letters[i] == value)
             {
-                current = (char)(i+60);
+                current = (char)(i+65);
                 System.out.print(current);
             }
         }
@@ -84,7 +85,7 @@ public class WGCli {
         int current;
         for(int i = 0; i < model.getActualword().length(); i++)
         {
-            current = model.getActualword().charAt(i);
+            current = (model.getActualword().charAt(i) - 'a')%26;
             if(letters[current] == 0)
             {
                 if(model.getColors()[i] != 0) {
@@ -141,10 +142,11 @@ public class WGCli {
         System.out.println(" Welcome to Wordle ! \n Hope you enjoy your time with us. \n Are you ready Player One ?");
         System.out.println(" Coded by Thanatos ");
         System.out.println(" This game present different option: \n First, you can choose to have a random word" +
-                "or to use the pre-selected word (I'm not gonna give it to you :) ) \n" +
+                " or to use the pre-selected word (I'm not gonna give it to you :) ) \n" +
                 " Then, you can choose to have a display mode: the selected word will be prompt on the console when you" +
-                "tape \"display\" at the beginnig of a turn.\n" +
-                " Finally, the last flag will ...\n");
+                " tape \"display\" at the beginnig of a turn.\n" +
+                " Finally, the last flag will display an error message and will let you give another word if you input is not" +
+                " in the wordle database. Choose wisely.\n");
         System.out.println(" Ready to crack the word ?\n");
     }
 
@@ -224,31 +226,33 @@ public class WGCli {
         {
             System.out.println("I'm sorry, you lost...");
             System.out.print(CColor.RED);
-            System.out.println("┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼\n" +
-                    "███▀▀▀██┼███▀▀▀███┼███▀█▄█▀███┼██▀▀▀\n" +
-                    "██┼┼┼┼██┼██┼┼┼┼┼██┼██┼┼┼█┼┼┼██┼██┼┼┼\n" +
-                    "██┼┼┼▄▄▄┼██▄▄▄▄▄██┼██┼┼┼▀┼┼┼██┼██▀▀▀\n" +
-                    "██┼┼┼┼██┼██┼┼┼┼┼██┼██┼┼┼┼┼┼┼██┼██┼┼┼\n" +
-                    "███▄▄▄██┼██┼┼┼┼┼██┼██┼┼┼┼┼┼┼██┼██▄▄▄\n" +
-                    "┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼\n" +
-                    "███▀▀▀███┼▀███┼┼██▀┼██▀▀▀┼██▀▀▀▀██▄┼\n" +
-                    "██┼┼┼┼┼██┼┼┼██┼┼██┼┼██┼┼┼┼██┼┼┼┼┼██┼\n" +
-                    "██┼┼┼┼┼██┼┼┼██┼┼██┼┼██▀▀▀┼██▄▄▄▄▄▀▀┼\n" +
-                    "██┼┼┼┼┼██┼┼┼██┼┼█▀┼┼██┼┼┼┼██┼┼┼┼┼██┼\n" +
-                    "███▄▄▄███┼┼┼─▀█▀┼┼─┼██▄▄▄┼██┼┼┼┼┼██▄\n" +
-                    "┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼\n" +
-                    "┼┼┼┼┼┼┼┼██┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼██┼┼┼┼┼┼┼┼┼\n" +
-                    "┼┼┼┼┼┼████▄┼┼┼▄▄▄▄▄▄▄┼┼┼▄████┼┼┼┼┼┼┼\n" +
-                    "┼┼┼┼┼┼┼┼┼▀▀█▄█████████▄█▀▀┼┼┼┼┼┼┼┼┼┼\n" +
-                    "┼┼┼┼┼┼┼┼┼┼┼█████████████┼┼┼┼┼┼┼┼┼┼┼┼\n" +
-                    "┼┼┼┼┼┼┼┼┼┼┼██▀▀▀███▀▀▀██┼┼┼┼┼┼┼┼┼┼┼┼\n" +
-                    "┼┼┼┼┼┼┼┼┼┼┼██┼┼┼███┼┼┼██┼┼┼┼┼┼┼┼┼┼┼┼\n" +
-                    "┼┼┼┼┼┼┼┼┼┼┼█████▀▄▀█████┼┼┼┼┼┼┼┼┼┼┼┼\n" +
-                    "┼┼┼┼┼┼┼┼┼┼┼┼███████████┼┼┼┼┼┼┼┼┼┼┼┼┼\n" +
-                    "┼┼┼┼┼┼┼┼▄▄▄██┼┼█▀█▀█┼┼██▄▄▄┼┼┼┼┼┼┼┼┼\n" +
-                    "┼┼┼┼┼┼┼┼▀▀██┼┼┼┼┼┼┼┼┼┼┼██▀▀┼┼┼┼┼┼┼┼┼\n" +
-                    "┼┼┼┼┼┼┼┼┼┼▀▀┼┼┼┼┼┼┼┼┼┼┼▀▀┼┼┼┼┼┼┼┼┼┼┼\n" +
-                    "┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼\n");
+            System.out.println("""
+                    ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+                    ┼┼┼┼███▀▀▀██┼ ███▀▀▀███┼ ███▀█▄█▀███┼ ██▀▀▀┼┼┼┼
+                    ┼┼┼┼██┼┼┼┼██┼ ██┼┼┼┼┼██┼ ██┼┼┼█┼┼┼██┼ ██┼┼┼┼┼┼┼
+                    ┼┼┼┼██┼┼┼▄▄▄┼ ██▄▄▄▄▄██┼ ██┼┼┼▀┼┼┼██┼ ██▀▀▀┼┼┼┼
+                    ┼┼┼┼██┼┼┼┼██┼ ██┼┼┼┼┼██┼ ██┼┼┼┼┼┼┼██┼ ██┼┼┼┼┼┼┼
+                    ┼┼┼┼███▄▄▄██┼ ██┼┼┼┼┼██┼ ██┼┼┼┼┼┼┼██┼ ██▄▄▄┼┼┼┼
+                    ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+                    ┼┼┼┼███▀▀▀███┼ ▀███┼┼██▀┼ ██▀▀▀┼ ██▀▀▀▀██▄┼┼┼┼┼
+                    ┼┼┼┼██┼┼┼┼┼██┼ ┼┼██┼┼██┼┼ ██┼┼┼┼ ██┼┼┼┼┼██┼┼┼┼┼
+                    ┼┼┼┼██┼┼┼┼┼██┼ ┼┼██┼┼██┼┼ ██▀▀▀┼ ██▄▄▄▄▄▀▀┼┼┼┼┼
+                    ┼┼┼┼██┼┼┼┼┼██┼ ┼┼██┼┼█▀┼┼ ██┼┼┼┼ ██┼┼┼┼┼██┼┼┼┼┼
+                    ┼┼┼┼███▄▄▄███┼ ┼┼─▀█▀┼┼─┼ ██▄▄▄┼ ██┼┼┼┼┼██▄┼┼┼┼
+                    ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+                    ┼┼┼┼┼┼┼┼┼┼┼┼┼┼██┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼██┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+                    ┼┼┼┼┼┼┼┼┼┼┼┼████▄┼┼┼▄▄▄▄▄▄▄┼┼┼▄████┼┼┼┼┼┼┼┼┼┼┼┼
+                    ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼▀▀█▄█████████▄█▀▀┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+                    ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼█████████████┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+                    ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼██▀▀▀███▀▀▀██┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+                    ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼██┼┼┼███┼┼┼██┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+                    ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼█████▀▄▀█████┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+                    ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼███████████┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+                    ┼┼┼┼┼┼┼┼┼┼┼┼┼┼▄▄▄██┼┼█▀█▀█┼┼██▄▄▄┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+                    ┼┼┼┼┼┼┼┼┼┼┼┼┼┼▀▀██┼┼┼┼┼┼┼┼┼┼┼██▀▀┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+                    ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼▀▀┼┼┼┼┼┼┼┼┼┼┼▀▀┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+                    ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
+                    """);
         }
         System.out.print(CColor.RESET);
         System.out.println("Do you want to play again ?(y/n)");

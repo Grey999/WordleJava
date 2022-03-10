@@ -136,7 +136,7 @@ public class InputView implements Observer{
     private void debbugMode(boolean debbug)
     {
         controller.setDebbug(debbug);
-        displayView(2);
+        displayView(3);
     }
 
     private void displayError(boolean error)
