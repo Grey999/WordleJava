@@ -20,19 +20,12 @@ public class WGCli {
             //second loop to play a game
             while (model.getGuess() < 6 && !model.isNewgame()) {
                 System.out.println("Enter you word:");
-                prompt();
-                model.setActualword(sc.next());
-                if (model.getActualword().equals("display") && model.isDebbug()) {
-                    System.out.println(model.getWord());
-                    prompt();
-                    model.setActualword(sc.next());
-                }
-                if (model.isMessagerror()) {
-                    while (!model.isValidWord()) {
-                        System.out.println("Invalid word. Try again");
-                        prompt();
-                        model.setActualword(sc.next());
-                    }
+                takeinput(sc);
+                boolean wordcorrect = wordaccept();
+                while(!wordcorrect)
+                {
+                    takeinput(sc);
+                    wordcorrect = wordaccept();
                 }
                 model.change();
                 applyColors();
@@ -42,6 +35,55 @@ public class WGCli {
             newgame();
         }
         System.out.println("Thank you for playing with us!");
+    }
+
+    private static boolean wordaccept() throws FileNotFoundException {
+        if(model.getActualword().length() != 5)
+        {
+            System.out.println("Error: only take words of 5 letters. Try again");
+            return false;
+        }
+        for(int i = 0; i < model.getActualword().length(); i++)
+        {
+            if(model.getActualword().charAt(i) < 65 || model.getActualword().charAt(i) > 91 && model.getActualword().charAt(i) < 97 || model.getActualword().charAt(i) > 123)
+            {
+                System.out.println("Error: the game only accept letters.");
+            }
+        }
+        if (model.isMessagerror()) {
+            if (!model.isValidWord()) {
+                System.out.println("Error: the word isn't accept by the game. Try again");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static void takeinput(Scanner sc)
+    {
+        prompt();
+        model.setActualword(sc.next());
+        boolean rightinput = verifyInput();
+        while(!rightinput)
+        {
+            prompt();
+            model.setActualword(sc.next());
+            rightinput = verifyInput();
+        }
+    }
+
+    private static boolean verifyInput()
+    {
+        if (model.getActualword().equals("display") && model.isDebbug()) {
+            System.out.println(model.getWord());
+            return false;
+        }
+        if(model.getActualword().equals("help"))
+        {
+            System.out.println("Write the help of the game");
+            return false;
+        }
+        return true;
     }
 
     private static void displayletters()
