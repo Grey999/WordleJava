@@ -34,6 +34,7 @@ public class WGCli {
             }
             newgame();
         }
+        sc.close();
         System.out.println("Thank you for playing with us!");
     }
 

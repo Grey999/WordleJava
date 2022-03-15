@@ -1,5 +1,6 @@
 package wordle;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
@@ -85,31 +86,62 @@ public class InputView implements Observer{
         no.setVisible(true);
         switch (viewnumber) {
             case 0 -> {
-                yes.addActionListener((ActionEvent e) -> randomWord(true));
-                no.addActionListener((ActionEvent e) -> randomWord(false));
                 this.textondisplay.setText("Do you want to have a random word ?");
+                yes.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        randomWord(true);
+                    }
+                });
+                no.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        randomWord(false);
+                    }
+                });
                 getFrame().repaint();
             }
             case 1 -> {
-                yes.addActionListener((ActionEvent e) -> debbugMode(true));
-                no.addActionListener((ActionEvent e) -> debbugMode(false));
                 this.textondisplay.setText("Do you want to use the debbug mode ?");
+                yes.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        debbugMode(true);
+                    }
+                });
+                no.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        debbugMode(false);
+                    }
+                });
                 getFrame().repaint();
             }
             case 2 -> {
-                yes.addActionListener((ActionEvent e) -> displayError(true));
-                no.addActionListener((ActionEvent e) -> displayError(false));
                 this.textondisplay.setText("Do you want to use the error mode ?");
+                yes.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        displayError(true);
+                    }
+                });
+                no.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        displayError(false);
+                    }
+                });
                 getFrame().repaint();
             }
             default -> {
                 this.textondisplay.setText("Problem");
+                getFrame().repaint();
             }
-
-
         }
 
+
     }
+
 
     private void endgame()
     {
@@ -136,7 +168,7 @@ public class InputView implements Observer{
     private void debbugMode(boolean debbug)
     {
         controller.setDebbug(debbug);
-        displayView(3);
+        displayView(2);
     }
 
     private void displayError(boolean error)
@@ -146,6 +178,7 @@ public class InputView implements Observer{
         yes.setVisible(false);
         no.setVisible(false);
         textondisplay.setVisible(false);
+        frame.repaint();
         startGame();
     }
 
@@ -154,21 +187,19 @@ public class InputView implements Observer{
         WGView view = new WGView(model, controller);
     }
 
-
-    @Override
-    public void update(Observable o, Object arg) {
-        if(model.isNewgame()) //changer pour controller
-        {
-            endgame();
-        }
-
-    }
-
     public JFrame getFrame() {
         return frame;
     }
 
     public void setFrame(JFrame frame) {
         this.frame = frame;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(model.isNewgame())
+        {
+            endgame();
+        }
     }
 }

@@ -61,12 +61,32 @@ public class KeyboardView {
         switch (label)
         {
             case "Enter":
-                if (!view.getModel().getActualword().equals("") && view.getModel().getActualword().length() < 5) {
+                if (view.getModel().getActualword().length() == 5) {
                     key.addActionListener((ActionEvent e) -> {
-                        //add error line
-                        //new panel only for error ???
-                        //How to manage the disposition ?
-                        //sleep for two second
+                        if (view.getModel().isMessagerror()) {
+                            try {
+                                if (!view.getModel().isValidWord()) {
+                                    //TODO
+                                }
+                                else
+                                {
+                                    try {
+                                        view.getModel().change();
+                                    } catch (FileNotFoundException ex) {
+                                        ex.printStackTrace();
+                                    }
+                                }
+                            } catch (FileNotFoundException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        else {
+                            try {
+                                view.getModel().change();
+                            } catch (FileNotFoundException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
                     });
                 }
                 else {

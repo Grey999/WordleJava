@@ -44,6 +44,7 @@ public class WGModel extends Observable {
         for (int i = 0; i < number; i++) {
             setWord(sc.nextLine());
         }
+        sc.close();
         //don't forget to erase that line
         if(display) {
             System.out.println("The word is: " + word);
@@ -90,6 +91,7 @@ public class WGModel extends Observable {
             sc = new Scanner(file);
             found = isWordCorrect(sc);
         }
+        sc.close();
         return found;
     }
 
