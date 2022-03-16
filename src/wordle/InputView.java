@@ -35,18 +35,18 @@ public class InputView implements Observer{
         getFrame().setLocationRelativeTo(null);
         getFrame().setVisible(true);
 
-        this.yes  = new JButton("Yes");
-        this.no = new JButton("No");
         this.newgame = new JButton("New Game");
         this.textondisplay = new JLabel("", SwingConstants.CENTER);
+        textondisplay.setText("Do you want to have a random word ?");
+
+        this.yes  = new JButton("Yes");
+        this.no = new JButton("No");
+
         createPanel();
         frame.setContentPane(panel);
         frame.pack();
 
         model.addObserver(this);
-
-        displayView(0);
-
         update(model,null);
 
     }
@@ -76,69 +76,46 @@ public class InputView implements Observer{
 
         panelnorth.setPreferredSize(PANEL_SIZE);
 
-    }
-
-    private void displayView(int viewnumber)
-    {
-
         textondisplay.setVisible(true);
         yes.setVisible(true);
         no.setVisible(true);
-        switch (viewnumber) {
-            case 0 -> {
-                this.textondisplay.setText("Do you want to have a random word ?");
-                yes.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        randomWord(true);
-                    }
-                });
-                no.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        randomWord(false);
-                    }
-                });
-                getFrame().repaint();
-            }
-            case 1 -> {
-                this.textondisplay.setText("Do you want to use the debbug mode ?");
-                yes.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        debbugMode(true);
-                    }
-                });
-                no.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        debbugMode(false);
-                    }
-                });
-                getFrame().repaint();
-            }
-            case 2 -> {
-                this.textondisplay.setText("Do you want to use the error mode ?");
-                yes.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        displayError(true);
-                    }
-                });
-                no.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        displayError(false);
-                    }
-                });
-                getFrame().repaint();
-            }
-            default -> {
-                this.textondisplay.setText("Problem");
-                getFrame().repaint();
-            }
-        }
 
+        yes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (textondisplay.getText().equals("Do you want to have a random word ?")) {
+                    randomWord(true);
+                    textondisplay.setText("Do you want to use the debbug mode ?");
+                    getFrame().repaint();
+                } else if (textondisplay.getText().equals("Do you want to use the debbug mode ?")) {
+                    debbugMode(true);
+                    textondisplay.setText("Do you want to use the error mode ?");
+                    getFrame().repaint();
+                } else if (textondisplay.getText().equals("Do you want to use the error mode ?")) {
+                    displayError(true);
+                    getFrame().repaint();
+                }
+
+            }
+        });
+
+        no.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (textondisplay.getText().equals("Do you want to have a random word ?")) {
+                    randomWord(false);
+                    textondisplay.setText("Do you want to use the debbug mode ?");
+                    getFrame().repaint();
+                } else if (textondisplay.getText().equals("Do you want to use the debbug mode ?")) {
+                    debbugMode(false);
+                    textondisplay.setText("Do you want to use the error mode ?");
+                    getFrame().repaint();
+                } else if (textondisplay.getText().equals("Do you want to use the error mode ?")) {
+                    displayError(false);
+                    getFrame().repaint();
+                }
+            }
+        });
 
     }
 
@@ -162,13 +139,11 @@ public class InputView implements Observer{
     private void randomWord(boolean random)
     {
         controller.setRandom(random);
-        displayView(1);
     }
 
     private void debbugMode(boolean debbug)
     {
         controller.setDebbug(debbug);
-        displayView(2);
     }
 
     private void displayError(boolean error)
