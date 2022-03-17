@@ -11,7 +11,9 @@ import java.util.Locale;
 public class KeyboardView {
     private final JButton[] keyboard;
     private final JPanel keyboardpanel;
-    private final JPanel keygrid;;
+    private final JPanel keygridfirst;
+    private final JPanel keygridsecond;
+    private final JPanel keygridthird;
     private final WGView view;
 
     public KeyboardView(WGView view)
@@ -28,16 +30,27 @@ public class KeyboardView {
 
         keyboardpanel.setLayout(new BoxLayout(keyboardpanel, BoxLayout.Y_AXIS));
         keyboardpanel.setPreferredSize(new Dimension(650,160));
-        keygrid = new JPanel();
-        keygrid.setLayout(new GridBagLayout());
-        keygrid.setOpaque(true);
+        keygridfirst = new JPanel();
+        keygridsecond = new JPanel();
+        keygridthird = new JPanel();
+
+
+        keygridfirst.setLayout(new GridBagLayout());
+        keygridfirst.setOpaque(true);
+        keygridsecond.setLayout(new GridBagLayout());
+        keygridsecond.setOpaque(true);
+        keygridthird.setLayout(new GridBagLayout());
+        keygridthird.setOpaque(true);
 
         Container contentPane = view.getFrame().getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
         contentPane.add(keyboardpanel);
-        keyboardpanel.add(keygrid);
-
         addKeyToGrid();
+
+
+        keyboardpanel.add(keygridfirst);
+        keyboardpanel.add(keygridsecond);
+        keyboardpanel.add(keygridthird);
 
 
     }
@@ -136,8 +149,18 @@ public class KeyboardView {
     private void addKeyToGrid()
     {
         int length = keyboard.length;
-        for (JButton jButton : keyboard) {
-            keygrid.add(jButton);
+        for (int i = 0; i < length; i++) {
+            if(i < 10) {
+                keygridfirst.add(keyboard[i]);
+            }
+            if(i > 10 && i < 19)
+            {
+                keygridsecond.add(keyboard[i]);
+            }
+            if(i >= 19)
+            {
+                keygridthird.add(keyboard[i]);
+            }
         }
     }
 
