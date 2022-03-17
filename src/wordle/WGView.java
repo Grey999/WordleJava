@@ -18,14 +18,21 @@ public class WGView implements Observer
     private GridView grid;
     private KeyboardView keyboard;
 
+    private JPanel errorpannel;
+    private JTextArea errormessage;
 
-    public WGView(WGModel model, WGController controller)
-    {
+
+    public WGView(WGModel model, WGController controller) throws InterruptedException {
         this.model = model;
         this.controller = controller;
         setGrid(new GridView(this));
         setFrame(new JFrame("Wordle"));
         getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setErrorpannel(new JPanel());
+        getErrorpannel().setLayout(new BoxLayout(getErrorpannel(), BoxLayout.Y_AXIS));
+        getErrorpannel().setBackground(Color.BLACK);
+        setErrormessage(new JTextArea());
+        getErrorpannel().add(getErrormessage());
         setKeyboard(new KeyboardView(this));
         createControls();
         controller.setView(this);
@@ -46,6 +53,8 @@ public class WGView implements Observer
 
         createPanel();
         contentPane.add(panel);
+        contentPane.add(getErrorpannel());
+        getErrorpannel().setVisible(false);
 
         getFrame().pack();
         getFrame().setSize(1000,1000);
@@ -104,5 +113,21 @@ public class WGView implements Observer
 
     public WGModel getModel() {
         return model;
+    }
+
+    public JPanel getErrorpannel() {
+        return errorpannel;
+    }
+
+    public void setErrorpannel(JPanel errorpannel) {
+        this.errorpannel = errorpannel;
+    }
+
+    public JTextArea getErrormessage() {
+        return errormessage;
+    }
+
+    public void setErrormessage(JTextArea errormessage) {
+        this.errormessage = errormessage;
     }
 }

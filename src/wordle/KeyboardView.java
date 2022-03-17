@@ -6,7 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.FileNotFoundException;
-import java.util.Locale;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class KeyboardView {
     private final JButton[] keyboard;
@@ -16,8 +17,7 @@ public class KeyboardView {
     private final JPanel keygridthird;
     private final WGView view;
 
-    public KeyboardView(WGView view)
-    {
+    public KeyboardView(WGView view) throws InterruptedException {
         this.view = view;
         keyboard = new JButton[28];
         keyboardpanel = new JPanel();
@@ -57,8 +57,7 @@ public class KeyboardView {
 
 
 
-    private void createKeys(String label, int i)
-    {
+    private void createKeys(String label, int i) throws InterruptedException {
         //review conditions for the keyboard
         JButton key = new JButton(label);
         if(label.equals("Enter"))
@@ -71,29 +70,33 @@ public class KeyboardView {
         key.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
         key.setBackground(Color.WHITE);
         key.setOpaque(true);
-        switch (label)
-        {
-            case "Enter":
-                if (view.getModel().getActualword().length() == 5) {
+        switch (label) {
+            case "Enter" -> {
+                long delay = 5;
+                TimeUnit time = TimeUnit.SECONDS;
+                if (view.getModel().getActualword().length() < 5) {
+                    view.getErrorpannel().setVisible(true);
+                    view.getErrormessage().setText("Word too short");
+                    time.sleep(delay);
+                } else {
                     key.addActionListener((ActionEvent e) -> {
                         if (view.getModel().isMessagerror()) {
                             try {
                                 if (!view.getModel().isValidWord()) {
-                                    //TODO
-                                }
-                                else
-                                {
+                                    view.getErrorpannel().setVisible(true);
+                                    view.getErrormessage().setText("Word not found");
+                                    time.sleep(delay);
+                                } else {
                                     try {
                                         view.getModel().change();
                                     } catch (FileNotFoundException ex) {
                                         ex.printStackTrace();
                                     }
                                 }
-                            } catch (FileNotFoundException ex) {
+                            } catch (FileNotFoundException | InterruptedException ex) {
                                 ex.printStackTrace();
                             }
-                        }
-                        else {
+                        } else {
                             try {
                                 view.getModel().change();
                             } catch (FileNotFoundException ex) {
@@ -102,38 +105,22 @@ public class KeyboardView {
                         }
                     });
                 }
-                else {
-                    if (!view.getModel().getActualword().equals("") && view.getModel().getActualword().length() == 5) {
-                        key.addActionListener((ActionEvent e) -> {
-                            try {
-                                view.getController().change();
-                            } catch (FileNotFoundException ex) {
-                                ex.printStackTrace();
-                            }
-                        });
-                    }
+            }
+            case "⌫" -> key.addActionListener((ActionEvent e) -> {
+                if (!view.getModel().getActualword().equals("") && view.getModel().getActualword().length() > 0) {
+                    view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
+                    view.getGrid().changeLabel(view.getModel().getActualword().length(),
+                            view.getModel().getGuess(), "");
                 }
-                break;
-            case "⌫":
-                key.addActionListener((ActionEvent e) -> {
-                    if(!view.getModel().getActualword().equals("") && view.getModel().getActualword().length() > 0)
-                    {
-                        view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
-                        view.getGrid().changeLabel(view.getModel().getActualword().length(),
-                                view.getModel().getGuess(), "");
-                    }
 
-                });
-                break;
-            default:
-                key.addActionListener((ActionEvent e) -> {
-                    if(!view.getModel().getActualword().equals("") && view.getModel().getActualword().length() < 5)
-                    {
-                        view.getModel().setActualword(view.getModel().getActualword() + label.toLowerCase(Locale.ROOT));
-                        view.getGrid().changeLabel(view.getModel().getActualword().length(),
-                                view.getModel().getGuess(), label.toUpperCase(Locale.ROOT));
-                    }
-                });
+            });
+            default -> key.addActionListener((ActionEvent e) -> {
+                if (!view.getModel().getActualword().equals("") && view.getModel().getActualword().length() < 5) {
+                    view.getModel().setActualword(view.getModel().getActualword() + label.toLowerCase(Locale.ROOT));
+                    view.getGrid().changeLabel(view.getModel().getActualword().length(),
+                            view.getModel().getGuess(), label.toUpperCase(Locale.ROOT));
+                }
+            });
         }
         keyboard[i] = key;
 

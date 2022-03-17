@@ -92,7 +92,11 @@ public class InputView implements Observer{
                     textondisplay.setText("Do you want to use the error mode ?");
                     getFrame().repaint();
                 } else if (textondisplay.getText().equals("Do you want to use the error mode ?")) {
-                    displayError(true);
+                    try {
+                        displayError(true);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
                     getFrame().repaint();
                 }
 
@@ -111,7 +115,11 @@ public class InputView implements Observer{
                     textondisplay.setText("Do you want to use the error mode ?");
                     getFrame().repaint();
                 } else if (textondisplay.getText().equals("Do you want to use the error mode ?")) {
-                    displayError(false);
+                    try {
+                        displayError(false);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
                     getFrame().repaint();
                 }
             }
@@ -146,8 +154,7 @@ public class InputView implements Observer{
         controller.setDebbug(debbug);
     }
 
-    private void displayError(boolean error)
-    {
+    private void displayError(boolean error) throws InterruptedException {
         controller.setError(error);
         getFrame().setVisible(false);
         yes.setVisible(false);
@@ -157,8 +164,7 @@ public class InputView implements Observer{
         startGame();
     }
 
-    public void startGame()
-    {
+    public void startGame() throws InterruptedException {
         WGView view = new WGView(model, controller);
     }
 
