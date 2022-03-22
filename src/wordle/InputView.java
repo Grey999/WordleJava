@@ -1,13 +1,13 @@
 package wordle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
 import java.awt.*;
 public class InputView implements Observer{
 
-    //Create method for the other flags (reread project paper)
     private static final Dimension PANEL_SIZE = new Dimension(250,250);
     private final JButton yes;
     private final JButton no;
@@ -94,7 +94,7 @@ public class InputView implements Observer{
                 } else if (textondisplay.getText().equals("Do you want to use the error mode ?")) {
                     try {
                         displayError(true);
-                    } catch (InterruptedException ex) {
+                    } catch (InterruptedException | FileNotFoundException ex) {
                         ex.printStackTrace();
                     }
                     getFrame().repaint();
@@ -117,7 +117,7 @@ public class InputView implements Observer{
                 } else if (textondisplay.getText().equals("Do you want to use the error mode ?")) {
                     try {
                         displayError(false);
-                    } catch (InterruptedException ex) {
+                    } catch (InterruptedException | FileNotFoundException ex) {
                         ex.printStackTrace();
                     }
                     getFrame().repaint();
@@ -154,7 +154,7 @@ public class InputView implements Observer{
         controller.setDebbug(debbug);
     }
 
-    private void displayError(boolean error) throws InterruptedException {
+    private void displayError(boolean error) throws InterruptedException, FileNotFoundException {
         controller.setError(error);
         getFrame().setVisible(false);
         yes.setVisible(false);
@@ -164,7 +164,7 @@ public class InputView implements Observer{
         startGame();
     }
 
-    public void startGame() throws InterruptedException {
+    public void startGame() throws InterruptedException, FileNotFoundException {
         WGView view = new WGView(model, controller);
     }
 

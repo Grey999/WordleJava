@@ -4,12 +4,12 @@ package wordle;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class KeyboardView {
+public class KeyboardView implements WordleComponent, KeyListener{
     private final JButton[] keyboard;
     private final JPanel keyboardpanel;
     private final JPanel keygridfirst;
@@ -17,7 +17,7 @@ public class KeyboardView {
     private final JPanel keygridthird;
     private final WGView view;
 
-    public KeyboardView(WGView view) throws InterruptedException {
+    public KeyboardView(WGView view) throws InterruptedException, FileNotFoundException {
         this.view = view;
         keyboard = new JButton[28];
         keyboardpanel = new JPanel();
@@ -57,7 +57,8 @@ public class KeyboardView {
 
 
 
-    private void createKeys(String label, int i) throws InterruptedException {
+
+    private void createKeys(String label, int i) throws InterruptedException, FileNotFoundException {
         //review conditions for the keyboard
         JButton key = new JButton(label);
         if(label.equals("Enter"))
@@ -72,34 +73,30 @@ public class KeyboardView {
         key.setOpaque(true);
         switch (label) {
             case "Enter" -> {
-                long delay = 5;
-                TimeUnit time = TimeUnit.SECONDS;
-                if (view.getModel().getActualword().length() < 5) {
-                    view.getErrorpannel().setVisible(true);
-                    view.getErrormessage().setText("Word too short");
-                    time.sleep(delay);
-                } else {
-                    key.addActionListener((ActionEvent e) -> {
-                        if (view.getModel().isMessagerror()) {
+                if(!view.showerrorpannel())
+                {
+                    key.addActionListener((ActionEvent e) ->
+                    {
+                        if (view.getModel().isMessagerror())
+                        {
                             try {
-                                if (!view.getModel().isValidWord()) {
-                                    view.getErrorpannel().setVisible(true);
-                                    view.getErrormessage().setText("Word not found");
-                                    time.sleep(delay);
-                                } else {
-                                    try {
+                                if (!view.showerrorpannel())
+                                {
                                         view.getModel().change();
-                                    } catch (FileNotFoundException ex) {
-                                        ex.printStackTrace();
-                                    }
+                                        System.out.println("Do it now !!!");
                                 }
-                            } catch (FileNotFoundException | InterruptedException ex) {
+                            } catch (FileNotFoundException ex) {
                                 ex.printStackTrace();
                             }
-                        } else {
-                            try {
+                        }
+                        else
+                        {
+                            try
+                            {
                                 view.getModel().change();
-                            } catch (FileNotFoundException ex) {
+                                System.out.println("Do it !");
+                            } catch (FileNotFoundException ex)
+                            {
                                 ex.printStackTrace();
                             }
                         }
@@ -107,15 +104,18 @@ public class KeyboardView {
                 }
             }
             case "⌫" -> key.addActionListener((ActionEvent e) -> {
-                if (!view.getModel().getActualword().equals("") && view.getModel().getActualword().length() > 0) {
+                if (view.getModel().getActualword().length() > 0)
+                {
+                    //problem backspace
                     view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
-                    view.getGrid().changeLabel(view.getModel().getActualword().length(),
+                    view.getGrid().changeLabel(view.getModel().getActualword().length()+1,
                             view.getModel().getGuess(), "");
                 }
 
             });
             default -> key.addActionListener((ActionEvent e) -> {
-                if (!view.getModel().getActualword().equals("") && view.getModel().getActualword().length() < 5) {
+                if (view.getModel().getActualword().length() < 5)
+                {
                     view.getModel().setActualword(view.getModel().getActualword() + label.toLowerCase(Locale.ROOT));
                     view.getGrid().changeLabel(view.getModel().getActualword().length(),
                             view.getModel().getGuess(), label.toUpperCase(Locale.ROOT));
@@ -158,5 +158,42 @@ public class KeyboardView {
     public JPanel getPanel()
     {
         return keyboardpanel;
+    }
+
+    @Override
+    public void changeBackgroundColor(int colum, int line, int state) {
+        switch (state) {
+            case 0 -> keyboard[colum + line].setBackground(Color.DARK_GRAY);
+            case 1 -> keyboard[colum + line].setBackground(Color.ORANGE);
+            case 2 -> keyboard[colum + line].setBackground(Color.GREEN);
+            default -> keyboard[colum + line].setBackground(Color.GRAY);
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        switch (KeyEvent.getKeyText(e.getKeyCode()))
+        {
+            case "Enter" -> System.out.println("Something");
+            case "BackSpace" -> System.out.println("BackSpce");
+            case "" -> {
+                //find how to see a letter
+                if (view.getModel().getActualword().length() < 5) {
+                    view.getModel().setActualword(view.getModel().getActualword() + String.valueOf(e.getKeyChar()));
+                    view.getGrid().changeLabel(view.getModel().getActualword().length(),
+                        view.getModel().getGuess(), String.valueOf(e.getKeyChar()));
+                }
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
     }
 }

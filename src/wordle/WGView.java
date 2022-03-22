@@ -1,4 +1,5 @@
 package wordle;
+import java.io.FileNotFoundException;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
@@ -22,20 +23,29 @@ public class WGView implements Observer
     private JTextArea errormessage;
 
 
-    public WGView(WGModel model, WGController controller) throws InterruptedException {
+    public WGView(WGModel model, WGController controller) throws InterruptedException, FileNotFoundException {
+        //Link the model, the controller and the view
         this.model = model;
         this.controller = controller;
-        setGrid(new GridView(this));
+        controller.setView(this);
+
+
+        //creation of the Frame
         setFrame(new JFrame("Wordle"));
         getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setErrorpannel(new JPanel());
-        getErrorpannel().setLayout(new BoxLayout(getErrorpannel(), BoxLayout.Y_AXIS));
-        getErrorpannel().setBackground(Color.BLACK);
-        setErrormessage(new JTextArea());
-        getErrorpannel().add(getErrormessage());
+
+        //creation of grid
+        setGrid(new GridView(this));
+
+        //need to be created before the keyboard
+        //will display error message for the words
+        createErrorPannel();
+
+
         setKeyboard(new KeyboardView(this));
+
+
         createControls();
-        controller.setView(this);
         model.addObserver(this);
         update(model,null);
     }
@@ -62,6 +72,15 @@ public class WGView implements Observer
         getFrame().setVisible(true);
     }
 
+    private void createErrorPannel()
+    {
+        setErrorpannel(new JPanel());
+        getErrorpannel().setLayout(new BoxLayout(getErrorpannel(), BoxLayout.Y_AXIS));
+        getErrorpannel().setBackground(Color.BLACK);
+        setErrormessage(new JTextArea());
+        getErrorpannel().add(getErrormessage());
+    }
+
 
     private void createPanel() {
         panel = new JPanel();
@@ -80,9 +99,32 @@ public class WGView implements Observer
         if(model.getActualword() != null && model.getActualword().length() == 5) {
             for (int i = 0; i < 5; i++) {
                 getGrid().changeBackgroundColor(i, getModel().getGuess(), getModel().getColors(i, getModel().getGuess()));
+                getKeyboard().changeBackgroundColor(i, getModel().getGuess(), getModel().getColors(i, getModel().getGuess()));
             }
         }
         getFrame().repaint();
+    }
+
+    public boolean showerrorpannel() throws FileNotFoundException {
+        //long delay = 5;
+        //TimeUnit time = TimeUnit.SECONDS;
+        if (getModel().getActualword().length() != 5)
+        {
+            getErrorpannel().setVisible(true);
+            getErrormessage().setText("Word too short");
+            //time.sleep(delay);
+            return true;
+        }
+        else {
+            if (!getModel().isValidWord())
+            {
+                getErrorpannel().setVisible(true);
+                getErrormessage().setText("Word not found");
+                //time.sleep(delay);
+                return true;
+            }
+            return false;
+        }
     }
     
     public WGController getController(){return controller;}

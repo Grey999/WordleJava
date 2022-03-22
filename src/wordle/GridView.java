@@ -3,7 +3,7 @@ package wordle;
 import javax.swing.*;
 import java.awt.*;
 
-public class GridView {
+public class GridView implements WordleComponent {
     private final JLabel[] letterscase;
     private final JPanel gridpanel;
     private final WGView view;
@@ -31,7 +31,7 @@ public class GridView {
             letterscase[i].setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,2,true));
             letterscase[i].setOpaque(true);
             letterscase[i].setHorizontalAlignment(SwingConstants.CENTER);
-            letterscase[i].setText(Integer.toString(i));
+            letterscase[i].setText("");
             gridpanel.add(letterscase[i], gbc);
             if(i%6 == 0)
             {
@@ -53,7 +53,9 @@ public class GridView {
         letterscase[colum+line-1].setText(letter);
     }
 
-    protected void changeBackgroundColor(int colum, int line, int state)
+
+    @Override
+    public void changeBackgroundColor(int colum, int line, int state)
     {
         switch (state) {
             case 0 -> letterscase[colum + line].setBackground(Color.DARK_GRAY);
