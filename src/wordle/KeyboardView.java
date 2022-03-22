@@ -72,37 +72,41 @@ public class KeyboardView implements WordleComponent, KeyListener{
         key.setBackground(Color.WHITE);
         key.setOpaque(true);
         switch (label) {
-            case "Enter" -> {
-                if(!view.showerrorpannel())
-                {
-                    key.addActionListener((ActionEvent e) ->
+            case "Enter" ->
+                key.addActionListener((ActionEvent e) ->
                     {
-                        if (view.getModel().isMessagerror())
-                        {
-                            try {
-                                if (!view.showerrorpannel())
+                        try {
+                            if(!view.showerrorpannel())
+                            {
+                                if (view.getModel().isMessagerror())
                                 {
-                                        view.getModel().change();
-                                        System.out.println("Do it now !!!");
+                                    try {
+                                        if (!view.showerrorpannel())
+                                        {
+                                            view.getModel().change();
+                                            view.update(view.getModel(), null);
+                                        }
+                                    } catch (FileNotFoundException ex) {
+                                        ex.printStackTrace();
+                                    }
                                 }
-                            } catch (FileNotFoundException ex) {
-                                ex.printStackTrace();
+                                else
+                                {
+                                    try
+                                    {
+                                        view.getModel().change();
+                                        view.update(view.getModel(), null);
+                                    } catch (FileNotFoundException ex)
+                                    {
+                                        ex.printStackTrace();
+                                    }
+                                }
                             }
+                        } catch (FileNotFoundException ex) {
+                            ex.printStackTrace();
                         }
-                        else
-                        {
-                            try
-                            {
-                                view.getModel().change();
-                                System.out.println("Do it !");
-                            } catch (FileNotFoundException ex)
-                            {
-                                ex.printStackTrace();
-                            }
-                        }
+
                     });
-                }
-            }
             case "⌫" -> key.addActionListener((ActionEvent e) -> {
                 if (view.getModel().getActualword().length() > 0)
                 {
@@ -116,6 +120,9 @@ public class KeyboardView implements WordleComponent, KeyListener{
             default -> key.addActionListener((ActionEvent e) -> {
                 if (view.getModel().getActualword().length() < 5)
                 {
+                    //doesn't seem to change the number of Guess...
+                    //Maybe recreate the key ???
+                    //weird...
                     view.getModel().setActualword(view.getModel().getActualword() + label.toLowerCase(Locale.ROOT));
                     view.getGrid().changeLabel(view.getModel().getActualword().length(),
                             view.getModel().getGuess(), label.toUpperCase(Locale.ROOT));

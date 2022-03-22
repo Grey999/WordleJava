@@ -63,7 +63,6 @@ public class GridView implements WordleComponent {
             case 2 -> letterscase[colum + line].setBackground(Color.GREEN);
             default -> letterscase[colum + line].setBackground(Color.GRAY);
         }
-
         view.getController().setColors();
 
     }

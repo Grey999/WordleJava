@@ -164,7 +164,7 @@ public class WGCli {
                     System.out.print(model.getActualword().charAt(i));
                     System.out.print(CColor.RESET);
                 }
-                default -> System.out.print("Houston, got a problem");
+                default -> System.out.print("not suppose to happen");
             }
         }
         System.out.println();
@@ -235,8 +235,8 @@ public class WGCli {
             case 1 -> model.setDebbug(answer.equals("y"));
             case 2 -> model.setMessagerror(answer.equals("y"));
             default -> {
+                //nothing
             }
-            //nothing
         }
     }
 
