@@ -95,13 +95,15 @@ public class WGView implements Observer
     }
 
     public void update(Observable o, Object arg) {
-        for (int i = 0; i < 5; i++) {
-            getGrid().changeBackgroundColor(i, getModel().getGuess(), getModel().getColors(i, getModel().getGuess()));
-            getKeyboard().changeBackgroundColor(i, getModel().getGuess(), getModel().getColors(i, getModel().getGuess()));
+        if(!getModel().getActualword().equals("")) {
+            for (int i = 0; i < 5; i++) {
+                getGrid().changeBackgroundColor(i, getModel().getGuess(), getModel().getColors(i));
+                getKeyboard().changeBackgroundColor(getModel().getColors(i), String.valueOf(getModel().getActualword().charAt(i)));
+            }
+            getModel().setActualword("");
+            System.out.println(getModel().getGuess());
         }
-        getModel().setActualword("");
-        System.out.println(getModel().getGuess());
-        getFrame().repaint();
+            getFrame().repaint();
     }
 
     public boolean showerrorpannel() throws FileNotFoundException {
@@ -112,7 +114,7 @@ public class WGView implements Observer
             getErrorpannel().setVisible(true);
             getErrormessage().setText("Word too short");
             //time.sleep(delay);
-            return true;
+            return false;
         }
         else {
             if (!getModel().isValidWord())
@@ -120,9 +122,9 @@ public class WGView implements Observer
                 getErrorpannel().setVisible(true);
                 getErrormessage().setText("Word not found");
                 //time.sleep(delay);
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
     }
     

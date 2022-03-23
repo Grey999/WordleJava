@@ -3,7 +3,7 @@ package wordle;
 import javax.swing.*;
 import java.awt.*;
 
-public class GridView implements WordleComponent {
+public class GridView {
     private final JLabel[] letterscase;
     private final JPanel gridpanel;
     private final WGView view;
@@ -54,7 +54,6 @@ public class GridView implements WordleComponent {
     }
 
 
-    @Override
     public void changeBackgroundColor(int colum, int line, int state)
     {
         switch (state) {

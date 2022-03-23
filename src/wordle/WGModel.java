@@ -60,15 +60,18 @@ public class WGModel extends Observable {
 
     protected void change() throws FileNotFoundException {
        //actual word send by the controller
+        System.out.println("change is called");
         if(getActualword().equals(getWord()))
         {
             setNewgame(true);
             setWin(true);
+            System.out.println("The game is over");
         }
         else
         {
             changeColors();
             setGuess(getGuess() + 1);
+            System.out.println(getGuess());
             if(getGuess() == GUESS)
             {
                 setWin(false);
@@ -78,7 +81,6 @@ public class WGModel extends Observable {
         setDisplay(true);
         setChanged();
         notifyObservers();
-
     }
 
     protected boolean isValidWord() throws FileNotFoundException {
@@ -126,7 +128,7 @@ public class WGModel extends Observable {
             }
         }
     }
-    public int getColors(int colum, int line) { return getColors()[colum+line];}
+    public int getColors(int colum) { return getColors()[colum];}
 
     public boolean isWin(){return win; }
 

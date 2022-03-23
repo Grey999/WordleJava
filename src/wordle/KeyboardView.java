@@ -7,9 +7,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
-public class KeyboardView implements WordleComponent, KeyListener{
+public class KeyboardView implements KeyListener{
     private final JButton[] keyboard;
     private final JPanel keyboardpanel;
     private final JPanel keygridfirst;
@@ -60,7 +59,8 @@ public class KeyboardView implements WordleComponent, KeyListener{
 
     private void createKeys(String label, int i) throws InterruptedException, FileNotFoundException {
         //review conditions for the keyboard
-        JButton key = new JButton(label);
+        JButton key = new JButton();
+        key.setText(label);
         if(label.equals("Enter"))
         {
             key.setFont(new Font(Font.MONOSPACED, Font.BOLD, 40));
@@ -76,12 +76,12 @@ public class KeyboardView implements WordleComponent, KeyListener{
                 key.addActionListener((ActionEvent e) ->
                     {
                         try {
-                            if(!view.showerrorpannel())
+                            if(view.showerrorpannel())
                             {
                                 if (view.getModel().isMessagerror())
                                 {
                                     try {
-                                        if (!view.showerrorpannel())
+                                        if (view.showerrorpannel())
                                         {
                                             view.getModel().change();
                                             view.update(view.getModel(), null);
@@ -107,10 +107,10 @@ public class KeyboardView implements WordleComponent, KeyListener{
                         }
 
                     });
-            case "⌫" -> key.addActionListener((ActionEvent e) -> {
+            case "⌫" ->
+                    key.addActionListener((ActionEvent e) -> {
                 if (view.getModel().getActualword().length() > 0)
                 {
-                    //problem backspace
                     view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
                     view.getGrid().changeLabel(view.getModel().getActualword().length()+1,
                             view.getModel().getGuess(), "");
@@ -167,14 +167,29 @@ public class KeyboardView implements WordleComponent, KeyListener{
         return keyboardpanel;
     }
 
-    @Override
-    public void changeBackgroundColor(int colum, int line, int state) {
-        switch (state) {
-            case 0 -> keyboard[colum + line].setBackground(Color.DARK_GRAY);
-            case 1 -> keyboard[colum + line].setBackground(Color.ORANGE);
-            case 2 -> keyboard[colum + line].setBackground(Color.GREEN);
-            default -> keyboard[colum + line].setBackground(Color.GRAY);
+
+    public void changeBackgroundColor(int state, String letter) {
+        JButton key = null;
+        boolean found = false;
+        int index = 0;
+        while(index < keyboard.length-1 || !found)
+        {
+            //problem index to debbug
+            if(keyboard[index].getText().equals(letter))
+            {
+                key = keyboard[index];
+                found = true;
+            }
+            index++;
         }
+
+        switch (state) {
+            case 0 -> key.setBackground(Color.DARK_GRAY);
+            case 1 -> key.setBackground(Color.ORANGE);
+            case 2 -> key.setBackground(Color.GREEN);
+            default -> key.setBackground(Color.GRAY);
+        }
+
     }
 
     @Override
@@ -187,7 +202,7 @@ public class KeyboardView implements WordleComponent, KeyListener{
         switch (KeyEvent.getKeyText(e.getKeyCode()))
         {
             case "Enter" -> System.out.println("Something");
-            case "BackSpace" -> System.out.println("BackSpce");
+            case "BackSpace" -> System.out.println("BackSpace");
             case "" -> {
                 //find how to see a letter
                 if (view.getModel().getActualword().length() < 5) {
