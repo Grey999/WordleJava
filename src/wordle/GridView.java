@@ -50,12 +50,22 @@ public class GridView {
 
     protected void changeLabel(int colum, int line, String letter)
     {
-        letterscase[colum+line-1].setText(letter);
+        if(line != 0)
+        {
+            line = line -1;
+        }
+
+        letterscase[colum+line].setText(letter);
+
     }
 
 
     public void changeBackgroundColor(int colum, int line, int state)
     {
+        if(line != 0)
+        {
+            line = line -1;
+        }
         switch (state) {
             case 0 -> letterscase[colum + line].setBackground(Color.DARK_GRAY);
             case 1 -> letterscase[colum + line].setBackground(Color.ORANGE);

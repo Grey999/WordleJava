@@ -1,5 +1,6 @@
 package wordle;
 import java.io.FileNotFoundException;
+import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
@@ -97,11 +98,10 @@ public class WGView implements Observer
     public void update(Observable o, Object arg) {
         if(!getModel().getActualword().equals("")) {
             for (int i = 0; i < 5; i++) {
-                getGrid().changeBackgroundColor(i, getModel().getGuess(), getModel().getColors(i));
-                getKeyboard().changeBackgroundColor(getModel().getColors(i), String.valueOf(getModel().getActualword().charAt(i)));
+                getGrid().changeBackgroundColor(i+(getModel().getGuess()-1)*5, getModel().getGuess()-1, getModel().getColors(i));
+                getKeyboard().changeBackgroundColor(getModel().getColors(i), String.valueOf(getModel().getActualword().charAt(i)).toUpperCase(Locale.ROOT));
             }
             getModel().setActualword("");
-            System.out.println(getModel().getGuess());
         }
             getFrame().repaint();
     }

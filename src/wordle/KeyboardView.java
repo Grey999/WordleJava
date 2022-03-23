@@ -61,7 +61,7 @@ public class KeyboardView implements KeyListener{
         //review conditions for the keyboard
         JButton key = new JButton();
         key.setText(label);
-        if(label.equals("Enter"))
+        if(label.equals("Enter") || label.equals("⌫"))
         {
             key.setFont(new Font(Font.MONOSPACED, Font.BOLD, 40));
         }
@@ -112,7 +112,7 @@ public class KeyboardView implements KeyListener{
                 if (view.getModel().getActualword().length() > 0)
                 {
                     view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
-                    view.getGrid().changeLabel(view.getModel().getActualword().length()+1,
+                    view.getGrid().changeLabel(view.getModel().getActualword().length(),
                             view.getModel().getGuess(), "");
                 }
 
@@ -120,12 +120,11 @@ public class KeyboardView implements KeyListener{
             default -> key.addActionListener((ActionEvent e) -> {
                 if (view.getModel().getActualword().length() < 5)
                 {
-                    //doesn't seem to change the number of Guess...
-                    //Maybe recreate the key ???
-                    //weird...
+                    System.out.println(view.getModel().getActualword().length() + (view.getModel().getGuess()*5)+
+                            view.getModel().getGuess());
+                    view.getGrid().changeLabel(view.getModel().getActualword().length() + (view.getModel().getGuess()*5),
+                                view.getModel().getGuess(), label.toUpperCase(Locale.ROOT));
                     view.getModel().setActualword(view.getModel().getActualword() + label.toLowerCase(Locale.ROOT));
-                    view.getGrid().changeLabel(view.getModel().getActualword().length(),
-                            view.getModel().getGuess(), label.toUpperCase(Locale.ROOT));
                 }
             });
         }
@@ -144,10 +143,10 @@ public class KeyboardView implements KeyListener{
     {
         int length = keyboard.length;
         for (int i = 0; i < length; i++) {
-            if(i < 10) {
+            if(i <10) {
                 keygridfirst.add(keyboard[i]);
             }
-            if(i > 10 && i < 19)
+            if(i >= 10 && i < 19)
             {
                 keygridsecond.add(keyboard[i]);
             }
@@ -168,27 +167,41 @@ public class KeyboardView implements KeyListener{
     }
 
 
-    public void changeBackgroundColor(int state, String letter) {
+    public void changeBackgroundColor(int state, String letter)
+    {
         JButton key = null;
         boolean found = false;
         int index = 0;
-        while(index < keyboard.length-1 || !found)
+        while(!found && index < keyboard.length)
         {
             //problem index to debbug
             if(keyboard[index].getText().equals(letter))
             {
                 key = keyboard[index];
                 found = true;
+                System.out.println("found");
             }
             index++;
         }
-
         switch (state) {
-            case 0 -> key.setBackground(Color.DARK_GRAY);
-            case 1 -> key.setBackground(Color.ORANGE);
-            case 2 -> key.setBackground(Color.GREEN);
-            default -> key.setBackground(Color.GRAY);
+            case 0 -> {
+                assert key != null;
+                key.setBackground(Color.DARK_GRAY);
+            }
+            case 1 -> {
+                assert key != null;
+                key.setBackground(Color.ORANGE);
+            }
+            case 2 -> {
+                assert key != null;
+                key.setBackground(Color.GREEN);
+            }
+            default -> {
+                assert key != null;
+                key.setBackground(Color.GRAY);
+            }
         }
+
 
     }
 

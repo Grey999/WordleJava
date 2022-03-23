@@ -51,6 +51,7 @@ public class WGModel extends Observable {
         }
         colors = new int[5];
         setActualword("");
+        System.out.println(getActualword().length());
         setGuess(0);
         setChanged();
         notifyObservers();
