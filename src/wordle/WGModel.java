@@ -45,10 +45,7 @@ public class WGModel extends Observable {
             setWord(sc.nextLine());
         }
         sc.close();
-        //don't forget to erase that line
-        if(display) {
-            System.out.println("The word is: " + word);
-        }
+        System.out.println(getWord());
         colors = new int[5];
         setActualword("");
         System.out.println(getActualword().length());
@@ -71,6 +68,11 @@ public class WGModel extends Observable {
         else
         {
             changeColors();
+            //Debbugage
+            for(int i = 0; i < getColors().length; i++)
+            {
+                System.out.println(getActualword().charAt(i)+" "+getColors()[i]);
+            }
             setGuess(getGuess() + 1);
             System.out.println(getGuess());
             if(getGuess() == GUESS)

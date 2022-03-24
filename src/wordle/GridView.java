@@ -13,7 +13,7 @@ public class GridView {
         letterscase = new JLabel[30];
         gridpanel = new JPanel();
         gridpanel.setLayout(new GridLayout(6,5));
-        gridpanel.setPreferredSize(new Dimension(400,400));
+        gridpanel.setPreferredSize(new Dimension(300,300));
         addLabelsView();
     }
 
@@ -27,8 +27,8 @@ public class GridView {
             gbc.gridy = colum;
             letterscase[i] = new JLabel("",SwingConstants.CENTER);
             letterscase[i].setBackground(Color.WHITE);
-            letterscase[i].setMaximumSize(new Dimension(8,8));
-            letterscase[i].setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,2,true));
+            letterscase[i].setMaximumSize(new Dimension(6,6));
+            letterscase[i].setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY,1,true));
             letterscase[i].setOpaque(true);
             letterscase[i].setHorizontalAlignment(SwingConstants.CENTER);
             letterscase[i].setText("");
@@ -67,9 +67,9 @@ public class GridView {
             line = line -1;
         }
         switch (state) {
-            case 0 -> letterscase[colum + line].setBackground(Color.DARK_GRAY);
-            case 1 -> letterscase[colum + line].setBackground(Color.ORANGE);
-            case 2 -> letterscase[colum + line].setBackground(Color.GREEN);
+            case 0 -> letterscase[colum + line].setBackground(Color.RED);
+            case 1 -> letterscase[colum + line].setBackground(Color.GREEN);
+            case 2 -> letterscase[colum + line].setBackground(Color.ORANGE);
             default -> letterscase[colum + line].setBackground(Color.GRAY);
         }
         view.getController().setColors();

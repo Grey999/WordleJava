@@ -34,15 +34,16 @@ public class KeyboardView implements KeyListener{
         keygridthird = new JPanel();
 
 
-        keygridfirst.setLayout(new GridBagLayout());
+        keygridfirst.setLayout(new BoxLayout(keygridfirst, BoxLayout.X_AXIS));
         keygridfirst.setOpaque(true);
-        keygridsecond.setLayout(new GridBagLayout());
+        keygridsecond.setLayout(new BoxLayout(keygridsecond, BoxLayout.X_AXIS));
         keygridsecond.setOpaque(true);
-        keygridthird.setLayout(new GridBagLayout());
+        keygridthird.setLayout(new BoxLayout(keygridthird, BoxLayout.X_AXIS));
         keygridthird.setOpaque(true);
 
         Container contentPane = view.getFrame().getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+        contentPane.setMaximumSize(new Dimension(400,400));
         contentPane.add(keyboardpanel);
         addKeyToGrid();
 
@@ -68,7 +69,8 @@ public class KeyboardView implements KeyListener{
         else {
             key.setFont(new Font(Font.MONOSPACED, Font.BOLD, 30));
         }
-        key.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2, true));
+        key.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
+        key.setSize(new Dimension(8,8));
         key.setBackground(Color.WHITE);
         key.setOpaque(true);
         switch (label) {
@@ -120,8 +122,6 @@ public class KeyboardView implements KeyListener{
             default -> key.addActionListener((ActionEvent e) -> {
                 if (view.getModel().getActualword().length() < 5)
                 {
-                    System.out.println(view.getModel().getActualword().length() + (view.getModel().getGuess()*5)+
-                            view.getModel().getGuess());
                     view.getGrid().changeLabel(view.getModel().getActualword().length() + (view.getModel().getGuess()*5),
                                 view.getModel().getGuess(), label.toUpperCase(Locale.ROOT));
                     view.getModel().setActualword(view.getModel().getActualword() + label.toLowerCase(Locale.ROOT));
@@ -186,15 +186,15 @@ public class KeyboardView implements KeyListener{
         switch (state) {
             case 0 -> {
                 assert key != null;
-                key.setBackground(Color.DARK_GRAY);
+                key.setBackground(Color.RED);
             }
             case 1 -> {
                 assert key != null;
-                key.setBackground(Color.ORANGE);
+                key.setBackground(Color.GREEN);
             }
             case 2 -> {
                 assert key != null;
-                key.setBackground(Color.GREEN);
+                key.setBackground(Color.ORANGE);
             }
             default -> {
                 assert key != null;

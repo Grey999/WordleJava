@@ -165,6 +165,7 @@ public class InputView implements Observer{
     }
 
     public void startGame() throws InterruptedException, FileNotFoundException {
+        model.initialise();
         WGView view = new WGView(model, controller);
     }
 
