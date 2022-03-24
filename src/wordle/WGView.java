@@ -97,10 +97,8 @@ public class WGView implements Observer
 
     public void update(Observable o, Object arg) {
         if(!getModel().getActualword().equals("")) {
-            for (int i = 0; i < 5; i++) {
-                getGrid().changeBackgroundColor(i+(getModel().getGuess()-1)*5, getModel().getGuess()-1, getModel().getColors(i));
-                getKeyboard().changeBackgroundColor(getModel().getColors(i), String.valueOf(getModel().getActualword().charAt(i)).toUpperCase(Locale.ROOT));
-            }
+            getGrid().changeBackgroundColor((getModel().getGuess()-1)*5, getModel().getGuess()-1);
+            getKeyboard().changeBackgroundColor();
             getModel().setActualword("");
         }
             getFrame().repaint();

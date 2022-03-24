@@ -167,38 +167,41 @@ public class KeyboardView implements KeyListener{
     }
 
 
-    public void changeBackgroundColor(int state, String letter)
+    public void changeBackgroundColor()
     {
         JButton key = null;
         boolean found = false;
-        int index = 0;
-        while(!found && index < keyboard.length)
-        {
-            //problem index to debbug
-            if(keyboard[index].getText().equals(letter))
-            {
-                key = keyboard[index];
-                found = true;
-                System.out.println("found");
+        int index;
+        int state;
+        String letter;
+        for(int i = 0; i < view.getModel().getColors().length;i++) {
+            index = 0;
+            state = view.getModel().getColors()[i];
+            letter = String.valueOf(view.getModel().getActualword().charAt(i));
+            while (!found && index < keyboard.length) {
+                if (keyboard[index].getText().equals(letter)) {
+                    key = keyboard[index];
+                    found = true;
+                }
+                index++;
             }
-            index++;
-        }
-        switch (state) {
-            case 0 -> {
-                assert key != null;
-                key.setBackground(Color.RED);
-            }
-            case 1 -> {
-                assert key != null;
-                key.setBackground(Color.GREEN);
-            }
-            case 2 -> {
-                assert key != null;
-                key.setBackground(Color.ORANGE);
-            }
-            default -> {
-                assert key != null;
-                key.setBackground(Color.GRAY);
+            switch (state) {
+                case 0 -> {
+                    assert key != null;
+                    key.setBackground(Color.RED);
+                }
+                case 1 -> {
+                    assert key != null;
+                    key.setBackground(Color.GREEN);
+                }
+                case 2 -> {
+                    assert key != null;
+                    key.setBackground(Color.ORANGE);
+                }
+                default -> {
+                    assert key != null;
+                    key.setBackground(Color.GRAY);
+                }
             }
         }
 

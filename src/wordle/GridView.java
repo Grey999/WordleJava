@@ -60,17 +60,18 @@ public class GridView {
     }
 
 
-    public void changeBackgroundColor(int colum, int line, int state)
+    public void changeBackgroundColor(int colum, int line)
     {
-        if(line != 0)
-        {
-            line = line -1;
+        if (line != 0) {
+            line = line - 1;
         }
-        switch (state) {
-            case 0 -> letterscase[colum + line].setBackground(Color.RED);
-            case 1 -> letterscase[colum + line].setBackground(Color.GREEN);
-            case 2 -> letterscase[colum + line].setBackground(Color.ORANGE);
-            default -> letterscase[colum + line].setBackground(Color.GRAY);
+        for(int i = 0; i < view.getModel().getColors().length; i++) {
+            switch (view.getModel().getColors()[i]) {
+                case 0 -> letterscase[colum + line+i].setBackground(Color.RED);
+                case 1 -> letterscase[colum + line+i].setBackground(Color.GREEN);
+                case 2 -> letterscase[colum + line+i].setBackground(Color.ORANGE);
+                default -> letterscase[colum + line+i].setBackground(Color.GRAY);
+            }
         }
         view.getController().setColors();
 
