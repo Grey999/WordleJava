@@ -105,15 +105,16 @@ public class KeyboardView implements KeyListener {
                     key.addActionListener((ActionEvent e) -> {
                 if (view.getModel().getActualword().length() > 0)
                 {
-                    view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
-                    view.getGrid().changeLabel(view.getModel().getActualword().length(),
+                    view.getGrid().changeLabel(view.getModel().getActualword().length()+ (view.getModel().getGuess()*5),
                             view.getModel().getGuess(), "");
+                    view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
                 }
 
             });
             default -> key.addActionListener((ActionEvent e) -> {
                 if (view.getModel().getActualword().length() < 5)
                 {
+                    //review condition (problem on second try)
                     view.getGrid().changeLabel(view.getModel().getActualword().length() + (view.getModel().getGuess()*5),
                                 view.getModel().getGuess(), label.toUpperCase(Locale.ROOT));
                     view.getModel().setActualword(view.getModel().getActualword() + label.toLowerCase(Locale.ROOT));
@@ -161,6 +162,7 @@ public class KeyboardView implements KeyListener {
 
     public void changeBackgroundColor()
     {
+        //change only the first letter of the word...
         JButton key = null;
         boolean found = false;
         int index;
@@ -170,6 +172,7 @@ public class KeyboardView implements KeyListener {
             index = 0;
             state = view.getModel().getColors()[i];
             letter = String.valueOf(view.getModel().getActualword().charAt(i));
+            letter = letter.toUpperCase(Locale.ROOT);
             while (!found && index < keyboard.length) {
                 if (keyboard[index].getText().equals(letter)) {
                     key = keyboard[index];
@@ -177,23 +180,24 @@ public class KeyboardView implements KeyListener {
                 }
                 index++;
             }
+
             switch (state) {
-                case 0 -> {
-                    assert key != null;
-                    key.setBackground(Color.RED);
-                }
-                case 1 -> {
-                    assert key != null;
-                    key.setBackground(Color.GREEN);
-                }
-                case 2 -> {
-                    assert key != null;
-                    key.setBackground(Color.ORANGE);
-                }
-                default -> {
-                    assert key != null;
-                    key.setBackground(Color.GRAY);
-                }
+                    case 0 -> {
+                        assert key != null;
+                        key.setBackground(Color.RED);
+                    }
+                    case 1 -> {
+                        assert key != null;
+                        key.setBackground(Color.GREEN);
+                    }
+                    case 2 -> {
+                        assert key != null;
+                        key.setBackground(Color.ORANGE);
+                    }
+                    default -> {
+                        assert key != null;
+                        key.setBackground(Color.GRAY);
+                    }
             }
         }
 

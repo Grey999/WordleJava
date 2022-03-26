@@ -18,9 +18,6 @@ public class Main {
         );
     }
     public static void createAndShowGUI() throws FileNotFoundException {
-        WGModel model = new WGModel();
-        WGController controller = new WGController(model);
-        controller.initialise();
-        InputView inputView = new InputView(model, controller);
+        InputView inputView = new InputView();
     }
 }

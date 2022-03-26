@@ -13,22 +13,21 @@ public class InputView implements Observer{
     private final JButton no;
     private final JButton newgame;
 
-    private final WGController controller;
-
-    private final WGModel model;
+    private boolean random;
+    private boolean error;
+    private boolean debbug;
     private JFrame frame;
     private JPanel panel;
     private final JLabel textondisplay;
-    private WGView view;
+
+    private WGModel model;
 
 
     //must handle: flags, endgame screen
     //smaller panel in front of the game one
     //first frame visible at the beginning
-    public InputView(WGModel model, WGController controller)
+    public InputView()
     {
-        this.controller = controller;
-        this.model = model;
         this.setFrame(new JFrame("Play Mode"));
         getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getFrame().setSize(300,300);
@@ -47,8 +46,6 @@ public class InputView implements Observer{
         frame.setContentPane(panel);
         frame.pack();
 
-        model.addObserver(this);
-        update(model,null);
 
     }
 
@@ -147,16 +144,16 @@ public class InputView implements Observer{
 
     private void randomWord(boolean random)
     {
-        controller.setRandom(random);
+        this.random = random;
     }
 
     private void debbugMode(boolean debbug)
     {
-        controller.setDebbug(debbug);
+        this.debbug = debbug;
     }
 
     private void displayError(boolean error) throws InterruptedException, FileNotFoundException {
-        controller.setError(error);
+        this.error = error;
         getFrame().setVisible(false);
         yes.setVisible(false);
         no.setVisible(false);
@@ -166,8 +163,14 @@ public class InputView implements Observer{
     }
 
     public void startGame() throws InterruptedException, FileNotFoundException {
-        model.initialise();
-        view = new WGView(model, controller);
+        model = new WGModel();
+        WGController controller = new WGController(model);
+        model.addObserver(this);
+        controller.setError(error);
+        controller.setRandom(random);
+        controller.setDebbug(debbug);
+        controller.initialise();
+        WGView view = new WGView(model, controller);
     }
 
     public JFrame getFrame() {
@@ -178,8 +181,8 @@ public class InputView implements Observer{
         this.frame = frame;
     }
 
-    @Override
     public void update(Observable o, Object arg) {
+        System.out.println("Appel input view");
         if(model.isNewgame())
         {
             endgame();

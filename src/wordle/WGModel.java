@@ -6,8 +6,7 @@ import java.util.*;
 import java.util.Observable;
 
 
-public class WGModel extends Observable{
-    private boolean display;
+public class WGModel extends Observable {
     static final double GUESS=6;
 
     //FLAGS
@@ -26,10 +25,6 @@ public class WGModel extends Observable{
     private String actualword;
     private int guess;
 
-
-    public void addObserver(WGView wgView) {
-    }
-
     protected void initialise() throws FileNotFoundException {
         File file = new File("words.txt");
         Scanner sc = new Scanner(file);
@@ -45,10 +40,8 @@ public class WGModel extends Observable{
             setWord(sc.nextLine());
         }
         sc.close();
-        System.out.println(getWord());
         colors = new int[5];
         setActualword("");
-        System.out.println(getActualword().length());
         setGuess(0);
         setChanged();
         notifyObservers();
@@ -64,6 +57,8 @@ public class WGModel extends Observable{
             setNewgame(true);
             setWin(true);
             System.out.println("The game is over");
+            setChanged();
+            notifyObservers();
         }
         else
         {
@@ -80,10 +75,9 @@ public class WGModel extends Observable{
                 setWin(false);
                 setNewgame(true);
             }
+            setChanged();
+            notifyObservers();
         }
-        setDisplay(true);
-        setChanged();
-        notifyObservers();
     }
 
     protected boolean isValidWord() throws FileNotFoundException {
@@ -136,14 +130,6 @@ public class WGModel extends Observable{
     public boolean isWin(){return win; }
 
     public void setWin(boolean win){this.win = win; }
-
-    public boolean isDisplay() {
-        return display;
-    }
-
-    public void setDisplay(boolean display) {
-        this.display = display;
-    }
 
     public boolean isRandomword() {
         return randomword;

@@ -47,8 +47,8 @@ public class WGView implements Observer
 
 
         createControls();
-        getModel().addObserver(this);
-        update(model,null);
+        this.model.addObserver(this);
+        update(this.model,null);
     }
 
     public Dimension getPanelSize(){
@@ -95,17 +95,6 @@ public class WGView implements Observer
         panel.add(getKeyboard().getPanel());
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        System.out.println("appel de update view");
-        if(!getModel().getActualword().equals("")) {
-            getGrid().changeBackgroundColor((getModel().getGuess()-1)*5, getModel().getGuess()-1);
-            getKeyboard().changeBackgroundColor();
-            getModel().setActualword("");
-        }
-        getFrame().repaint();
-    }
-
     public boolean showerrorpannel() throws FileNotFoundException {
         //long delay = 5;
         //TimeUnit time = TimeUnit.SECONDS;
@@ -126,6 +115,17 @@ public class WGView implements Observer
             }
             return true;
         }
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        System.out.println("appel de update view");
+        if(!getModel().getActualword().equals("")) {
+            getGrid().changeBackgroundColor((getModel().getGuess()-1)*5, getModel().getGuess()-1);
+            getKeyboard().changeBackgroundColor();
+            getModel().setActualword("");
+        }
+        getFrame().repaint();
     }
     
     public WGController getController(){return controller;}
