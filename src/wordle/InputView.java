@@ -19,6 +19,7 @@ public class InputView implements Observer{
     private JFrame frame;
     private JPanel panel;
     private final JLabel textondisplay;
+    private WGView view;
 
 
     //must handle: flags, endgame screen
@@ -166,7 +167,7 @@ public class InputView implements Observer{
 
     public void startGame() throws InterruptedException, FileNotFoundException {
         model.initialise();
-        WGView view = new WGView(model, controller);
+        view = new WGView(model, controller);
     }
 
     public JFrame getFrame() {
@@ -183,5 +184,6 @@ public class InputView implements Observer{
         {
             endgame();
         }
+
     }
 }

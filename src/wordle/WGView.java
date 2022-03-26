@@ -47,7 +47,7 @@ public class WGView implements Observer
 
 
         createControls();
-        model.addObserver(this);
+        getModel().addObserver(this);
         update(model,null);
     }
 
@@ -95,13 +95,15 @@ public class WGView implements Observer
         panel.add(getKeyboard().getPanel());
     }
 
+    @Override
     public void update(Observable o, Object arg) {
+        System.out.println("appel de update view");
         if(!getModel().getActualword().equals("")) {
             getGrid().changeBackgroundColor((getModel().getGuess()-1)*5, getModel().getGuess()-1);
             getKeyboard().changeBackgroundColor();
             getModel().setActualword("");
         }
-            getFrame().repaint();
+        getFrame().repaint();
     }
 
     public boolean showerrorpannel() throws FileNotFoundException {

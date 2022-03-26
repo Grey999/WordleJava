@@ -8,7 +8,7 @@ import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class KeyboardView implements KeyListener{
+public class KeyboardView implements KeyListener {
     private final JButton[] keyboard;
     private final JPanel keyboardpanel;
     private final JPanel keygridfirst;
@@ -56,8 +56,6 @@ public class KeyboardView implements KeyListener{
     }
 
 
-
-
     private void createKeys(String label, int i) throws InterruptedException, FileNotFoundException {
         //review conditions for the keyboard
         JButton key = new JButton();
@@ -76,30 +74,23 @@ public class KeyboardView implements KeyListener{
         switch (label) {
             case "Enter" ->
                 key.addActionListener((ActionEvent e) ->
-                    {
+                {
+                    if (view.getModel().getActualword().length() == 5) {
                         try {
-                            if(view.showerrorpannel())
-                            {
-                                if (view.getModel().isMessagerror())
-                                {
+                            if (view.showerrorpannel()) {
+                                if (view.getModel().isMessagerror()) {
                                     try {
-                                        if (view.showerrorpannel())
-                                        {
+                                        if (view.showerrorpannel()) {
                                             view.getModel().change();
-                                            view.update(view.getModel(), null);
+
                                         }
                                     } catch (FileNotFoundException ex) {
                                         ex.printStackTrace();
                                     }
-                                }
-                                else
-                                {
-                                    try
-                                    {
+                                } else {
+                                    try {
                                         view.getModel().change();
-                                        view.update(view.getModel(), null);
-                                    } catch (FileNotFoundException ex)
-                                    {
+                                    } catch (FileNotFoundException ex) {
                                         ex.printStackTrace();
                                     }
                                 }
@@ -108,7 +99,8 @@ public class KeyboardView implements KeyListener{
                             ex.printStackTrace();
                         }
 
-                    });
+                    }
+                });
             case "⌫" ->
                     key.addActionListener((ActionEvent e) -> {
                 if (view.getModel().getActualword().length() > 0)

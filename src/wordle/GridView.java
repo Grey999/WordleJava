@@ -73,7 +73,6 @@ public class GridView {
                 default -> letterscase[colum + line+i].setBackground(Color.GRAY);
             }
         }
-        view.getController().setColors();
 
     }
 }

@@ -2,11 +2,11 @@ package wordle;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.*;
 import java.util.Observable;
 
 
-public class WGModel extends Observable {
+public class WGModel extends Observable{
     private boolean display;
     static final double GUESS=6;
 
@@ -208,4 +208,5 @@ public class WGModel extends Observable {
     public void setColors(int[] colors) {
         this.colors = colors;
     }
+
 }
