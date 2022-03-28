@@ -1,8 +1,5 @@
 package wordle;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
-import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
@@ -87,13 +84,17 @@ public class WGView implements Observer
     private void createPanel() {
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(Color.black);
+        panel.setBackground(Color.GRAY);
         JLabel title = new JLabel("WORDLE", SwingConstants.CENTER);
         title.setBackground(Color.WHITE);
         title.setSize(new Dimension(40,40));
         panel.add(title);
-        panel.add(getGrid().getPanel());
-        panel.add(getKeyboard().getPanel());
+        panel.add(getGrid().getPanel(), BorderLayout.NORTH);
+        JPanel invisible = new JPanel();
+        invisible.setSize(new Dimension(800,800));
+        invisible.setBackground(Color.GRAY);
+        panel.add(invisible,BorderLayout.SOUTH);
+        panel.add(getKeyboard().getPanel(), BorderLayout.SOUTH);
     }
 
     public boolean showerrorpannel() throws FileNotFoundException {

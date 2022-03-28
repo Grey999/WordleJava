@@ -14,9 +14,9 @@ public class WGModel extends Observable {
     private boolean debbug;
     private boolean messagerror;
 
-    final int Red = 0;
-    final int Green = 1;
-    final int Orange = 2;
+    static final int Red = 0;
+    static final int Green = 1;
+    static final int Orange = 2;
 
     private boolean newgame;
     private boolean win;

@@ -8,6 +8,8 @@ import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+import static wordle.WGModel.*;
+
 public class KeyboardView {
     private final JButton[] keyboard;
     private final JPanel keyboardpanel;
@@ -20,6 +22,7 @@ public class KeyboardView {
         this.view = view;
         keyboard = new JButton[28];
         keyboardpanel = new JPanel();
+        keyboardpanel.setBackground(Color.GRAY);
         String qwerty = "QWERTYUIOPASDFGHJKL⌫ZXCVBNM";
         for(int i = 0; i < qwerty.length(); i++)
         {
@@ -34,16 +37,13 @@ public class KeyboardView {
                 {
                     case 10 ->
                             {
-                                System.out.println("Enter");
                                 EnterKey();
                             }
                     case 8 ->
                             {
-                                System.out.println("BackSpace");
                                 BackSpaceKey();
                             }
                     default -> {
-                        System.out.println("Touch");
                         if((e.getKeyChar() >= 97 && e.getKeyChar() <= 122))
                         {
                             LetterKey(String.valueOf(e.getKeyChar()));
@@ -65,7 +65,7 @@ public class KeyboardView {
         });
 
         keyboardpanel.setLayout(new BoxLayout(keyboardpanel, BoxLayout.Y_AXIS));
-        keyboardpanel.setPreferredSize(new Dimension(650,160));
+        keyboardpanel.setPreferredSize(new Dimension(1980,850));
         keygridfirst = new JPanel();
         keygridsecond = new JPanel();
         keygridthird = new JPanel();
@@ -73,10 +73,13 @@ public class KeyboardView {
 
         keygridfirst.setLayout(new BoxLayout(keygridfirst, BoxLayout.X_AXIS));
         keygridfirst.setOpaque(true);
+        keygridfirst.setBackground(Color.GRAY);
         keygridsecond.setLayout(new BoxLayout(keygridsecond, BoxLayout.X_AXIS));
         keygridsecond.setOpaque(true);
+        keygridsecond.setBackground(Color.GRAY);
         keygridthird.setLayout(new BoxLayout(keygridthird, BoxLayout.X_AXIS));
         keygridthird.setOpaque(true);
+        keygridthird.setBackground(Color.GRAY);
 
         Container contentPane = view.getFrame().getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
@@ -145,13 +148,9 @@ public class KeyboardView {
         //review conditions for the keyboard
         JButton key = new JButton();
         key.setText(label);
-        if(label.equals("Enter") || label.equals("⌫"))
-        {
-            key.setFont(new Font(Font.MONOSPACED, Font.BOLD, 40));
-        }
-        else {
-            key.setFont(new Font(Font.MONOSPACED, Font.BOLD, 30));
-        }
+
+        key.setFont(new Font(Font.MONOSPACED, Font.BOLD, 40));
+
         key.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
         key.setSize(new Dimension(8,8));
         key.setBackground(Color.WHITE);
@@ -204,7 +203,6 @@ public class KeyboardView {
 
     public void changeBackgroundColor()
     {
-        //change only the first letter of the word...
         JButton key = null;
         boolean found = false;
         int index;
@@ -223,18 +221,19 @@ public class KeyboardView {
                 index++;
             }
             switch (state) {
-                    case 0 -> {
+                case Red -> {
                         assert key != null;
                         key.setBackground(Color.RED);
                     }
-                    case 1 -> {
+                case Green -> {
                         assert key != null;
                         key.setBackground(Color.GREEN);
                     }
-                    case 2 -> {
+                case Orange -> {
                         assert key != null;
                         key.setBackground(Color.ORANGE);
                     }
+
                     default -> {
                         assert key != null;
                         key.setBackground(Color.GRAY);

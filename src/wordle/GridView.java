@@ -3,6 +3,8 @@ package wordle;
 import javax.swing.*;
 import java.awt.*;
 
+import static wordle.WGModel.*;
+
 public class GridView {
     private final JLabel[] letterscase;
     private final JPanel gridpanel;
@@ -13,7 +15,8 @@ public class GridView {
         letterscase = new JLabel[30];
         gridpanel = new JPanel();
         gridpanel.setLayout(new GridLayout(6,5));
-        gridpanel.setPreferredSize(new Dimension(300,300));
+        gridpanel.setPreferredSize(new Dimension(2000,2000));
+        gridpanel.setBackground(Color.GRAY);
         addLabelsView();
     }
 
@@ -58,10 +61,10 @@ public class GridView {
     {
         for(int i = 0; i < view.getModel().getColors().length; i++) {
             switch (view.getModel().getColors()[i]) {
-                case 0 -> letterscase[colum+i].setBackground(Color.RED);
-                case 1 -> letterscase[colum+i].setBackground(Color.GREEN);
-                case 2 -> letterscase[colum +i].setBackground(Color.ORANGE);
-                default -> letterscase[colum+i].setBackground(Color.GRAY);
+                case Red -> letterscase[colum + i].setBackground(Color.RED);
+                case Green -> letterscase[colum + i].setBackground(Color.GREEN);
+                case Orange -> letterscase[colum + i].setBackground(Color.ORANGE);
+                default -> letterscase[colum + i].setBackground(Color.GRAY);
             }
         }
 
