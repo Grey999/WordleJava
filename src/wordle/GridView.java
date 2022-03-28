@@ -48,15 +48,9 @@ public class GridView {
     }
 
 
-    protected void changeLabel(int colum, int line, String letter)
+    protected void changeLabel(int index, String letter)
     {
-        if(line != 0)
-        {
-            line = line -1;
-        }
-
-        letterscase[colum+line].setText(letter);
-
+        letterscase[index].setText(letter);
     }
 
 

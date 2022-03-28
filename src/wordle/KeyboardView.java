@@ -55,6 +55,53 @@ public class KeyboardView implements KeyListener {
 
     }
 
+    private void EnterKey()
+    {
+        if (view.getModel().getActualword().length() == 5) {
+            try {
+                if (view.showerrorpannel()) {
+                    if (view.getModel().isMessagerror()) {
+                        try {
+                            if (view.showerrorpannel()) {
+                                view.getModel().change();
+
+                            }
+                        } catch (FileNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    } else {
+                        try {
+                            view.getModel().change();
+                        } catch (FileNotFoundException ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
+
+        }
+    }
+
+    private void BackSpaceKey()
+    {
+        if (view.getModel().getActualword().length() > 0)
+        {
+            view.getGrid().changeLabel(view.getModel().getActualword().length()+ (view.getModel().getGuess()*5), "");
+            view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
+        }
+    }
+
+    private void LetterKey(String label)
+    {
+        if (view.getModel().getActualword().length() < 5)
+        {
+            //review condition (problem on second try)
+            view.getGrid().changeLabel(view.getModel().getActualword().length() + (view.getModel().getGuess()*5),label.toUpperCase(Locale.ROOT));
+            view.getModel().setActualword(view.getModel().getActualword() + label.toLowerCase(Locale.ROOT));
+        }
+    }
 
     private void createKeys(String label, int i) throws InterruptedException, FileNotFoundException {
         //review conditions for the keyboard
@@ -73,53 +120,10 @@ public class KeyboardView implements KeyListener {
         key.setOpaque(true);
         switch (label) {
             case "Enter" ->
-                key.addActionListener((ActionEvent e) ->
-                {
-                    if (view.getModel().getActualword().length() == 5) {
-                        try {
-                            if (view.showerrorpannel()) {
-                                if (view.getModel().isMessagerror()) {
-                                    try {
-                                        if (view.showerrorpannel()) {
-                                            view.getModel().change();
-
-                                        }
-                                    } catch (FileNotFoundException ex) {
-                                        ex.printStackTrace();
-                                    }
-                                } else {
-                                    try {
-                                        view.getModel().change();
-                                    } catch (FileNotFoundException ex) {
-                                        ex.printStackTrace();
-                                    }
-                                }
-                            }
-                        } catch (FileNotFoundException ex) {
-                            ex.printStackTrace();
-                        }
-
-                    }
-                });
+                key.addActionListener((ActionEvent e) -> {EnterKey();});
             case "⌫" ->
-                    key.addActionListener((ActionEvent e) -> {
-                if (view.getModel().getActualword().length() > 0)
-                {
-                    view.getGrid().changeLabel(view.getModel().getActualword().length()+ (view.getModel().getGuess()*5),
-                            view.getModel().getGuess(), "");
-                    view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
-                }
-
-            });
-            default -> key.addActionListener((ActionEvent e) -> {
-                if (view.getModel().getActualword().length() < 5)
-                {
-                    //review condition (problem on second try)
-                    view.getGrid().changeLabel(view.getModel().getActualword().length() + (view.getModel().getGuess()*5),
-                                view.getModel().getGuess(), label.toUpperCase(Locale.ROOT));
-                    view.getModel().setActualword(view.getModel().getActualword() + label.toLowerCase(Locale.ROOT));
-                }
-            });
+                    key.addActionListener((ActionEvent e) -> { BackSpaceKey();});
+            default -> key.addActionListener((ActionEvent e) -> {LetterKey(label);});
         }
         keyboard[i] = key;
 
@@ -180,7 +184,6 @@ public class KeyboardView implements KeyListener {
                 }
                 index++;
             }
-
             switch (state) {
                     case 0 -> {
                         assert key != null;
@@ -199,9 +202,8 @@ public class KeyboardView implements KeyListener {
                         key.setBackground(Color.GRAY);
                     }
             }
+            found = false;
         }
-
-
     }
 
     @Override
@@ -211,20 +213,25 @@ public class KeyboardView implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        switch (KeyEvent.getKeyText(e.getKeyCode()))
+        String keyText = KeyEvent.getKeyText(e.getKeyCode());
+        switch (keyText)
         {
-            case "Enter" -> System.out.println("Something");
-            case "BackSpace" -> System.out.println("BackSpace");
-            case "" -> {
-                //find how to see a letter
-                if (view.getModel().getActualword().length() < 5) {
-                    view.getModel().setActualword(view.getModel().getActualword() + String.valueOf(e.getKeyChar()));
-                    view.getGrid().changeLabel(view.getModel().getActualword().length(),
-                        view.getModel().getGuess(), String.valueOf(e.getKeyChar()));
+            case "Enter" ->
+                    {
+                        EnterKey();
+                    }
+            case "BackSpace" ->
+                    {
+                        BackSpaceKey();
+                    }
+            default -> {
+                char current = keyText.charAt(0);
+                if((current < 65 || current > 91 && current < 97 || current > 123) && keyText.length() == 1)
+                LetterKey(KeyEvent.getKeyText(e.getKeyCode()));
                 }
             }
-        }
     }
+
 
     @Override
     public void keyReleased(KeyEvent e) {
