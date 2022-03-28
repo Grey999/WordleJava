@@ -1,4 +1,6 @@
 package wordle;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 import java.util.Locale;
 import java.util.Observable;
@@ -19,6 +21,7 @@ public class WGView implements Observer
     private JPanel panel;
     private GridView grid;
     private KeyboardView keyboard;
+
 
     private JPanel errorpannel;
     private JTextArea errormessage;
@@ -56,8 +59,6 @@ public class WGView implements Observer
     }
 
     private void createControls() {
-
-
         Container contentPane = getFrame().getContentPane();
         contentPane.setBackground(Color.black);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
@@ -121,7 +122,7 @@ public class WGView implements Observer
     public void update(Observable o, Object arg) {
         System.out.println("appel de update view");
         if(!getModel().getActualword().equals("")) {
-            getGrid().changeBackgroundColor((getModel().getGuess()-1)*5, getModel().getGuess()-1);
+            getGrid().changeBackgroundColor((getModel().getGuess()-1)*5);
             getKeyboard().changeBackgroundColor();
             getModel().setActualword("");
         }

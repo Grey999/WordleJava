@@ -8,7 +8,7 @@ import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-public class KeyboardView implements KeyListener {
+public class KeyboardView {
     private final JButton[] keyboard;
     private final JPanel keyboardpanel;
     private final JPanel keygridfirst;
@@ -26,6 +26,43 @@ public class KeyboardView implements KeyListener {
             createKeys(String.valueOf(qwerty.charAt(i)), i);
         }
         createKeys("Enter",27);
+
+        keyboard[0].addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                switch (e.getKeyChar())
+                {
+                    case 10 ->
+                            {
+                                System.out.println("Enter");
+                                EnterKey();
+                            }
+                    case 8 ->
+                            {
+                                System.out.println("BackSpace");
+                                BackSpaceKey();
+                            }
+                    default -> {
+                        System.out.println("Touch");
+                        if((e.getKeyChar() >= 97 && e.getKeyChar() <= 122))
+                        {
+                            LetterKey(String.valueOf(e.getKeyChar()));
+                        }
+
+                    }
+                }
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
 
         keyboardpanel.setLayout(new BoxLayout(keyboardpanel, BoxLayout.Y_AXIS));
         keyboardpanel.setPreferredSize(new Dimension(650,160));
@@ -55,7 +92,7 @@ public class KeyboardView implements KeyListener {
 
     }
 
-    private void EnterKey()
+    public void EnterKey()
     {
         if (view.getModel().getActualword().length() == 5) {
             try {
@@ -84,16 +121,17 @@ public class KeyboardView implements KeyListener {
         }
     }
 
-    private void BackSpaceKey()
+    public void BackSpaceKey()
     {
-        if (view.getModel().getActualword().length() > 0)
+        System.out.println("Appel BackSpace");
+        if (view.getModel().getActualword().length() != 0)
         {
-            view.getGrid().changeLabel(view.getModel().getActualword().length()+ (view.getModel().getGuess()*5), "");
+            view.getGrid().changeLabel(view.getModel().getActualword().length() + (view.getModel().getGuess()*5)-1, "");
             view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
         }
     }
 
-    private void LetterKey(String label)
+    public void LetterKey(String label)
     {
         if (view.getModel().getActualword().length() < 5)
         {
@@ -204,37 +242,5 @@ public class KeyboardView implements KeyListener {
             }
             found = false;
         }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        String keyText = KeyEvent.getKeyText(e.getKeyCode());
-        switch (keyText)
-        {
-            case "Enter" ->
-                    {
-                        EnterKey();
-                    }
-            case "BackSpace" ->
-                    {
-                        BackSpaceKey();
-                    }
-            default -> {
-                char current = keyText.charAt(0);
-                if((current < 65 || current > 91 && current < 97 || current > 123) && keyText.length() == 1)
-                LetterKey(KeyEvent.getKeyText(e.getKeyCode()));
-                }
-            }
-    }
-
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
     }
 }

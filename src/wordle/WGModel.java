@@ -14,6 +14,10 @@ public class WGModel extends Observable {
     private boolean debbug;
     private boolean messagerror;
 
+    final int Red = 0;
+    final int Green = 1;
+    final int Orange = 2;
+
     private boolean newgame;
     private boolean win;
 
@@ -109,17 +113,17 @@ public class WGModel extends Observable {
         setColors(new int[5]);
         for (int c = 0; c < 5; c++)
         {
-            getColors()[c] = 0;
+            getColors()[c] = Red;
         }
         for (int i = 0; i < 5; i++) {
             if(actualword.charAt(i) == word.charAt(i))
             {
-                getColors()[i] = 1;
+                getColors()[i] = Green;
             }
             else {
                 for (int j = i + 1; j < 5; j++) {
                     if (actualword.charAt(i) == word.charAt(j)) {
-                        getColors()[i] = 2;
+                        getColors()[i] = Orange;
                     }
                 }
             }
