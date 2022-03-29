@@ -121,7 +121,6 @@ public class WGView implements Observer
 
     @Override
     public void update(Observable o, Object arg) {
-        System.out.println("appel de update view");
         if(!getModel().getActualword().equals("")) {
             getGrid().changeBackgroundColor((getModel().getGuess()-1)*5);
             getKeyboard().changeBackgroundColor();

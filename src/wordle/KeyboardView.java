@@ -103,7 +103,7 @@ public class KeyboardView {
                     if (view.getModel().isMessagerror()) {
                         try {
                             if (view.showerrorpannel()) {
-                                view.getModel().change();
+                                view.getController().change();
 
                             }
                         } catch (FileNotFoundException ex) {
@@ -111,7 +111,7 @@ public class KeyboardView {
                         }
                     } else {
                         try {
-                            view.getModel().change();
+                            view.getController().change();
                         } catch (FileNotFoundException ex) {
                             ex.printStackTrace();
                         }

@@ -14,9 +14,10 @@ public class WGModel extends Observable {
     private boolean debbug;
     private boolean messagerror;
 
-    static final int Red = 0;
-    static final int Green = 1;
-    static final int Orange = 2;
+    static final int Grey = 0;
+    static final int Red = 1;
+    static final int Green = 2;
+    static final int Orange = 3;
 
     private boolean newgame;
     private boolean win;
@@ -44,6 +45,7 @@ public class WGModel extends Observable {
             setWord(sc.nextLine());
         }
         sc.close();
+        System.out.println(word);
         colors = new int[5];
         setActualword("");
         setGuess(0);
@@ -55,7 +57,6 @@ public class WGModel extends Observable {
 
     protected void change() throws FileNotFoundException {
        //actual word send by the controller
-        System.out.println("change is called");
         if(getActualword().equals(getWord()))
         {
             setNewgame(true);
@@ -67,11 +68,6 @@ public class WGModel extends Observable {
         else
         {
             changeColors();
-            //Debbugage
-            for(int i = 0; i < getColors().length; i++)
-            {
-                System.out.println(getActualword().charAt(i)+" "+getColors()[i]);
-            }
             setGuess(getGuess() + 1);
             System.out.println(getGuess());
             if(getGuess() == GUESS)

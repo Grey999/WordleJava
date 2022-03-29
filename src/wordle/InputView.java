@@ -13,14 +13,17 @@ public class InputView implements Observer{
     private final JButton no;
     private final JButton newgame;
 
+
     private boolean random;
     private boolean error;
     private boolean debbug;
+    public static boolean isnewgame;
     private JFrame frame;
     private JPanel panel;
     private final JLabel textondisplay;
 
     private WGModel model;
+    private WGView view;
 
 
     //must handle: flags, endgame screen
@@ -41,6 +44,7 @@ public class InputView implements Observer{
 
         this.yes  = new JButton("Yes");
         this.no = new JButton("No");
+        isnewgame = false;
 
         createPanel();
         frame.setContentPane(panel);
@@ -97,7 +101,6 @@ public class InputView implements Observer{
                     }
                     getFrame().repaint();
                 }
-
             }
         });
 
@@ -120,6 +123,16 @@ public class InputView implements Observer{
                     }
                     getFrame().repaint();
                 }
+            }
+        });
+
+        newgame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textondisplay.setText("Do you want to have a random word ?");
+                yes.setVisible(true);
+                no.setVisible(true);
+                newgame.setVisible(false);
             }
         });
 
@@ -170,7 +183,7 @@ public class InputView implements Observer{
         controller.setRandom(random);
         controller.setDebbug(debbug);
         controller.initialise();
-        WGView view = new WGView(model, controller);
+        view = new WGView(model, controller);
     }
 
     public JFrame getFrame() {
@@ -182,7 +195,6 @@ public class InputView implements Observer{
     }
 
     public void update(Observable o, Object arg) {
-        System.out.println("Appel input view");
         if(model.isNewgame())
         {
             endgame();

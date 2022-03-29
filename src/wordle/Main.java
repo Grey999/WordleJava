@@ -8,12 +8,12 @@ public class Main {
         javax.swing.SwingUtilities.invokeLater(
                 new Runnable() {
                     public void run() {
-                        try {
-                            createAndShowGUI();
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
+                            try {
+                                createAndShowGUI();
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }
                 }
         );
     }
