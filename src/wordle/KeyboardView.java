@@ -220,24 +220,23 @@ public class KeyboardView {
                 }
                 index++;
             }
-            switch (state) {
-                case Red -> {
-                        assert key != null;
+            assert key != null;
+            if(key.getBackground() == Color.WHITE) {
+                switch (state) {
+                    case Red -> {
                         key.setBackground(Color.RED);
                     }
-                case Green -> {
-                        assert key != null;
+                    case Green -> {
                         key.setBackground(Color.GREEN);
                     }
-                case Orange -> {
-                        assert key != null;
+                    case Orange -> {
                         key.setBackground(Color.ORANGE);
                     }
 
                     default -> {
-                        assert key != null;
                         key.setBackground(Color.GRAY);
                     }
+                }
             }
             found = false;
         }

@@ -61,7 +61,7 @@ public class WGView implements Observer
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 
         createPanel();
-        contentPane.add(panel);
+        contentPane.add(getPanel());
         contentPane.add(getErrorpannel());
         getErrorpannel().setVisible(false);
 
@@ -82,19 +82,19 @@ public class WGView implements Observer
 
 
     private void createPanel() {
-        panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(Color.GRAY);
+        setPanel(new JPanel());
+        getPanel().setLayout(new BoxLayout(getPanel(), BoxLayout.Y_AXIS));
+        getPanel().setBackground(Color.GRAY);
         JLabel title = new JLabel("WORDLE", SwingConstants.CENTER);
         title.setBackground(Color.WHITE);
         title.setSize(new Dimension(40,40));
-        panel.add(title);
-        panel.add(getGrid().getPanel(), BorderLayout.NORTH);
+        getPanel().add(title);
+        getPanel().add(getGrid().getPanel(), BorderLayout.NORTH);
         JPanel invisible = new JPanel();
         invisible.setSize(new Dimension(800,800));
         invisible.setBackground(Color.GRAY);
-        panel.add(invisible,BorderLayout.SOUTH);
-        panel.add(getKeyboard().getPanel(), BorderLayout.SOUTH);
+        getPanel().add(invisible,BorderLayout.SOUTH);
+        getPanel().add(getKeyboard().getPanel(), BorderLayout.SOUTH);
     }
 
     public boolean showerrorpannel() throws FileNotFoundException {
@@ -173,5 +173,13 @@ public class WGView implements Observer
 
     public void setErrormessage(JTextArea errormessage) {
         this.errormessage = errormessage;
+    }
+
+    public JPanel getPanel() {
+        return panel;
+    }
+
+    public void setPanel(JPanel panel) {
+        this.panel = panel;
     }
 }

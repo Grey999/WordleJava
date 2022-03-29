@@ -129,6 +129,7 @@ public class InputView implements Observer{
         newgame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                view.getPanel().setVisible(false);
                 textondisplay.setText("Do you want to have a random word ?");
                 yes.setVisible(true);
                 no.setVisible(true);

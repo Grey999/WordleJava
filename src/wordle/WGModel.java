@@ -117,8 +117,8 @@ public class WGModel extends Observable {
                 getColors()[i] = Green;
             }
             else {
-                for (int j = i + 1; j < 5; j++) {
-                    if (actualword.charAt(i) == word.charAt(j)) {
+                for (int j = 0; j < 5; j++) {
+                    if (actualword.charAt(i) == word.charAt(j) && getColors()[i] == Red) {
                         getColors()[i] = Orange;
                     }
                 }
