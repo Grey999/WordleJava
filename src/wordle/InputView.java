@@ -53,6 +53,15 @@ public class InputView implements Observer{
 
     }
 
+    @Override
+    public void update(Observable o, Object arg) {
+        if(model.isNewgame())
+        {
+            endGame();
+        }
+
+    }
+
     private void createPanel()
     {
         this.panel = new JPanel();
@@ -85,44 +94,14 @@ public class InputView implements Observer{
         yes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textondisplay.getText().equals("Do you want to have a random word ?")) {
-                    randomWord(true);
-                    textondisplay.setText("Do you want to use the debbug mode ?");
-                    getFrame().repaint();
-                } else if (textondisplay.getText().equals("Do you want to use the debbug mode ?")) {
-                    debbugMode(true);
-                    textondisplay.setText("Do you want to use the error mode ?");
-                    getFrame().repaint();
-                } else if (textondisplay.getText().equals("Do you want to use the error mode ?")) {
-                    try {
-                        displayError(true);
-                    } catch (InterruptedException | FileNotFoundException ex) {
-                        ex.printStackTrace();
-                    }
-                    getFrame().repaint();
-                }
+                setUpFlag(true);
             }
         });
 
         no.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (textondisplay.getText().equals("Do you want to have a random word ?")) {
-                    randomWord(false);
-                    textondisplay.setText("Do you want to use the debbug mode ?");
-                    getFrame().repaint();
-                } else if (textondisplay.getText().equals("Do you want to use the debbug mode ?")) {
-                    debbugMode(false);
-                    textondisplay.setText("Do you want to use the error mode ?");
-                    getFrame().repaint();
-                } else if (textondisplay.getText().equals("Do you want to use the error mode ?")) {
-                    try {
-                        displayError(false);
-                    } catch (InterruptedException | FileNotFoundException ex) {
-                        ex.printStackTrace();
-                    }
-                    getFrame().repaint();
-                }
+                setUpFlag(false);
             }
         });
 
@@ -140,21 +119,24 @@ public class InputView implements Observer{
 
     }
 
-
-    private void endgame()
+    public void setUpFlag(boolean bool)
     {
-        getFrame().setVisible(true);
-        textondisplay.setVisible(true);
-        if(model.isWin())
-        {
-            textondisplay.setText("You win ! \n Do you want to play again ?");
+        if (textondisplay.getText().equals("Do you want to have a random word ?")) {
+            randomWord(bool);
+            textondisplay.setText("Do you want to use the debbug mode ?");
+            getFrame().repaint();
+        } else if (textondisplay.getText().equals("Do you want to use the debbug mode ?")) {
+            debbugMode(bool);
+            textondisplay.setText("Do you want to use the error mode ?");
+            getFrame().repaint();
+        } else if (textondisplay.getText().equals("Do you want to use the error mode ?")) {
+            try {
+                displayError(bool);
+            } catch (InterruptedException | FileNotFoundException ex) {
+                ex.printStackTrace();
+            }
+            getFrame().repaint();
         }
-        else
-        {
-            textondisplay.setText("You lose ! \n Do you want to play again ?");
-        }
-        newgame.setVisible(true);
-        getFrame().repaint();
     }
 
     private void randomWord(boolean random)
@@ -188,19 +170,29 @@ public class InputView implements Observer{
         view = new WGView(model, controller);
     }
 
+    private void endGame()
+    {
+        getFrame().setVisible(true);
+        textondisplay.setVisible(true);
+        if(model.isWin())
+        {
+            textondisplay.setText("You win ! \n Do you want to play again ?");
+        }
+        else
+        {
+            textondisplay.setText("You lose ! \n Do you want to play again ?");
+        }
+        newgame.setVisible(true);
+        getFrame().repaint();
+    }
+
+
+    //Getter and Setters
     public JFrame getFrame() {
         return frame;
     }
 
     public void setFrame(JFrame frame) {
         this.frame = frame;
-    }
-
-    public void update(Observable o, Object arg) {
-        if(model.isNewgame())
-        {
-            endgame();
-        }
-
     }
 }

@@ -30,19 +30,14 @@ public class KeyboardView {
         }
         createKeys("Enter",27);
 
+        //Use to setUp the physical keyboard
         keyboard[0].addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
                 switch (e.getKeyChar())
                 {
-                    case 10 ->
-                            {
-                                EnterKey();
-                            }
-                    case 8 ->
-                            {
-                                BackSpaceKey();
-                            }
+                    case 10 -> EnterKey();
+                    case 8 -> BackSpaceKey();
                     default -> {
                         if((e.getKeyChar() >= 97 && e.getKeyChar() <= 122))
                         {
@@ -99,7 +94,7 @@ public class KeyboardView {
         if (view.getModel().getPlayerword().length() == 5) {
             if (view.getModel().isErrorflag()) {
                 try {
-                    if (view.showerrorpannel()) {
+                    if (view.showErrorPannel()) {
                         view.getController().change();
                     }
 
@@ -185,15 +180,6 @@ public class KeyboardView {
         }
     }
 
-    public JButton[] getKeyBoard()
-    {
-        return keyboard;
-    }
-    public JPanel getPanel()
-    {
-        return keyboardpanel;
-    }
-
 
     public void changeBackgroundColor()
     {
@@ -234,5 +220,10 @@ public class KeyboardView {
             }
             found = false;
         }
+    }
+
+    public JPanel getPanel()
+    {
+        return keyboardpanel;
     }
 }

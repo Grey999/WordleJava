@@ -32,6 +32,11 @@ public class WGModel extends Observable {
     private String playerword;
     private int[] colors;
 
+    public WGModel()
+    {
+
+    }
+
     protected void initialise() throws FileNotFoundException {
         //call when creating a WGModel Object
         //Will initialise the game
@@ -57,8 +62,6 @@ public class WGModel extends Observable {
         setChanged();
         notifyObservers();
     }
-
-
 
     protected void change() throws FileNotFoundException {
        //update the game depending on the current actualword

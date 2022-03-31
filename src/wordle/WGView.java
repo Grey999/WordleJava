@@ -35,10 +35,6 @@ public class WGView implements Observer
         //creation of grid
         setGrid(new GridView(this));
 
-        //need to be created before the keyboard
-        //will display error message for the words
-        //createErrorPannel();
-
 
         setKeyboard(new KeyboardView(this));
 
@@ -48,22 +44,15 @@ public class WGView implements Observer
         update(this.model,null);
     }
 
-    private void createControls() {
-        Container contentPane = getFrame().getContentPane();
-        contentPane.setBackground(Color.black);
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
-
-        createPanel();
-        contentPane.add(getPanel());
-
-
-        getFrame().pack();
-        getFrame().setSize(600,750);
-        getFrame().setResizable(false);
-        getFrame().setVisible(true);
+    @Override
+    public void update(Observable o, Object arg) {
+        if(!getModel().getPlayerword().equals("")) {
+            getGrid().changeBackgroundColor((getModel().getGuess()-1)*5);
+            getKeyboard().changeBackgroundColor();
+            getModel().setPlayerword("");
+        }
+        getFrame().repaint();
     }
-
-
 
     private void createPanel() {
         setPanel(new JPanel());
@@ -82,7 +71,22 @@ public class WGView implements Observer
         getPanel().add(getKeyboard().getPanel(), BorderLayout.SOUTH);
     }
 
-    public boolean showerrorpannel() throws FileNotFoundException {
+    private void createControls() {
+        Container contentPane = getFrame().getContentPane();
+        contentPane.setBackground(Color.black);
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+
+        createPanel();
+        contentPane.add(getPanel());
+
+
+        getFrame().pack();
+        getFrame().setSize(600,750);
+        getFrame().setResizable(false);
+        getFrame().setVisible(true);
+    }
+
+    public boolean showErrorPannel() throws FileNotFoundException {
         if (!getModel().isWordOnList())
             {
                 JOptionPane.showMessageDialog( getFrame(), "Word not found",
@@ -92,18 +96,8 @@ public class WGView implements Observer
             return true;
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        if(!getModel().getPlayerword().equals("")) {
-            getGrid().changeBackgroundColor((getModel().getGuess()-1)*5);
-            getKeyboard().changeBackgroundColor();
-            getModel().setPlayerword("");
-        }
-        getFrame().repaint();
-    }
 
-
-    
+    //Getters and Setters
     public WGController getController(){return controller;}
 
     public GridView getGrid() {
@@ -133,16 +127,6 @@ public class WGView implements Observer
     public WGModel getModel() {
         return model;
     }
-
-    /*
-    public JTextArea getErrormessage() {
-        return errormessage;
-    }
-
-    public void setErrormessage(JTextArea errormessage) {
-        this.errormessage = errormessage;
-    }
-    */
 
     public JPanel getPanel() {
         return panel;

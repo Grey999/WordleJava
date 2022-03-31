@@ -91,8 +91,13 @@ public class WGCli {
         }
         if(model.getPlayerword().equals("help"))
         {
-            //TODO
-            System.out.println("Write the help of the game");
+            System.out.println("Help of Wordle: \n" +
+                    "Rules: You got "+ GUESS+ " to found the right word. A word is composed of 5 letters. \n"+
+                    "You can decide of different flags at the begging of the game: You can have" +
+                    "a random word or the decided word, have an error message if the world doesn't belong" +
+                    "to the lists of possible words and the possibility to see the given word at any moment of " +
+                    "the game.\n" +
+                    "If you want to see the word, type 'display'.\n");
             return false;
         }
         return true;
