@@ -1,4 +1,8 @@
 package wordle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 import java.util.Observable;
 import java.util.Observer;
@@ -18,6 +22,8 @@ public class WGView implements Observer
     private JPanel panel;
     private GridView grid;
     private KeyboardView keyboard;
+
+    private JButton display;
 
 
 
@@ -66,6 +72,18 @@ public class WGView implements Observer
         getPanel().add(getGrid().getPanel(), BorderLayout.NORTH);
         JPanel invisible = new JPanel();
         invisible.setSize(new Dimension(800,800));
+        display = new JButton("display");
+        display.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (getModel().isDebbugflag())
+                {
+                    JOptionPane.showMessageDialog( getFrame(), getModel().getWordtoguess(),
+                            "Word to find",JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        invisible.add(display);
         invisible.setBackground(Color.GRAY);
         getPanel().add(invisible,BorderLayout.SOUTH);
         getPanel().add(getKeyboard().getPanel(), BorderLayout.SOUTH);
