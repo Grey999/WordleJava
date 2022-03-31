@@ -100,7 +100,7 @@ public class WGView implements Observer
     public boolean showerrorpannel() throws FileNotFoundException {
         //long delay = 5;
         //TimeUnit time = TimeUnit.SECONDS;
-        if (getModel().getActualword().length() != 5)
+        if (getModel().getPlayerword().length() != 5)
         {
             getErrorpannel().setVisible(true);
             getErrormessage().setText("Word too short");
@@ -108,7 +108,7 @@ public class WGView implements Observer
             return false;
         }
         else {
-            if (!getModel().isValidWord())
+            if (!getModel().isWordOnList())
             {
                 getErrorpannel().setVisible(true);
                 getErrormessage().setText("Word not found");
@@ -121,10 +121,10 @@ public class WGView implements Observer
 
     @Override
     public void update(Observable o, Object arg) {
-        if(!getModel().getActualword().equals("")) {
+        if(!getModel().getPlayerword().equals("")) {
             getGrid().changeBackgroundColor((getModel().getGuess()-1)*5);
             getKeyboard().changeBackgroundColor();
-            getModel().setActualword("");
+            getModel().setPlayerword("");
         }
         getFrame().repaint();
     }

@@ -7,34 +7,38 @@ import java.util.Observable;
 
 
 public class WGModel extends Observable {
+    //Number of permitted guess
     static final double GUESS=6;
 
     //FLAGS
-    private boolean randomword;
-    private boolean debbug;
-    private boolean messagerror;
+    private boolean randomflag;
+    private boolean debbugflag;
+    private boolean errorflag;
 
-    static final int Grey = 0;
-    static final int Red = 1;
-    static final int Green = 2;
-    static final int Orange = 3;
+    //Constant for the colors
+    static final int RED = 1;
+    static final int GREEN = 2;
+    static final int ORANGE = 3;
 
+    //Boolean that control the beginning of a new game
     private boolean newgame;
     private boolean win;
 
-    //word to guess
-    private String word;
-    private int[] colors;
-
-    //word on try
-    private String actualword;
+    //word to guess and the number of guess associated
+    private String wordtoguess;
     private int guess;
 
+    //word on try and the colors associated
+    private String playerword;
+    private int[] colors;
+
     protected void initialise() throws FileNotFoundException {
+        //call when creating a WGModel Object
+        //Will initialise the game
         File file = new File("words.txt");
         Scanner sc = new Scanner(file);
         int number;
-        if(randomword) {
+        if(randomflag) {
             number = (int) (Math.random() * 10657);
         }
         else
@@ -42,13 +46,14 @@ public class WGModel extends Observable {
             number = 42;
         }
         for (int i = 0; i < number; i++) {
-            setWord(sc.nextLine());
+            setWordtoguess(sc.nextLine());
         }
         sc.close();
-        System.out.println(word);
         colors = new int[5];
-        setActualword("");
+        setPlayerword("");
         setGuess(0);
+
+        //call the update methods of the views
         setChanged();
         notifyObservers();
     }
@@ -56,12 +61,14 @@ public class WGModel extends Observable {
 
 
     protected void change() throws FileNotFoundException {
-       //actual word send by the controller
-        if(getActualword().equals(getWord()))
+       //update the game depending on the current actualword
+        if(getPlayerword().equals(getWordtoguess()))
         {
+            //Game is Win
             setNewgame(true);
             setWin(true);
-            System.out.println("The game is over");
+
+            //Update the views
             setChanged();
             notifyObservers();
         }
@@ -69,36 +76,42 @@ public class WGModel extends Observable {
         {
             changeColors();
             setGuess(getGuess() + 1);
-            System.out.println(getGuess());
+
+            //See if the game is over
             if(getGuess() == GUESS)
             {
                 setWin(false);
                 setNewgame(true);
             }
+
+            //Update the views
             setChanged();
             notifyObservers();
         }
     }
 
-    protected boolean isValidWord() throws FileNotFoundException {
+    protected boolean isWordOnList() throws FileNotFoundException {
+        //verify is the actual word belong to the lists of word
         File file = new File("common.txt");
         Scanner sc = new Scanner(file);
-        boolean found = isWordCorrect(sc);
+        boolean found = checkList(sc);
         if(!found)
         {
             file = new File("words.txt");
             sc = new Scanner(file);
-            found = isWordCorrect(sc);
+            found = checkList(sc);
         }
-        sc.close();
+        //Verify if it work without this line
+        //TODO
+        //sc.close();
         return found;
     }
 
-    private  boolean isWordCorrect(Scanner sc) throws FileNotFoundException {
+    private  boolean checkList(Scanner sc) throws FileNotFoundException {
         boolean found = false;
         while(!found && sc.hasNextLine())
         {
-            found = getActualword().equals(sc.nextLine());
+            found = getPlayerword().equals(sc.nextLine());
         }
         sc.close();
         return found;
@@ -106,37 +119,37 @@ public class WGModel extends Observable {
 
     private void changeColors()
     {
+        //Change the number on the colors array
+        //This array will be used by the classes to display the correct
+        //information to the player
         setColors(new int[5]);
         for (int c = 0; c < 5; c++)
         {
-            getColors()[c] = Red;
+            getColors()[c] = RED;
         }
         for (int i = 0; i < 5; i++) {
-            if(actualword.charAt(i) == word.charAt(i))
+            if(playerword.charAt(i) == wordtoguess.charAt(i))
             {
-                getColors()[i] = Green;
+                getColors()[i] = GREEN;
             }
             else {
                 for (int j = 0; j < 5; j++) {
-                    if (actualword.charAt(i) == word.charAt(j) && getColors()[i] == Red) {
-                        getColors()[i] = Orange;
+                    if (playerword.charAt(i) == wordtoguess.charAt(j) && getColors()[i] == RED) {
+                        getColors()[i] = ORANGE;
                     }
                 }
             }
         }
     }
-    public int getColors(int colum) { return getColors()[colum];}
 
+
+    //Getter and Setters for the variables
     public boolean isWin(){return win; }
 
     public void setWin(boolean win){this.win = win; }
 
-    public boolean isRandomword() {
-        return randomword;
-    }
-
-    public void setRandomword(boolean randomword) {
-        this.randomword = randomword;
+    public void setRandomflag(boolean randomflag) {
+        this.randomflag = randomflag;
     }
 
     public boolean isNewgame() {
@@ -147,20 +160,20 @@ public class WGModel extends Observable {
         this.newgame = newgame;
     }
 
-    public String getWord() {
-        return word;
+    public String getWordtoguess() {
+        return wordtoguess;
     }
 
-    public void setWord(String word) {
-        this.word = word;
+    public void setWordtoguess(String wordtoguess) {
+        this.wordtoguess = wordtoguess;
     }
 
-    public String getActualword() {
-        return actualword;
+    public String getPlayerword() {
+        return playerword;
     }
 
-    public void setActualword(String actualword) {
-        this.actualword = actualword;
+    public void setPlayerword(String playerword) {
+        this.playerword = playerword;
     }
 
     public int getGuess() {
@@ -171,20 +184,20 @@ public class WGModel extends Observable {
         this.guess = guess;
     }
 
-    public boolean isDebbug() {
-        return debbug;
+    public boolean isDebbugflag() {
+        return debbugflag;
     }
 
-    public void setDebbug(boolean debbug) {
-        this.debbug = debbug;
+    public void setDebbugflag(boolean debbugflag) {
+        this.debbugflag = debbugflag;
     }
 
-    public boolean isMessagerror() {
-        return messagerror;
+    public boolean isErrorflag() {
+        return errorflag;
     }
 
-    public void setMessagerror(boolean messagerror) {
-        this.messagerror = messagerror;
+    public void setErrorflag(boolean errorflag) {
+        this.errorflag = errorflag;
     }
 
     public int[] getColors() {

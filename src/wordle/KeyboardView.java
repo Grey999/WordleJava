@@ -97,10 +97,10 @@ public class KeyboardView {
 
     public void EnterKey()
     {
-        if (view.getModel().getActualword().length() == 5) {
+        if (view.getModel().getPlayerword().length() == 5) {
             try {
                 if (view.showerrorpannel()) {
-                    if (view.getModel().isMessagerror()) {
+                    if (view.getModel().isErrorflag()) {
                         try {
                             if (view.showerrorpannel()) {
                                 view.getController().change();
@@ -127,20 +127,20 @@ public class KeyboardView {
     public void BackSpaceKey()
     {
         System.out.println("Appel BackSpace");
-        if (view.getModel().getActualword().length() != 0)
+        if (view.getModel().getPlayerword().length() != 0)
         {
-            view.getGrid().changeLabel(view.getModel().getActualword().length() + (view.getModel().getGuess()*5)-1, "");
-            view.getModel().setActualword(removeLastChar(view.getModel().getActualword()));
+            view.getGrid().changeLabel(view.getModel().getPlayerword().length() + (view.getModel().getGuess()*5)-1, "");
+            view.getModel().setPlayerword(removeLastChar(view.getModel().getPlayerword()));
         }
     }
 
     public void LetterKey(String label)
     {
-        if (view.getModel().getActualword().length() < 5)
+        if (view.getModel().getPlayerword().length() < 5)
         {
             //review condition (problem on second try)
-            view.getGrid().changeLabel(view.getModel().getActualword().length() + (view.getModel().getGuess()*5),label.toUpperCase(Locale.ROOT));
-            view.getModel().setActualword(view.getModel().getActualword() + label.toLowerCase(Locale.ROOT));
+            view.getGrid().changeLabel(view.getModel().getPlayerword().length() + (view.getModel().getGuess()*5),label.toUpperCase(Locale.ROOT));
+            view.getModel().setPlayerword(view.getModel().getPlayerword() + label.toLowerCase(Locale.ROOT));
         }
     }
 
@@ -211,7 +211,7 @@ public class KeyboardView {
         for(int i = 0; i < view.getModel().getColors().length;i++) {
             index = 0;
             state = view.getModel().getColors()[i];
-            letter = String.valueOf(view.getModel().getActualword().charAt(i));
+            letter = String.valueOf(view.getModel().getPlayerword().charAt(i));
             letter = letter.toUpperCase(Locale.ROOT);
             while (!found && index < keyboard.length) {
                 if (keyboard[index].getText().equals(letter)) {
@@ -223,13 +223,13 @@ public class KeyboardView {
             assert key != null;
             if(key.getBackground() == Color.WHITE) {
                 switch (state) {
-                    case Red -> {
+                    case RED -> {
                         key.setBackground(Color.RED);
                     }
-                    case Green -> {
+                    case GREEN -> {
                         key.setBackground(Color.GREEN);
                     }
-                    case Orange -> {
+                    case ORANGE -> {
                         key.setBackground(Color.ORANGE);
                     }
 

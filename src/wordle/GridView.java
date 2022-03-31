@@ -61,9 +61,9 @@ public class GridView {
     {
         for(int i = 0; i < view.getModel().getColors().length; i++) {
             switch (view.getModel().getColors()[i]) {
-                case Red -> letterscase[colum + i].setBackground(Color.RED);
-                case Green -> letterscase[colum + i].setBackground(Color.GREEN);
-                case Orange -> letterscase[colum + i].setBackground(Color.ORANGE);
+                case RED -> letterscase[colum + i].setBackground(Color.RED);
+                case GREEN -> letterscase[colum + i].setBackground(Color.GREEN);
+                case ORANGE -> letterscase[colum + i].setBackground(Color.ORANGE);
                 default -> letterscase[colum + i].setBackground(Color.GRAY);
             }
         }

@@ -134,6 +134,7 @@ public class InputView implements Observer{
                 yes.setVisible(true);
                 no.setVisible(true);
                 newgame.setVisible(false);
+                getFrame().repaint();
             }
         });
 
@@ -180,9 +181,9 @@ public class InputView implements Observer{
         model = new WGModel();
         WGController controller = new WGController(model);
         model.addObserver(this);
-        controller.setError(error);
-        controller.setRandom(random);
-        controller.setDebbug(debbug);
+        controller.setErrorFlag(error);
+        controller.setRandomFlag(random);
+        controller.setDebbugFlag(debbug);
         controller.initialise();
         view = new WGView(model, controller);
     }

@@ -3,11 +3,16 @@ package wordle;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import static wordle.WGModel.*;
+
 public class WGCli {
-    //build the entire CLI version using only controller and model
+    //Declaration
     private static WGModel model;
     private static boolean endgame;
     protected static int[] letters;
+
+
+    //Main Method
     public static void main(String[] args) throws FileNotFoundException {
         //declaration variable and rules of the game
         mainScreen();
@@ -20,17 +25,17 @@ public class WGCli {
             //second loop to play a game
             while (model.getGuess() < 6 && !model.isNewgame()) {
                 System.out.println("Enter you word:");
-                takeinput(sc);
-                boolean wordcorrect = wordaccept();
+                takeInput(sc);
+                boolean wordcorrect = isWordAccept();
                 while(!wordcorrect)
                 {
-                    takeinput(sc);
-                    wordcorrect = wordaccept();
+                    takeInput(sc);
+                    wordcorrect = isWordAccept();
                 }
                 model.change();
                 applyColors();
-                changeletters();
-                displayletters();
+                changeLetters();
+                displayLetters();
             }
             newgame();
         }
@@ -38,23 +43,25 @@ public class WGCli {
         System.out.println("Thank you for playing with us!");
     }
 
-    private static boolean wordaccept() throws FileNotFoundException {
-        if(model.getActualword().length() != 5)
+
+    private static boolean isWordAccept() throws FileNotFoundException {
+        //Handle the possible mistake of the input
+        if(model.getPlayerword().length() != 5)
         {
             System.out.println("Error: only take words of 5 letters. Try again");
             return false;
         }
-        for(int i = 0; i < model.getActualword().length(); i++)
+        for(int i = 0; i < model.getPlayerword().length(); i++)
         {
-            int current = model.getActualword().charAt(i);
+            int current = model.getPlayerword().charAt(i);
             if(current < 65 || current > 91 && current < 97 || current > 123)
             {
                 System.out.println("Error: the game only accept letters.");
                 return false;
             }
         }
-        if (model.isMessagerror()) {
-            if (!model.isValidWord()) {
+        if (model.isErrorflag()) {
+            if (!model.isWordOnList()) {
                 System.out.println("Error: the word isn't accept by the game. Try again");
                 return false;
             }
@@ -62,58 +69,61 @@ public class WGCli {
         return true;
     }
 
-    private static void takeinput(Scanner sc)
+    private static void takeInput(Scanner sc)
     {
+        //Loop to take a valid input
         prompt();
-        model.setActualword(sc.next());
-        boolean rightinput = verifyInput();
+        model.setPlayerword(sc.next());
+        boolean rightinput = isSpecialInput();
         while(!rightinput)
         {
             prompt();
-            model.setActualword(sc.next());
-            rightinput = verifyInput();
+            model.setPlayerword(sc.next());
+            rightinput = isSpecialInput();
         }
     }
 
-    private static boolean verifyInput()
+    private static boolean isSpecialInput()
     {
-        if (model.getActualword().equals("display") && model.isDebbug()) {
-            System.out.println(model.getWord());
+        if (model.getPlayerword().equals("display") && model.isDebbugflag()) {
+            System.out.println(model.getWordtoguess());
             return false;
         }
-        if(model.getActualword().equals("help"))
+        if(model.getPlayerword().equals("help"))
         {
+            //TODO
             System.out.println("Write the help of the game");
             return false;
         }
         return true;
     }
 
-    private static void displayletters()
+    private static void displayLetters()
     {
         System.out.println("The letter you haven't use yet: ");
-        displaytheletter(0);
+        displayTheLetter(0);
         System.out.println();
         System.out.println("The letters that belong to the word and are in the right place:");
         System.out.print(CColor.GREEN);
-        displaytheletter(1);
+        displayTheLetter(GREEN);
         System.out.println();
         System.out.print(CColor.RESET);
         System.out.println("The letters that belong to the word but are not in the right place: ");
         System.out.print(CColor.YELLOW);
-        displaytheletter(2);
+        displayTheLetter(ORANGE);
         System.out.println();
         System.out.print(CColor.RESET);
         System.out.println("The letter that doesn't belong tot the word");
         System.out.print(CColor.RED);
-        displaytheletter(3);
+        displayTheLetter(RED);
         System.out.println();
         System.out.print(CColor.RESET);
     }
 
-    //review this part
-    private static void displaytheletter(int value)
+
+    private static void displayTheLetter(int value)
     {
+        //Look for the correct letters depeding on the category we want
         char current;
         for(int i =0; i < letters.length; i++)
         {
@@ -125,12 +135,12 @@ public class WGCli {
         }
     }
 
-    private static void changeletters()
+    private static void changeLetters()
     {
         int current;
-        for(int i = 0; i < model.getActualword().length(); i++)
+        for(int i = 0; i < model.getPlayerword().length(); i++)
         {
-            current = (model.getActualword().charAt(i) - 'a')%26;
+            current = (model.getPlayerword().charAt(i) - 'a')%26;
             if(letters[current] == 0)
             {
                 if(model.getColors()[i] != 0) {
@@ -149,19 +159,19 @@ public class WGCli {
         for(int i = 0; i < 5; i++)
         {
             switch (model.getColors()[i]) {
-                case 0 -> {
+                case RED -> {
                     System.out.print(CColor.RED_BOLD);
-                    System.out.print(model.getActualword().charAt(i));
+                    System.out.print(model.getPlayerword().charAt(i));
                     System.out.print(CColor.RESET);
                 }
-                case 1 -> {
+                case GREEN -> {
                     System.out.print(CColor.GREEN_BOLD);
-                    System.out.print(model.getActualword().charAt(i));
+                    System.out.print(model.getPlayerword().charAt(i));
                     System.out.print(CColor.RESET);
                 }
-                case 2 -> {
+                case ORANGE -> {
                     System.out.print(CColor.YELLOW_BOLD);
-                    System.out.print(model.getActualword().charAt(i));
+                    System.out.print(model.getPlayerword().charAt(i));
                     System.out.print(CColor.RESET);
                 }
                 default -> System.out.print("not suppose to happen");
@@ -200,15 +210,15 @@ public class WGCli {
         System.out.println("Do you want to have a random word ?(y/n)");
         prompt();
         String input = getInput();
-        setupflags(0,input);
+        setUpFlags(0,input);
         System.out.println("Do you want to see the word ? ");
         prompt();
         input = getInput();
-        setupflags(1,input);
+        setUpFlags(1,input);
         System.out.println("Do you want to have an error message ?");
         prompt();
         input = getInput();
-        setupflags(2,input);
+        setUpFlags(2,input);
     }
 
     private static String getInput()
@@ -228,14 +238,14 @@ public class WGCli {
         System.out.print(">> ");
     }
 
-    private static void setupflags(int number, String answer)
+    private static void setUpFlags(int number, String answer)
     {
         switch (number) {
-            case 0 -> model.setRandomword(answer.equals("y"));
-            case 1 -> model.setDebbug(answer.equals("y"));
-            case 2 -> model.setMessagerror(answer.equals("y"));
+            case 0 -> model.setRandomflag(answer.equals("y"));
+            case 1 -> model.setDebbugflag(answer.equals("y"));
+            case 2 -> model.setErrorflag(answer.equals("y"));
             default -> {
-                //nothing
+                System.err.println("Not supposed to happen");
             }
         }
     }
@@ -256,16 +266,17 @@ public class WGCli {
         {
             System.out.println("Congratulation ! You won !");
             System.out.print(CColor.YELLOW_BRIGHT);
-            System.out.println("                              .''.       \n" +
-                    "       .''.      .        *''*    :_\\/_:     . \n" +
-                    "      :_\\/_:   _\\(/_  .:.*_\\/_*   : /\\ :  .'.:.'.\n" +
-                    "  .''.: /\\ :   ./)\\   ':'* /\\ * :  '..'.  -=:o:=-\n" +
-                    " :_\\/_:'.:::.    ' *''*    * '.\\'/.' _\\(/_'.':'.'\n" +
-                    " : /\\ : :::::     *_\\/_*     -= o =-  /)\\    '  *\n" +
-                    "  '..'  ':::'     * /\\ *     .'/.\\'.   '\n" +
-                    "      *            *..*         :\n" +
-                    "       *\n" +
-                    "        *");
+            System.out.println("""
+                                                 .''.      \s
+                          .''.      .        *''*    :_\\/_:     .\s
+                         :_\\/_:   _\\(/_  .:.*_\\/_*   : /\\ :  .'.:.'.
+                     .''.: /\\ :   ./)\\   ':'* /\\ * :  '..'.  -=:o:=-
+                    :_\\/_:'.:::.    ' *''*    * '.\\'/.' _\\(/_'.':'.'
+                    : /\\ : :::::     *_\\/_*     -= o =-  /)\\    '  *
+                     '..'  ':::'     * /\\ *     .'/.\\'.   '
+                         *            *..*         :
+                          *
+                           *""".indent(1));
         }
         else
         {
