@@ -14,9 +14,9 @@ public class InputView implements Observer{
     private final JButton newgame;
 
 
-    private boolean random;
-    private boolean error;
-    private boolean debbug;
+    private boolean randomflag;
+    private boolean errorflag;
+    private boolean debbugflag;
     public static boolean isnewgame;
     private JFrame frame;
     private JPanel panel;
@@ -159,16 +159,16 @@ public class InputView implements Observer{
 
     private void randomWord(boolean random)
     {
-        this.random = random;
+        this.randomflag = random;
     }
 
     private void debbugMode(boolean debbug)
     {
-        this.debbug = debbug;
+        this.debbugflag = debbug;
     }
 
     private void displayError(boolean error) throws InterruptedException, FileNotFoundException {
-        this.error = error;
+        this.errorflag = error;
         getFrame().setVisible(false);
         yes.setVisible(false);
         no.setVisible(false);
@@ -181,9 +181,9 @@ public class InputView implements Observer{
         model = new WGModel();
         WGController controller = new WGController(model);
         model.addObserver(this);
-        controller.setErrorFlag(error);
-        controller.setRandomFlag(random);
-        controller.setDebbugFlag(debbug);
+        controller.setErrorFlag(errorflag);
+        controller.setRandomFlag(randomflag);
+        controller.setDebbugFlag(debbugflag);
         controller.initialise();
         view = new WGView(model, controller);
     }

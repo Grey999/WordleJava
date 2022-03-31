@@ -20,9 +20,6 @@ public class WGView implements Observer
     private KeyboardView keyboard;
 
 
-    private JPanel errorpannel;
-    private JTextArea errormessage;
-
 
     public WGView(WGModel model, WGController controller) throws InterruptedException, FileNotFoundException {
         //Link the model, the controller and the view
@@ -40,7 +37,7 @@ public class WGView implements Observer
 
         //need to be created before the keyboard
         //will display error message for the words
-        createErrorPannel();
+        //createErrorPannel();
 
 
         setKeyboard(new KeyboardView(this));
@@ -51,10 +48,6 @@ public class WGView implements Observer
         update(this.model,null);
     }
 
-    public Dimension getPanelSize(){
-        return PANEL_SIZE;
-    }
-
     private void createControls() {
         Container contentPane = getFrame().getContentPane();
         contentPane.setBackground(Color.black);
@@ -62,29 +55,21 @@ public class WGView implements Observer
 
         createPanel();
         contentPane.add(getPanel());
-        contentPane.add(getErrorpannel());
-        getErrorpannel().setVisible(false);
+
 
         getFrame().pack();
-        getFrame().setSize(1000,1000);
+        getFrame().setSize(600,750);
         getFrame().setResizable(false);
         getFrame().setVisible(true);
     }
 
-    private void createErrorPannel()
-    {
-        setErrorpannel(new JPanel());
-        getErrorpannel().setLayout(new BoxLayout(getErrorpannel(), BoxLayout.Y_AXIS));
-        getErrorpannel().setBackground(Color.BLACK);
-        setErrormessage(new JTextArea());
-        getErrorpannel().add(getErrormessage());
-    }
 
 
     private void createPanel() {
         setPanel(new JPanel());
         getPanel().setLayout(new BoxLayout(getPanel(), BoxLayout.Y_AXIS));
         getPanel().setBackground(Color.GRAY);
+        getPanel().setSize(PANEL_SIZE);
         JLabel title = new JLabel("WORDLE", SwingConstants.CENTER);
         title.setBackground(Color.WHITE);
         title.setSize(new Dimension(40,40));
@@ -98,25 +83,13 @@ public class WGView implements Observer
     }
 
     public boolean showerrorpannel() throws FileNotFoundException {
-        //long delay = 5;
-        //TimeUnit time = TimeUnit.SECONDS;
-        if (getModel().getPlayerword().length() != 5)
-        {
-            getErrorpannel().setVisible(true);
-            getErrormessage().setText("Word too short");
-            //time.sleep(delay);
-            return false;
-        }
-        else {
-            if (!getModel().isWordOnList())
+        if (!getModel().isWordOnList())
             {
-                getErrorpannel().setVisible(true);
-                getErrormessage().setText("Word not found");
-                //time.sleep(delay);
+                JOptionPane.showMessageDialog( getFrame(), "Word not found",
+                        "Error: Word not Found",JOptionPane.ERROR_MESSAGE);
                 return false;
             }
             return true;
-        }
     }
 
     @Override
@@ -128,6 +101,8 @@ public class WGView implements Observer
         }
         getFrame().repaint();
     }
+
+
     
     public WGController getController(){return controller;}
 
@@ -159,14 +134,7 @@ public class WGView implements Observer
         return model;
     }
 
-    public JPanel getErrorpannel() {
-        return errorpannel;
-    }
-
-    public void setErrorpannel(JPanel errorpannel) {
-        this.errorpannel = errorpannel;
-    }
-
+    /*
     public JTextArea getErrormessage() {
         return errormessage;
     }
@@ -174,6 +142,7 @@ public class WGView implements Observer
     public void setErrormessage(JTextArea errormessage) {
         this.errormessage = errormessage;
     }
+    */
 
     public JPanel getPanel() {
         return panel;

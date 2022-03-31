@@ -95,34 +95,28 @@ public class KeyboardView {
 
     }
 
-    public void EnterKey()
-    {
+    public void EnterKey() {
         if (view.getModel().getPlayerword().length() == 5) {
-            try {
-                if (view.showerrorpannel()) {
-                    if (view.getModel().isErrorflag()) {
-                        try {
-                            if (view.showerrorpannel()) {
-                                view.getController().change();
-
-                            }
-                        } catch (FileNotFoundException ex) {
-                            ex.printStackTrace();
-                        }
-                    } else {
-                        try {
-                            view.getController().change();
-                        } catch (FileNotFoundException ex) {
-                            ex.printStackTrace();
-                        }
+            if (view.getModel().isErrorflag()) {
+                try {
+                    if (view.showerrorpannel()) {
+                        view.getController().change();
                     }
-                }
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-            }
 
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                try {
+
+                    view.getController().change();
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+            }
         }
     }
+
 
     public void BackSpaceKey()
     {
