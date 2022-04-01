@@ -45,6 +45,7 @@ public class WGCli {
 
     private static void mainScreen()
     {
+        //Display the beggining of the game
         System.out.print(CColor.YELLOW);
         System.out.println("""
 
@@ -69,6 +70,7 @@ public class WGCli {
 
     private static void prompt()
     {
+        //display the prompt
         System.out.print(">> ");
     }
 
@@ -99,6 +101,7 @@ public class WGCli {
 
     private static void inputFlags()
     {
+        //call the method setUpFlags for the three flags
         System.out.println("Do you want to have a random word ?(y/n)");
         prompt();
         String input = getInput();
@@ -160,6 +163,7 @@ public class WGCli {
 
     private static boolean isSpecialInput()
     {
+        //handle the flag debbug and display a reminder of the rules
         if (model.getPlayerword().equals("display") && model.isDebbugflag()) {
             System.out.println(model.getWordtoguess());
             return false;
@@ -199,7 +203,7 @@ public class WGCli {
 
     private static void displayTheLetter(int value)
     {
-        //Look for the correct letters depeding on the category we want
+        //Look for the correct letters depending on the category we want
         char current;
         for(int i =0; i < letters.length; i++)
         {
@@ -261,6 +265,7 @@ public class WGCli {
 
     private static void newgame()
     {
+        //Display the endgame screen and ask for a new game
         System.out.println();
         System.out.println();
         System.out.println();

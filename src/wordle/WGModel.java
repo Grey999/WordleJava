@@ -147,11 +147,18 @@ public class WGModel extends Observable {
 
 
     //Getter and Setters for the variables
-    public boolean isWin(){return win; }
+    public boolean isWin()
+    {
+        return win;
+    }
 
-    public void setWin(boolean win){this.win = win; }
+    public void setWin(boolean win)
+    {
+        this.win = win;
+    }
 
-    public void setRandomflag(boolean randomflag) {
+    public void setRandomflag(boolean randomflag)
+    {
         this.randomflag = randomflag;
     }
 

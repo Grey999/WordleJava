@@ -8,8 +8,6 @@ import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-import static wordle.WGModel.*;
-
 public class KeyboardView {
     private final JButton[] keyboard;
     private final JPanel keyboardpanel;
@@ -24,6 +22,7 @@ public class KeyboardView {
         keyboardpanel = new JPanel();
         keyboardpanel.setBackground(Color.GRAY);
         String qwerty = "QWERTYUIOPASDFGHJKL⌫ZXCVBNM";
+
         for(int i = 0; i < qwerty.length(); i++)
         {
             createKeys(String.valueOf(qwerty.charAt(i)), i);
@@ -31,7 +30,8 @@ public class KeyboardView {
         createKeys("Enter",27);
 
         //Use to setUp the physical keyboard
-        keyboard[0].addKeyListener(new KeyListener() {
+        keyboard[0].addKeyListener(new KeyListener()
+        {
             @Override
             public void keyTyped(KeyEvent e) {
                 switch (e.getKeyChar())
@@ -91,6 +91,7 @@ public class KeyboardView {
     }
 
     protected void EnterKey() {
+        //Use when Enter is pressed on the physical and GUI keyboard
         if (view.getController().getPlayerword().length() == 5) {
             if (view.getController().isErrorflag()) {
                 try {
@@ -115,6 +116,7 @@ public class KeyboardView {
 
     protected void BackSpaceKey()
     {
+        //Use when BackSpace is pressed on the physical and GUI keyboard
         if (view.getController().getPlayerword().length() != 0)
         {
             view.getGrid().changeLabel(view.getController().getPlayerword().length() + (view.getController().getGuess()*5)-1, "");
@@ -124,16 +126,16 @@ public class KeyboardView {
 
     protected void LetterKey(String label)
     {
+        //Use when a letter is pressed on the physical and GUI keyboard
         if (view.getController().getPlayerword().length() < 5)
         {
-            //review condition (problem on second try)
             view.getGrid().changeLabel(view.getController().getPlayerword().length() + (view.getController().getGuess()*5),label.toUpperCase(Locale.ROOT));
             view.getController().setPlayerword(view.getController().getPlayerword() + label.toLowerCase(Locale.ROOT));
         }
     }
 
     private void createKeys(String label, int i) throws InterruptedException, FileNotFoundException {
-        //review conditions for the keyboard
+
         JButton key = new JButton();
         key.setText(label);
 
@@ -145,10 +147,19 @@ public class KeyboardView {
         key.setOpaque(true);
         switch (label) {
             case "Enter" ->
-                key.addActionListener((ActionEvent e) -> {EnterKey();});
+                key.addActionListener((ActionEvent e) ->
+                {
+                    EnterKey();
+                });
             case "⌫" ->
-                    key.addActionListener((ActionEvent e) -> { BackSpaceKey();});
-            default -> key.addActionListener((ActionEvent e) -> {LetterKey(label);});
+                    key.addActionListener((ActionEvent e) ->
+                    {
+                        BackSpaceKey();
+                    });
+            default -> key.addActionListener((ActionEvent e) ->
+            {
+                LetterKey(label);
+            });
         }
         keyboard[i] = key;
 
@@ -182,6 +193,7 @@ public class KeyboardView {
 
     protected void changeBackGroundColor()
     {
+        //change the Background Color of the letter depending on the state of the letter in Colors[]
         JButton key = null;
         boolean found = false;
         int index;
