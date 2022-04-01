@@ -115,7 +115,6 @@ public class KeyboardView {
 
     public void BackSpaceKey()
     {
-        System.out.println("Appel BackSpace");
         if (view.getController().getPlayerword().length() != 0)
         {
             view.getGrid().changeLabel(view.getController().getPlayerword().length() + (view.getController().getGuess()*5)-1, "");
