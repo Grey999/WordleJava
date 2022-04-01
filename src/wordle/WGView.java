@@ -50,6 +50,7 @@ public class WGView implements Observer
         if(!getController().isFirstflag()) {
             getGrid().changeBackgroundColor((getController().getGuess()-1)*5);
             getKeyboard().changeBackgroundColor();
+
             getController().setPlayerWord("");
         }
         getFrame().repaint();
@@ -69,13 +70,13 @@ public class WGView implements Observer
         invisible.setSize(new Dimension(800,800));
 
         //Only for the debbugFlag
-        if(getModel().isDebbugflag()) {
+        if(getController().isDebbugflag()) {
             JButton display = new JButton("display");
             display.setFocusable(false);
             display.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    JOptionPane.showMessageDialog(getFrame(), getModel().getWordtoguess(),
+                    JOptionPane.showMessageDialog(getFrame(), getController().getWordtoguess(),
                             "Word to find", JOptionPane.INFORMATION_MESSAGE);
                 }
             });
@@ -104,7 +105,7 @@ public class WGView implements Observer
     }
 
     public boolean showErrorPannel() throws FileNotFoundException {
-        if (!getModel().isWordOnList())
+        if (!getController().isWordOnList())
             {
                 JOptionPane.showMessageDialog( getFrame(), "Word not found",
                         "Error: Word not Found",JOptionPane.ERROR_MESSAGE);
@@ -139,10 +140,6 @@ public class WGView implements Observer
 
     public void setKeyboard(KeyboardView keyboard) {
         this.keyboard = keyboard;
-    }
-
-    public WGModel getModel() {
-        return model;
     }
 
     public JPanel getPanel() {

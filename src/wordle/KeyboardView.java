@@ -91,8 +91,8 @@ public class KeyboardView {
     }
 
     public void EnterKey() {
-        if (view.getModel().getPlayerword().length() == 5) {
-            if (view.getModel().isErrorflag()) {
+        if (view.getController().getPlayerword().length() == 5) {
+            if (view.getController().isErrorflag()) {
                 try {
                     if (view.showErrorPannel()) {
                         view.getController().change();
@@ -116,20 +116,20 @@ public class KeyboardView {
     public void BackSpaceKey()
     {
         System.out.println("Appel BackSpace");
-        if (view.getModel().getPlayerword().length() != 0)
+        if (view.getController().getPlayerword().length() != 0)
         {
-            view.getGrid().changeLabel(view.getModel().getPlayerword().length() + (view.getModel().getGuess()*5)-1, "");
-            view.getModel().setPlayerword(removeLastChar(view.getModel().getPlayerword()));
+            view.getGrid().changeLabel(view.getController().getPlayerword().length() + (view.getController().getGuess()*5)-1, "");
+            view.getController().setPlayerword(removeLastChar(view.getController().getPlayerword()));
         }
     }
 
     public void LetterKey(String label)
     {
-        if (view.getModel().getPlayerword().length() < 5)
+        if (view.getController().getPlayerword().length() < 5)
         {
             //review condition (problem on second try)
-            view.getGrid().changeLabel(view.getModel().getPlayerword().length() + (view.getModel().getGuess()*5),label.toUpperCase(Locale.ROOT));
-            view.getModel().setPlayerword(view.getModel().getPlayerword() + label.toLowerCase(Locale.ROOT));
+            view.getGrid().changeLabel(view.getController().getPlayerword().length() + (view.getController().getGuess()*5),label.toUpperCase(Locale.ROOT));
+            view.getController().setPlayerword(view.getController().getPlayerword() + label.toLowerCase(Locale.ROOT));
         }
     }
 
@@ -188,10 +188,10 @@ public class KeyboardView {
         int index;
         int state;
         String letter;
-        for(int i = 0; i < view.getModel().getColors().length;i++) {
+        for(int i = 0; i < view.getController().getColors().length;i++) {
             index = 0;
-            state = view.getModel().getColors()[i];
-            letter = String.valueOf(view.getModel().getPlayerword().charAt(i));
+            state = view.getController().getColors()[i];
+            letter = String.valueOf(view.getController().getPlayerword().charAt(i));
             letter = letter.toUpperCase(Locale.ROOT);
             while (!found && index < keyboard.length) {
                 if (keyboard[index].getText().equals(letter)) {

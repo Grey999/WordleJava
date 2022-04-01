@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 
 public class WGController {
     private final WGModel model;
-    private WGView view;
 
     protected void initialise() throws FileNotFoundException {
         model.initialise();
@@ -20,11 +19,15 @@ public class WGController {
         this.model = model;
     }
     protected void setView(WGView  view) {
-        this.view = view;
     }
 
     public String getPlayerword() {
         return model.getPlayerword();
+    }
+
+    public void setPlayerword(String s)
+    {
+        model.setPlayerword(s);
     }
 
     public int getGuess() {
@@ -41,5 +44,25 @@ public class WGController {
 
     public void setPlayerWord(String s) {
         model.setPlayerword(s);
+    }
+
+    public boolean isDebbugflag() {
+        return model.isDebbugflag();
+    }
+
+    public String getWordtoguess() {
+        return model.getWordtoguess();
+    }
+
+    public boolean isWordOnList() throws FileNotFoundException {
+        return model.isWordOnList();
+    }
+
+    public boolean isErrorflag() {
+        return model.isErrorflag();
+    }
+
+    public int[] getColors() {
+        return model.getColors();
     }
 }
