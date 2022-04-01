@@ -119,7 +119,7 @@ public class InputView implements Observer{
 
     }
 
-    public void setUpFlag(boolean bool)
+    protected void setUpFlag(boolean bool)
     {
         if (textondisplay.getText().equals("Do you want to have a random word ?")) {
             randomWord(bool);
@@ -159,7 +159,7 @@ public class InputView implements Observer{
         startGame();
     }
 
-    public void startGame() throws InterruptedException, FileNotFoundException {
+    protected void startGame() throws InterruptedException, FileNotFoundException {
         model = new WGModel();
         WGController controller = new WGController(model);
         model.addObserver(this);

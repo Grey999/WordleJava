@@ -107,9 +107,6 @@ public class WGModel extends Observable {
             sc = new Scanner(file);
             found = checkList(sc);
         }
-        //Verify if it work without this line
-        //TODO
-        //sc.close();
         return found;
     }
 

@@ -44,13 +44,6 @@ public class GridView {
     }
 
 
-
-    public JPanel getPanel()
-    {
-        return gridpanel;
-    }
-
-
     protected void changeLabel(int index, String letter)
     {
         letterscase[index].setText(letter);
@@ -68,5 +61,10 @@ public class GridView {
             }
         }
 
+    }
+
+    public JPanel getPanel()
+    {
+        return gridpanel;
     }
 }

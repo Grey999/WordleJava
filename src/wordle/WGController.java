@@ -4,6 +4,11 @@ import java.io.FileNotFoundException;
 
 public class WGController {
     private final WGModel model;
+    private WGView view;
+
+    protected  WGController(WGModel model) {
+        this.model = model;
+    }
 
     protected void initialise() throws FileNotFoundException {
         model.initialise();
@@ -12,33 +17,32 @@ public class WGController {
         model.change();
     }
 
-    protected void setRandomFlag(boolean random) {model.setRandomflag(random);}
-    protected void setDebbugFlag(boolean debbug) {model.setDebbugflag(debbug);}
-    protected void setErrorFlag(boolean error){model.setErrorflag(error);}
-    protected  WGController(WGModel model) {
-        this.model = model;
-    }
-    protected void setView(WGView  view) {
+    protected void setRandomFlag(boolean random) {
+        model.setRandomflag(random);
     }
 
-    public String getPlayerword() {
+    protected void setDebbugFlag(boolean debbug) {
+        model.setDebbugflag(debbug);
+    }
+
+    protected void setErrorFlag(boolean error){
+        model.setErrorflag(error);
+    }
+
+    protected String getPlayerword() {
         return model.getPlayerword();
     }
 
-    public void setPlayerword(String s)
+    protected void setPlayerword(String s)
     {
         model.setPlayerword(s);
     }
 
-    public int getGuess() {
+    protected int getGuess() {
         return model.getGuess();
     }
 
-    public void setFirstflag(boolean b) {
-        model.setFirstflag(b);
-    }
-
-    public boolean isFirstflag() {
+    protected boolean isFirstflag() {
         return model.isFirstflag();
     }
 
@@ -64,5 +68,9 @@ public class WGController {
 
     public int[] getColors() {
         return model.getColors();
+    }
+
+    public void setView(WGView wgView) {
+        this.view = wgView;
     }
 }

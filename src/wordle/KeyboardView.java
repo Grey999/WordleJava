@@ -90,7 +90,7 @@ public class KeyboardView {
 
     }
 
-    public void EnterKey() {
+    protected void EnterKey() {
         if (view.getController().getPlayerword().length() == 5) {
             if (view.getController().isErrorflag()) {
                 try {
@@ -113,7 +113,7 @@ public class KeyboardView {
     }
 
 
-    public void BackSpaceKey()
+    protected void BackSpaceKey()
     {
         if (view.getController().getPlayerword().length() != 0)
         {
@@ -122,7 +122,7 @@ public class KeyboardView {
         }
     }
 
-    public void LetterKey(String label)
+    protected void LetterKey(String label)
     {
         if (view.getController().getPlayerword().length() < 5)
         {
@@ -180,7 +180,7 @@ public class KeyboardView {
     }
 
 
-    public void changeBackgroundColor()
+    protected void changeBackGroundColor()
     {
         JButton key = null;
         boolean found = false;

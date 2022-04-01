@@ -14,7 +14,6 @@ public class WGView implements Observer
 {
     private static final Dimension PANEL_SIZE = new Dimension(500,500);
 
-    private final WGModel model;
     private final WGController controller;
     private JFrame frame;
     private JPanel panel;
@@ -24,7 +23,6 @@ public class WGView implements Observer
 
     public WGView(WGModel model, WGController controller) throws InterruptedException, FileNotFoundException {
         //Link the model, the controller and the view
-        this.model = model;
         this.controller = controller;
         controller.setView(this);
 
@@ -41,15 +39,15 @@ public class WGView implements Observer
 
 
         createControls();
-        this.model.addObserver(this);
-        update(this.model,null);
+        model.addObserver(this);
+        update(model,null);
     }
 
     @Override
     public void update(Observable o, Object arg) {
         if(!getController().isFirstflag()) {
             getGrid().changeBackgroundColor((getController().getGuess()-1)*5);
-            getKeyboard().changeBackgroundColor();
+            getKeyboard().changeBackGroundColor();
 
             getController().setPlayerWord("");
         }
@@ -104,7 +102,7 @@ public class WGView implements Observer
         getFrame().setVisible(true);
     }
 
-    public boolean showErrorPannel() throws FileNotFoundException {
+    protected boolean showErrorPannel() throws FileNotFoundException {
         if (!getController().isWordOnList())
             {
                 JOptionPane.showMessageDialog( getFrame(), "Word not found",

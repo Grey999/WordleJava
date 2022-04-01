@@ -18,24 +18,24 @@
 [WGView]->[GridView]
 
 [WGCli]->[WGModel]
-[CColor]->[WGCLi]
+[CColor]->[WGCli]
 
 [WGView]^[Observer]
 [InputView]^[Observer]
 
 //Definition ViewClass
-[WGView| -WGModel model;-WGController controller;-JFrame frame;-Jpanel panel; -GridView grid;-KeyBoardView keyboard|-createControls();-createPanel();+update()]
+[WGView| -WGController controller;-JFrame frame;-Jpanel panel; -GridView grid;-KeyBoardView keyboard|-createControls();-createPanel();+update(); -showErrorPannel()]
 
-[KeyBoardView|-JButton array keyboard;-JPanel keyboardpanel;-JPanel keygrid;-WGView view|-createKeys(String label);-removeLastChar(String s);-addKeyToGrid()]
+[KeyBoardView|-JButton array keyboard;-JPanel keyboardpanel;-JPanel keygridfirst;-JPanel keygridsecond;-JPanel keygridthird;-WGView view|-EnterKey();-BackSpace();-LetterKey();-createKeys(String label);-removeLastChar(String s);-addKeyToGrid(), -changBackGroundColor()]
 
-[GridView|-JLabel array lettercase;-JPanel gridpanel;-WGView view|-addLabelsView();-changeLabel(int colum, int line, String label);-changeBackgroundColor(int colum, int line, int state)]
+[GridView|-JLabel array lettercase;-JPanel gridpanel;-WGView view|-addLabelsView();-changeLabel(int index, String letter);-changeBackgroundColor(int colum)]
 
-[InputView|-JButton yes;-JButton no;-JButton newgame;-WGController controller; -WGModel model; -JFrame frame; -TextArea textondisplay|-createPanel();-displayView(int viewnumber);-endgame();-randomWord(boolean random); -debbugMode(boolean debbug); -displayError(boolean error); +startGame(); +update(Observable o, Object arg)]
+[InputView|-JButton yes;-JButton no;-JButton newgame;-boolean randomflag; -boolean errorflag; -boolean debbugflag; -boolean isnewgame;-WGModel model; -JPanel panel; -WGView view; -JFrame frame; -TextArea textondisplay|-createPanel(); -setUpFlag(boolean bool); -randomWord(boolean bool); -debbugMode(boolean bool); -displayError(boolean bool); -startGame(); -endGame(); +update(Observable o, Object arg)]
 
 //Definition Controller and Model
-[WGController|-WGModel model;-WGView view|-change();-isValidWord();-initialise()]
+[WGController|-WGModel model|-change();-initialise(); -setRandomFlag(boolean bool); -setDebbugFlag(boolean bool); -setErrorFlag(boolean bool); -getPlayerWord(); -setPlayerWord(String s); -getGuess(); -isFirstflag(); -setPlayerWord(); -isDebbugFlag(); -getWordtoguess(); -isWordOnList(); -isErrorFlag(); -getColors()]
 
-[WGModel|-boolean display;-boolean randomword;-boolean debbug; -boolean messagerror; -boolean newgame;-boolean win;-String word;-int array colors;-String actualword;-int guess|+addObserver();-initialise();-isValidWord();-isWordCorrect();-change();-changeColors()]
+[WGModel|-int GUESS;-boolean randomflag;-boolean debbugflag; -boolean errorflag; -boolean firstflag; -int RED; -int GREEN; -int ORANGE; -boolean newgame;-boolean win;-String wordtoguess;-int array colors;-String playerword;-int guess|+addObserver();-initialise(); -change(); -isWordOnList(); -checkList(); changeColors()]
 
 //Definition WGCli with a main function for the CLI mode
 [WGCli|-WGModel model;-boolean endgame;-int array letters| +main(String array args); -displayletters();-displaytheletter();-changeletters();-applyColors(); -mainScreen(); -prompt(); -inputFlags();-getInput();-initialiseWordle()|-setUpFlag(int number, String answer);-newgame()]
