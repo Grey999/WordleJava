@@ -22,6 +22,7 @@ public class GridView {
 
     private void addLabelsView()
     {
+        //Create the Visual Grid
         GridBagConstraints gbc = new GridBagConstraints();
         int colum = 0;
         for(int i = 0; i < letterscase.length; i++)
@@ -46,19 +47,16 @@ public class GridView {
 
     protected void changeLabel(int index, String letter)
     {
+        //Call by the Keyboard to change the letter on the case
         letterscase[index].setText(letter);
     }
 
 
     public void changeBackgroundColor(int colum)
     {
+        //Call by the view update to change the color, regarding the state of the letter on the word
         for(int i = 0; i < view.getController().getColors().length; i++) {
-            switch (view.getController().getColors()[i]) {
-                case RED -> letterscase[colum + i].setBackground(Color.RED);
-                case GREEN -> letterscase[colum + i].setBackground(Color.GREEN);
-                case ORANGE -> letterscase[colum + i].setBackground(Color.ORANGE);
-                default -> letterscase[colum + i].setBackground(Color.GRAY);
-            }
+            letterscase[colum+i].setBackground(view.applyColor(i));
         }
 
     }

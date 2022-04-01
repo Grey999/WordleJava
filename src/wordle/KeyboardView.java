@@ -185,11 +185,9 @@ public class KeyboardView {
         JButton key = null;
         boolean found = false;
         int index;
-        int state;
         String letter;
         for(int i = 0; i < view.getController().getColors().length;i++) {
             index = 0;
-            state = view.getController().getColors()[i];
             letter = String.valueOf(view.getController().getPlayerword().charAt(i));
             letter = letter.toUpperCase(Locale.ROOT);
             while (!found && index < keyboard.length) {
@@ -200,22 +198,9 @@ public class KeyboardView {
                 index++;
             }
             assert key != null;
-            if(key.getBackground() == Color.WHITE) {
-                switch (state) {
-                    case RED -> {
-                        key.setBackground(Color.RED);
-                    }
-                    case GREEN -> {
-                        key.setBackground(Color.GREEN);
-                    }
-                    case ORANGE -> {
-                        key.setBackground(Color.ORANGE);
-                    }
-
-                    default -> {
-                        key.setBackground(Color.GRAY);
-                    }
-                }
+            if(key.getBackground() == Color.WHITE)
+            {
+                key.setBackground(view.applyColor(i));
             }
             found = false;
         }

@@ -1,6 +1,8 @@
 package wordle;
 
 public enum CColor {
+    //Enum use on the CLI version to write with different colors and style (BOLD and ITALIC)
+
     //Color end string, color reset
     RESET("\033[0m"),
 

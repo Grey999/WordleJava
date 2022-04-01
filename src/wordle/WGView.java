@@ -7,7 +7,7 @@ import java.util.Observer;
 import javax.swing.*;
 import java.awt.*;
 
-
+import static wordle.WGModel.*;
 
 
 public class WGView implements Observer
@@ -26,15 +26,11 @@ public class WGView implements Observer
         this.controller = controller;
         controller.setView(this);
 
-
-        //creation of the Frame
         setFrame(new JFrame("Wordle"));
         getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //creation of grid
+        //creation of grid and the keyboard
         setGrid(new GridView(this));
-
-
         setKeyboard(new KeyboardView(this));
 
 
@@ -45,6 +41,7 @@ public class WGView implements Observer
 
     @Override
     public void update(Observable o, Object arg) {
+        //update the grid and the keyboard
         if(!getController().isFirstflag()) {
             getGrid().changeBackgroundColor((getController().getGuess()-1)*5);
             getKeyboard().changeBackGroundColor();
@@ -67,8 +64,9 @@ public class WGView implements Observer
         JPanel invisible = new JPanel();
         invisible.setSize(new Dimension(800,800));
 
-        //Only for the debbugFlag
-        if(getController().isDebbugflag()) {
+        //Only if debbugflag is up
+        if(getController().isDebbugflag())
+        {
             JButton display = new JButton("display");
             display.setFocusable(false);
             display.addActionListener(new ActionListener() {
@@ -103,6 +101,7 @@ public class WGView implements Observer
     }
 
     protected boolean showErrorPannel() throws FileNotFoundException {
+        //Only if the error flag is up
         if (!getController().isWordOnList())
             {
                 JOptionPane.showMessageDialog( getFrame(), "Word not found",
@@ -110,6 +109,25 @@ public class WGView implements Observer
                 return false;
             }
             return true;
+    }
+
+    protected Color applyColor(int index)
+    {
+        //Switch who return the color depending on the state in Colors[]
+        switch (getController().getColors()[index]) {
+            case RED -> {
+                return Color.RED;
+            }
+            case GREEN -> {
+                return Color.GREEN;
+            }
+            case ORANGE -> {
+                return Color.ORANGE;
+            }
+            default -> {
+                return Color.GRAY;
+            }
+        }
     }
 
 
