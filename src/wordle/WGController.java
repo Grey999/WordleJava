@@ -22,4 +22,24 @@ public class WGController {
     protected void setView(WGView  view) {
         this.view = view;
     }
+
+    public String getPlayerword() {
+        return model.getPlayerword();
+    }
+
+    public int getGuess() {
+        return model.getGuess();
+    }
+
+    public void setFirstflag(boolean b) {
+        model.setFirstflag(b);
+    }
+
+    public boolean isFirstflag() {
+        return model.isFirstflag();
+    }
+
+    public void setPlayerWord(String s) {
+        model.setPlayerword(s);
+    }
 }

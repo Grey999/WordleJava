@@ -14,6 +14,7 @@ public class WGModel extends Observable {
     private boolean randomflag;
     private boolean debbugflag;
     private boolean errorflag;
+    private boolean firstflag;
 
     //Constant for the colors
     static final int RED = 1;
@@ -40,6 +41,7 @@ public class WGModel extends Observable {
     protected void initialise() throws FileNotFoundException {
         //call when creating a WGModel Object
         //Will initialise the game
+        setFirstflag(true);
         File file = new File("words.txt");
         Scanner sc = new Scanner(file);
         int number;
@@ -65,6 +67,7 @@ public class WGModel extends Observable {
 
     protected void change() throws FileNotFoundException {
        //update the game depending on the current actualword
+        setFirstflag(false);
         if(getPlayerword().equals(getWordtoguess()))
         {
             //Game is Win
@@ -211,4 +214,11 @@ public class WGModel extends Observable {
         this.colors = colors;
     }
 
+    public boolean isFirstflag() {
+        return firstflag;
+    }
+
+    public void setFirstflag(boolean firstflag) {
+        this.firstflag = firstflag;
+    }
 }

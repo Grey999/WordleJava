@@ -47,10 +47,10 @@ public class WGView implements Observer
 
     @Override
     public void update(Observable o, Object arg) {
-        if(!getModel().getPlayerword().equals("")) {
-            getGrid().changeBackgroundColor((getModel().getGuess()-1)*5);
+        if(!getController().isFirstflag()) {
+            getGrid().changeBackgroundColor((getController().getGuess()-1)*5);
             getKeyboard().changeBackgroundColor();
-            getModel().setPlayerword("");
+            getController().setPlayerWord("");
         }
         getFrame().repaint();
     }
