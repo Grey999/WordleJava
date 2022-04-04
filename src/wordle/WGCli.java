@@ -120,6 +120,7 @@ public class WGCli {
         model = new WGModel();
         inputFlags();
         model.initialise();
+        model.setWordtoGuess();
     }
 
     private static void takeInput(Scanner sc)
@@ -185,9 +186,9 @@ public class WGCli {
     private static void changeLetters()
     {
         int current;
-        for(int i = 0; i < model.getPlayerword().length(); i++)
+        for(int i = 0; i < model.getLastword().length(); i++)
         {
-            current = (model.getPlayerword().charAt(i) - 'a')%26;
+            current = (model.getLastword().charAt(i) - 'a')%26;
             if(letters[current] == 0)
             {
                 if(model.getColors()[i] != 0) {
@@ -222,21 +223,17 @@ public class WGCli {
             switch (model.getColors()[i]) {
                 case RED -> {
                     System.out.print(CColor.RED_BOLD);
-                    System.out.print(model.getPlayerword().charAt(i));
-                    System.out.print(CColor.RESET);
                 }
                 case GREEN -> {
                     System.out.print(CColor.GREEN_BOLD);
-                    System.out.print(model.getPlayerword().charAt(i));
-                    System.out.print(CColor.RESET);
                 }
                 case ORANGE -> {
                     System.out.print(CColor.YELLOW_BOLD);
-                    System.out.print(model.getPlayerword().charAt(i));
-                    System.out.print(CColor.RESET);
                 }
                 default -> System.out.print("not suppose to happen");
             }
+            System.out.print(model.getLastword().charAt(i));
+            System.out.print(CColor.RESET);
         }
         System.out.println();
     }

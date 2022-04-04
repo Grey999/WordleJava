@@ -73,4 +73,12 @@ public class WGController {
     public void setView(WGView wgView) {
         this.view = wgView;
     }
+
+    public void setWordtoGuess() throws FileNotFoundException {
+        model.setWordtoGuess();
+    }
+
+    public String getLastWord() {
+        return model.getLastword();
+    }
 }

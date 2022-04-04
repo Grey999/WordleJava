@@ -200,7 +200,7 @@ public class KeyboardView {
         String letter;
         for(int i = 0; i < view.getController().getColors().length;i++) {
             index = 0;
-            letter = String.valueOf(view.getController().getPlayerword().charAt(i));
+            letter = String.valueOf(view.getController().getLastWord().charAt(i));
             letter = letter.toUpperCase(Locale.ROOT);
             while (!found && index < keyboard.length) {
                 if (keyboard[index].getText().equals(letter)) {

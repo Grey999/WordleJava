@@ -45,8 +45,6 @@ public class WGView implements Observer
         if(!getController().isFirstflag()) {
             getGrid().changeBackgroundColor((getController().getGuess()-1)*5);
             getKeyboard().changeBackGroundColor();
-
-            getController().setPlayerWord("");
         }
         getFrame().repaint();
     }

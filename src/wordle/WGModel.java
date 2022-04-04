@@ -31,17 +31,31 @@ public class WGModel extends Observable {
 
     //word on try and the colors associated
     private String playerword;
+    private String lastword;
     private int[] colors;
+
 
     public WGModel()
     {
 
     }
 
-    protected void initialise() throws FileNotFoundException {
+    protected void initialise()  {
         //call when creating a WGModel Object
         //Will initialise the game
         setFirstflag(true);
+        colors = new int[5];
+        setPlayerword("");
+        setGuess(0);
+        setLastword("");
+
+        //call the update methods of the views
+        setChanged();
+        notifyObservers();
+    }
+
+    protected void setWordtoGuess() throws FileNotFoundException
+    {
         File file = new File("words.txt");
         Scanner sc = new Scanner(file);
         int number;
@@ -56,13 +70,6 @@ public class WGModel extends Observable {
             setWordtoguess(sc.nextLine());
         }
         sc.close();
-        colors = new int[5];
-        setPlayerword("");
-        setGuess(0);
-
-        //call the update methods of the views
-        setChanged();
-        notifyObservers();
     }
 
     protected void change() throws FileNotFoundException {
@@ -89,6 +96,9 @@ public class WGModel extends Observable {
                 setWin(false);
                 setNewgame(true);
             }
+
+            setLastword(getPlayerword());
+            setPlayerword("");
 
             //Update the views
             setChanged();
@@ -224,5 +234,13 @@ public class WGModel extends Observable {
 
     public void setFirstflag(boolean firstflag) {
         this.firstflag = firstflag;
+    }
+
+    public String getLastword() {
+        return lastword;
+    }
+
+    public void setLastword(String lastword) {
+        this.lastword = lastword;
     }
 }

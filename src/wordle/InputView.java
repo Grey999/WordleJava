@@ -167,6 +167,7 @@ public class InputView implements Observer{
         controller.setRandomFlag(randomflag);
         controller.setDebbugFlag(debbugflag);
         controller.initialise();
+        controller.setWordtoGuess();
         view = new WGView(model, controller);
     }
 
