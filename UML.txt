@@ -2,22 +2,32 @@
 //-------------------------------
 
 //UML Diagram
-[WGController]->[Main]
-[WGView]->[Main]
-[WGModel]->[Main]
-[InputView]->[Main]
+[Main]-->[InputView]
 
 [WGView]->[WGModel]
 [WGView]->[WGController]
-[WGController]->[WGModel]
-[WGController]->[WGView]
-[InputView]->[WGController]
-[InputView]->[WGModel]
-
+[WGView]<>->[KeyBoardView]
+[WGView]<>->[GridView]
 [WGView]->[KeyBoardView]
 [WGView]->[GridView]
 
+[GridView]->[WGView]
+[KeyBoardView]->[WGView]
+
+[WGController]->[WGModel]
+[WGController]->[WGView]
+
+
+[InputView]-->[WGController]
+[InputView]<>->[WGController]
+[InputView]-->[WGModel]
+[InputView]<>->[WGModel]
+[InputView]-->[WGView]
+[InputView]<>->[WGView]
+
+
 [WGCli]->[WGModel]
+[WGCli]<>->[WGModel]
 [CColor]->[WGCli]
 
 [WGView]^[Observer]
