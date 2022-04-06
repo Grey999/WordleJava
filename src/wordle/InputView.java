@@ -175,16 +175,24 @@ public class InputView implements Observer{
     {
         getFrame().setVisible(true);
         textondisplay.setVisible(true);
-        if(model.isWin())
+        if(model.isAsked())
         {
-            textondisplay.setText("You win ! \n Do you want to play again ?");
+            view.getFrame().setVisible(false);
+            textondisplay.setText("Do you want to have a random word ?");
+            yes.setVisible(true);
+            no.setVisible(true);
+            newgame.setVisible(false);
+            getFrame().repaint();
         }
-        else
-        {
-            textondisplay.setText("You lose ! \n Do you want to play again ?");
+        else {
+            if (model.isWin()) {
+                textondisplay.setText("You win ! \n Do you want to play again ?");
+            } else {
+                textondisplay.setText("You lose ! \n Do you want to play again ?");
+            }
+            newgame.setVisible(true);
+            getFrame().repaint();
         }
-        newgame.setVisible(true);
-        getFrame().repaint();
     }
 
 

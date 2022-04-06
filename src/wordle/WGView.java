@@ -19,6 +19,7 @@ public class WGView implements Observer
     private JPanel panel;
     private GridView grid;
     private KeyboardView keyboard;
+    private JButton newgame;
 
 
     public WGView(WGModel model, WGController controller) throws InterruptedException, FileNotFoundException {
@@ -45,6 +46,7 @@ public class WGView implements Observer
         if(!getController().isFirstflag()) {
             getGrid().changeBackgroundColor((getController().getGuess()-1)*5);
             getKeyboard().changeBackGroundColor();
+            getController().enableNewGame();
         }
         getFrame().repaint();
     }
@@ -76,6 +78,18 @@ public class WGView implements Observer
             });
             invisible.add(display);
         }
+        setNewgame(new JButton("newgame"));
+        getNewgame().setFocusable(false);
+        getNewgame().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getFrame().setVisible(false);
+                getController().setNewGame();
+
+            }
+        });
+        getNewgame().setVisible(false);
+        invisible.add(getNewgame());
 
 
         invisible.setBackground(Color.GRAY);
@@ -162,5 +176,13 @@ public class WGView implements Observer
 
     public void setPanel(JPanel panel) {
         this.panel = panel;
+    }
+
+    public JButton getNewgame() {
+        return newgame;
+    }
+
+    public void setNewgame(JButton newgame) {
+        this.newgame = newgame;
     }
 }

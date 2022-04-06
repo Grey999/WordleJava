@@ -21,6 +21,16 @@ public class WGController {
         model.setRandomflag(random);
     }
 
+    protected void enableNewGame()
+    {
+        view.getNewgame().setVisible(true);
+    }
+
+    protected void setNewGame()
+    {
+        model.createNewGame();
+    }
+
     protected void setDebbugFlag(boolean debbug) {
         model.setDebbugflag(debbug);
     }

@@ -23,6 +23,7 @@ public class WGModel extends Observable {
 
     //Boolean that control the beginning of a new game
     private boolean newgame;
+    private boolean asked;
     private boolean win;
 
     //word to guess and the number of guess associated
@@ -71,6 +72,13 @@ public class WGModel extends Observable {
         }
         sc.close();
     }
+    public void createNewGame() {
+        setNewgame(true);
+        setAsked(true);
+        setChanged();
+        notifyObservers();
+
+    }
 
     protected void change() throws FileNotFoundException {
        //update the game depending on the current actualword
@@ -78,8 +86,8 @@ public class WGModel extends Observable {
         if(getPlayerword().equals(getWordtoguess()))
         {
             //Game is Win
-            setNewgame(true);
             setWin(true);
+            setNewgame(true);
 
             //Update the views
             setChanged();
@@ -242,5 +250,14 @@ public class WGModel extends Observable {
 
     public void setLastword(String lastword) {
         this.lastword = lastword;
+    }
+
+
+    public boolean isAsked() {
+        return asked;
+    }
+
+    public void setAsked(boolean asked) {
+        this.asked = asked;
     }
 }
