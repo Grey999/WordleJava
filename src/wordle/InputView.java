@@ -186,8 +186,10 @@ public class InputView implements Observer{
         }
         else {
             if (model.isWin()) {
+                view.getGrid().turnToGreen((view.getController().getGuess()-1)*5);
                 textondisplay.setText("You win ! \n Do you want to play again ?");
             } else {
+                view.getGrid().turntoRed((view.getController().getGuess()-1)*5);
                 textondisplay.setText("You lose ! \n Do you want to play again ?");
             }
             newgame.setVisible(true);

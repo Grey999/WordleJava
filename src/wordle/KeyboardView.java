@@ -219,10 +219,12 @@ public class KeyboardView {
                 index++;
             }
             assert key != null;
-            if(key.getBackground() == Color.WHITE)
+            Color color = view.applyColor(i);
+            if(key.getBackground() == Color.WHITE || (key.getBackground() == Color.ORANGE && color == Color.GREEN))
             {
-                key.setBackground(view.applyColor(i));
+                key.setBackground(color);
             }
+
             found = false;
         }
     }
