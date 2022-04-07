@@ -36,7 +36,9 @@ public class KeyboardView {
             public void keyTyped(KeyEvent e) {
                 switch (e.getKeyChar())
                 {
-                    case 10 -> EnterKey();
+                    case 10 -> {
+                            EnterKey();
+                    }
                     case 8 -> BackSpaceKey();
                     default -> {
                         if((e.getKeyChar() >= 97 && e.getKeyChar() <= 122))
@@ -90,10 +92,16 @@ public class KeyboardView {
 
     }
 
-    protected void EnterKey() {
+    protected void EnterKey(){
         //Use when Enter is pressed on the physical and GUI keyboard
-        if (view.getController().getPlayerword().length() == 5) {
-            if (view.getController().isErrorflag()) {
+        int code = 0;
+        try {
+            code = view.getController().isWordAccept();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (code != 0) {
+            if (view.getController().isErrorflag() && code == 3) {
                 try {
                     if (view.showErrorPannel()) {
                         view.getController().change();
@@ -102,13 +110,14 @@ public class KeyboardView {
                 } catch (FileNotFoundException ex) {
                     ex.printStackTrace();
                 }
-            } else {
-                try {
-
-                    view.getController().change();
-                } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
-                }
+            }
+        }
+        else
+        {
+            try {
+                view.getController().change();
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
             }
         }
     }
@@ -149,7 +158,7 @@ public class KeyboardView {
             case "Enter" ->
                 key.addActionListener((ActionEvent e) ->
                 {
-                    EnterKey();
+                        EnterKey();
                 });
             case "⌫" ->
                     key.addActionListener((ActionEvent e) ->
