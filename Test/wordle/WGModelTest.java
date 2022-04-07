@@ -40,6 +40,30 @@ public class WGModelTest {
 
     @Test
     public void SecondTest() throws FileNotFoundException {
+        int code = 0;
+        model.setRandomflag(false);
+        model.setErrorflag(true);
+        model.setWordtoGuess();
+        model.setPlayerword("err");
+        code = model.isWordAccept();
+        assertNotEquals(0, code);
+
+        model.setPlayerword("12345");
+        code = model.isWordAccept();
+        assertNotEquals(0,code);
+
+        model.setPlayerword("zelda");
+        code = model.isWordAccept();
+        assertNotEquals(0,code);
+
+        model.setPlayerword("hazel");
+        code = model.isWordAccept();
+        assertEquals(0,code);
+
+    }
+
+    @Test
+    public void ThirdTest() throws FileNotFoundException {
         model.setRandomflag(false);
         model.setWordtoGuess();
         list.add("evade");
@@ -61,17 +85,14 @@ public class WGModelTest {
         assertTrue(model.isNewgame());
 
 
-
-    }
-
-    @Test
-    public void ThirdTest() throws FileNotFoundException {
+        model.initialise();
+        list.remove(5);
         model.setRandomflag(false);
         model.setWordtoGuess();
-        list.add(4, "absit");
+        list.add("absit");
         model.setPlayerword(list.get(0));
-        int[] oldcolors = model.getColors();
-        int oldguess = model.getGuess();
+        oldcolors = model.getColors();
+        oldguess = model.getGuess();
 
         model.change();
 
