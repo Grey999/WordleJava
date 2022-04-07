@@ -72,7 +72,31 @@ public class WGModel extends Observable {
         }
         sc.close();
     }
-    public void createNewGame() {
+
+    public int isWordAccept() throws FileNotFoundException {
+        //Handle the possible mistake of the input
+        if(getPlayerword().length() != 5)
+        {
+            return 1;
+        }
+        for(int i = 0; i < getPlayerword().length(); i++)
+        {
+            int current = getPlayerword().charAt(i);
+            if(current < 65 || current > 91 && current < 97 || current > 123)
+            {
+                return 2;
+            }
+        }
+        if (isErrorflag()) {
+            if (!isWordOnList()) {
+                return 3;
+            }
+        }
+        return 0;
+    }
+
+
+    public void askForNewGame() {
         setNewgame(true);
         setAsked(true);
         setChanged();

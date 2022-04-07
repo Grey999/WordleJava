@@ -21,6 +21,10 @@ public class WGController {
         model.setRandomflag(random);
     }
 
+    protected int isWordAccept() throws FileNotFoundException {
+        return model.isWordAccept();
+    }
+
     protected void enableNewGame()
     {
         view.getNewgame().setVisible(true);
@@ -28,7 +32,7 @@ public class WGController {
 
     protected void setNewGame()
     {
-        model.createNewGame();
+        model.askForNewGame();
     }
 
     protected void setDebbugFlag(boolean debbug) {

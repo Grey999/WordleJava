@@ -26,11 +26,18 @@ public class WGCli {
             while (model.getGuess() < 6 && !model.isNewgame()) {
                 System.out.println("Enter you word:");
                 takeInput(sc);
-                boolean wordcorrect = isWordAccept();
-                while(!wordcorrect)
+                int wordcorrect = model.isWordAccept();
+                while(wordcorrect != 0)
                 {
+                    switch (wordcorrect) {
+                        case 1 -> System.out.println("Error: only take words of 5 letters. Try again");
+                        case 2 -> System.out.println("Error: the game only accept letters.");
+                        case 3 -> System.out.println("Error: the word isn't accept by the game. Try again");
+                        default -> {
+                        }
+                    }
                     takeInput(sc);
-                    wordcorrect = isWordAccept();
+                    wordcorrect = model.isWordAccept();
                 }
                 model.change();
                 applyColors();
@@ -128,41 +135,16 @@ public class WGCli {
         //Loop to take a valid input
         prompt();
         model.setPlayerword(sc.next());
-        boolean rightinput = isSpecialInput();
+        boolean rightinput = isnotSpecialInput();
         while(!rightinput)
         {
             prompt();
             model.setPlayerword(sc.next());
-            rightinput = isSpecialInput();
+            rightinput = isnotSpecialInput();
         }
     }
 
-    private static boolean isWordAccept() throws FileNotFoundException {
-        //Handle the possible mistake of the input
-        if(model.getPlayerword().length() != 5)
-        {
-            System.out.println("Error: only take words of 5 letters. Try again");
-            return false;
-        }
-        for(int i = 0; i < model.getPlayerword().length(); i++)
-        {
-            int current = model.getPlayerword().charAt(i);
-            if(current < 65 || current > 91 && current < 97 || current > 123)
-            {
-                System.out.println("Error: the game only accept letters.");
-                return false;
-            }
-        }
-        if (model.isErrorflag()) {
-            if (!model.isWordOnList()) {
-                System.out.println("Error: the word isn't accept by the game. Try again");
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private static boolean isSpecialInput()
+    private static boolean isnotSpecialInput()
     {
         //handle the flag debbug and display a reminder of the rules
         if (model.getPlayerword().equals("display") && model.isDebbugflag()) {
