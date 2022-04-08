@@ -113,29 +113,27 @@ public class WGModel extends Observable {
             setWin(true);
             setNewgame(true);
 
-            //Update the views
-            setChanged();
-            notifyObservers();
+            changeColors();
+            setGuess(getGuess() + 1);
         }
         else
         {
             changeColors();
             setGuess(getGuess() + 1);
-
             //See if the game is over
             if(getGuess() == GUESS)
             {
                 setWin(false);
                 setNewgame(true);
             }
-
-            setLastword(getPlayerword());
-            setPlayerword("");
-
-            //Update the views
-            setChanged();
-            notifyObservers();
         }
+
+        setLastword(getPlayerword());
+        setPlayerword("");
+
+        //Update the views
+        setChanged();
+        notifyObservers();
     }
 
     protected boolean isWordOnList() throws FileNotFoundException {
