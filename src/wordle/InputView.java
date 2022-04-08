@@ -12,6 +12,7 @@ public class InputView implements Observer{
     private final JButton yes;
     private final JButton no;
     private final JButton newgame;
+    private final JButton exit;
 
 
     private boolean randomflag;
@@ -39,6 +40,7 @@ public class InputView implements Observer{
         getFrame().setVisible(true);
 
         this.newgame = new JButton("New Game");
+        this.exit = new JButton("Exit");
         this.textondisplay = new JLabel("", SwingConstants.CENTER);
         textondisplay.setText("Do you want to have a random word ?");
 
@@ -82,8 +84,10 @@ public class InputView implements Observer{
 
         panelnorth.add(textondisplay,BorderLayout.CENTER);
 
-        panelsouth.add(newgame,BorderLayout.CENTER);
+        panelsouth.add(newgame,BorderLayout.NORTH);
+        panelsouth.add(exit,BorderLayout.SOUTH);
         newgame.setVisible(false);
+        exit.setVisible(false);
 
         panelnorth.setPreferredSize(PANEL_SIZE);
 
@@ -114,6 +118,14 @@ public class InputView implements Observer{
                 no.setVisible(true);
                 newgame.setVisible(false);
                 getFrame().repaint();
+            }
+        });
+
+        exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getFrame().dispose();
+                view.getFrame().dispose();
             }
         });
 
@@ -193,6 +205,7 @@ public class InputView implements Observer{
                 textondisplay.setText("You lose ! \n Do you want to play again ?");
             }
             newgame.setVisible(true);
+            exit.setVisible(true);
             getFrame().repaint();
         }
     }
