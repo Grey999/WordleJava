@@ -65,18 +65,4 @@ public class GridView {
     {
         return gridpanel;
     }
-
-    public void turnToGreen(int colum) {
-        for(int i = 0; i < view.getController().getColors().length; i++)
-        {
-            letterscase[colum+i].setBackground(Color.GREEN);
-        }
-    }
-
-    public void turntoRed(int colum) {
-        for(int i = 0; i < view.getController().getColors().length; i++)
-        {
-            letterscase[colum+i].setBackground(Color.RED);
-        }
-    }
 }

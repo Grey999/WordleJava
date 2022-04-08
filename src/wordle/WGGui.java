@@ -2,7 +2,9 @@ package wordle;
 
 import java.io.FileNotFoundException;
 
-public class Main {
+//Main Class for GUI version
+//Use Input View
+public class WGGui {
 
     public static void main(String[] args) {
         javax.swing.SwingUtilities.invokeLater(

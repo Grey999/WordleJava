@@ -28,7 +28,6 @@ public class InputView implements Observer{
 
 
     //must handle: flags, endgame screen
-    //smaller panel in front of the game one
     //first frame visible at the beginning
     public InputView()
     {
@@ -112,7 +111,7 @@ public class InputView implements Observer{
         newgame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                view.getFrame().setVisible(false);
+                view.getFrame().dispose();
                 textondisplay.setText("Do you want to have a random word ?");
                 yes.setVisible(true);
                 no.setVisible(true);
@@ -198,10 +197,8 @@ public class InputView implements Observer{
         }
         else {
             if (model.isWin()) {
-                view.getGrid().turnToGreen((view.getController().getGuess()-1)*5);
                 textondisplay.setText("You win ! \n Do you want to play again ?");
             } else {
-                view.getGrid().turntoRed((view.getController().getGuess()-1)*5);
                 textondisplay.setText("You lose ! \n Do you want to play again ?");
             }
             newgame.setVisible(true);
