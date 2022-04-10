@@ -6,7 +6,15 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
 import java.awt.*;
-public class InputView implements Observer{
+
+//First frame to appear to the player
+//Will ask the player for the flags they want to play with
+//Then, will initialise the model, the controller and the view according to it
+
+//At the end of the game, will display a message to say if the player win or lose
+//Then will ask for a newgame or to exit
+
+public class FirstView implements Observer{
 
     private static final Dimension PANEL_SIZE = new Dimension(250,250);
     private final JButton yes;
@@ -29,7 +37,7 @@ public class InputView implements Observer{
 
     //must handle: flags, endgame screen
     //first frame visible at the beginning
-    public InputView()
+    public FirstView()
     {
         this.setFrame(new JFrame("Play Mode"));
         getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

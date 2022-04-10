@@ -8,6 +8,10 @@ import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+
+//Visual and nonvisual KeyBoard
+//Handle the creation and visual aspect of the keyboard
+//Handle the events link to a key being pressed
 public class KeyboardView {
     private final JButton[] keyboard;
     private final JPanel keyboardpanel;
@@ -29,7 +33,7 @@ public class KeyboardView {
         }
         createKeys("Enter",27);
 
-        //Use to setUp the physical keyboard
+        //Use to create the physical keyboard
         keyboard[0].addKeyListener(new KeyListener()
         {
             @Override
@@ -41,6 +45,9 @@ public class KeyboardView {
                     }
                     case 8 -> BackSpaceKey();
                     default -> {
+                        //detect if it's a "letter" key
+                        //reduce the risk of wrong input
+                        //don't let the player use special character or number
                         if((e.getKeyChar() >= 97 && e.getKeyChar() <= 122))
                         {
                             LetterKey(String.valueOf(e.getKeyChar()));
@@ -94,6 +101,7 @@ public class KeyboardView {
 
     protected void EnterKey(){
         //Use when Enter is pressed on the physical and GUI keyboard
+        //Will call for isWordAccept to see if the word is accept
         int code = 0;
         try {
             code = view.getController().isWordAccept();
@@ -101,11 +109,10 @@ public class KeyboardView {
             e.printStackTrace();
         }
         if (code != 0) {
+            //if the word is not accepted and the error flag is up
             if (view.getController().isErrorflag() && code == 3) {
                 try {
-                    if (view.showErrorPannel()) {
-                        view.getController().change();
-                    }
+                    view.showErrorPannel();
 
                 } catch (FileNotFoundException ex) {
                     ex.printStackTrace();
@@ -114,6 +121,7 @@ public class KeyboardView {
         }
         else
         {
+            //if the word is accepted or the error mode is not up
             try {
                 view.getController().change();
             } catch (FileNotFoundException ex) {
@@ -126,6 +134,9 @@ public class KeyboardView {
     protected void BackSpaceKey()
     {
         //Use when BackSpace is pressed on the physical and GUI keyboard
+        //will change the last character label by ""
+        //except if there is no character
+        //will also call for a change in the PlayerWord
         if (view.getController().getPlayerword().length() != 0)
         {
             view.getGrid().changeLabel(view.getController().getPlayerword().length() + (view.getController().getGuess()*5)-1, "");
@@ -136,6 +147,8 @@ public class KeyboardView {
     protected void LetterKey(String label)
     {
         //Use when a letter is pressed on the physical and GUI keyboard
+        //will change the label on the grid for the label on the key
+        //will also call for a change in the PlayerWord
         if (view.getController().getPlayerword().length() < 5)
         {
             view.getGrid().changeLabel(view.getController().getPlayerword().length() + (view.getController().getGuess()*5),label.toUpperCase(Locale.ROOT));
@@ -144,6 +157,8 @@ public class KeyboardView {
     }
 
     private void createKeys(String label, int i) throws InterruptedException, FileNotFoundException {
+        //Create the different keys of the visual keyboard
+        //setup the size, label and function associated on the button based on the label
 
         JButton key = new JButton();
         key.setText(label);
@@ -183,6 +198,7 @@ public class KeyboardView {
 
     private void addKeyToGrid()
     {
+        //add the key to the good rows
         int length = keyboard.length;
         for (int i = 0; i < length; i++) {
             if(i <10) {

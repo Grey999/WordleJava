@@ -6,9 +6,10 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.*;
 import java.awt.*;
-
 import static wordle.WGModel.*;
 
+//The view of the game
+//Will be created with a GridView and a KeyBoardView
 
 public class WGView implements Observer
 {
@@ -112,20 +113,23 @@ public class WGView implements Observer
         getFrame().setVisible(true);
     }
 
-    protected boolean showErrorPannel() throws FileNotFoundException {
+    protected void showErrorPannel() throws FileNotFoundException {
         //Only if the error flag is up
-        if (!getController().isWordOnList())
+        //Display a message to say the word on try is not on the list
+        //if (!getController().isWordOnList())
             {
                 JOptionPane.showMessageDialog( getFrame(), "Word not found",
                         "Error: Word not Found",JOptionPane.ERROR_MESSAGE);
-                return false;
+                //return false;
             }
-            return true;
+            //return true;
     }
 
     protected Color applyColor(int index)
     {
-        //Switch who return the color depending on the state in Colors[]
+        //Switch who return the color depending on the state in Colors[] of WGModel
+        //Use the constants in WGModel to return the right color
+        //Use in GridView and KeyBoardView in changeBackGroundColor()
         switch (getController().getColors()[index]) {
             case RED -> {
                 return Color.RED;
@@ -137,6 +141,7 @@ public class WGView implements Observer
                 return Color.ORANGE;
             }
             default -> {
+                //not supposed to happen
                 return Color.GRAY;
             }
         }

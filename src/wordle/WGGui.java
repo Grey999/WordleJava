@@ -3,7 +3,7 @@ package wordle;
 import java.io.FileNotFoundException;
 
 //Main Class for GUI version
-//Use Input View
+//Use FirstView to start the game
 public class WGGui {
 
     public static void main(String[] args) {
@@ -20,6 +20,6 @@ public class WGGui {
         );
     }
     public static void createAndShowGUI() throws FileNotFoundException {
-        InputView inputView = new InputView();
+        FirstView firstView = new FirstView();
     }
 }

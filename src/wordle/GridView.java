@@ -5,6 +5,11 @@ import java.awt.*;
 
 import static wordle.WGModel.*;
 
+//Handle the grid on the game
+//Will change the letter according to the KeyBoardView
+//Will change the colors according to WGModel
+
+
 public class GridView {
     private final JLabel[] letterscase;
     private final JPanel gridpanel;
@@ -27,6 +32,7 @@ public class GridView {
         int colum = 0;
         for(int i = 0; i < letterscase.length; i++)
         {
+            //Create all the cases in the grid
             gbc.gridx = i;
             gbc.gridy = colum;
             letterscase[i] = new JLabel("",SwingConstants.CENTER);
@@ -48,13 +54,15 @@ public class GridView {
     protected void changeLabel(int index, String letter)
     {
         //Call by the Keyboard to change the letter on the case
+        //Could change to a letter or to an empty space (with the BackSpace key)
         letterscase[index].setText(letter);
     }
 
 
     public void changeBackgroundColor(int colum)
     {
-        //Call by the view update to change the color, regarding the state of the letter on the word
+        //Call by the view update to change the color, regarding the state of the letter
+        // in int[]Colors of WGModel
         for(int i = 0; i < view.getController().getColors().length; i++) {
             letterscase[colum+i].setBackground(view.applyColor(i));
         }
