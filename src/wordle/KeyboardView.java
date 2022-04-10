@@ -15,9 +15,9 @@ import java.util.*;
 public class KeyboardView {
     private final JButton[] keyboard;
     private final JPanel keyboardpanel;
-    private final JPanel keygridfirst;
-    private final JPanel keygridsecond;
-    private final JPanel keygridthird;
+    private  JPanel keygridfirst;
+    private  JPanel keygridsecond;
+    private  JPanel keygridthird;
     private final WGView view;
 
     public KeyboardView(WGView view) throws InterruptedException, FileNotFoundException {
@@ -68,6 +68,13 @@ public class KeyboardView {
             }
         });
 
+        CreatePanel();
+
+
+    }
+
+    protected void CreatePanel()
+    {
         keyboardpanel.setLayout(new BoxLayout(keyboardpanel, BoxLayout.Y_AXIS));
         keyboardpanel.setPreferredSize(new Dimension(1980,850));
         keygridfirst = new JPanel();
@@ -95,8 +102,6 @@ public class KeyboardView {
         keyboardpanel.add(keygridfirst);
         keyboardpanel.add(keygridsecond);
         keyboardpanel.add(keygridthird);
-
-
     }
 
     protected void EnterKey(){

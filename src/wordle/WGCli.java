@@ -13,14 +13,14 @@ public class WGCli {
     private static boolean endgame;
     protected static int[] letters;
 
-    protected static final String CRESET = "\033[0m";
-    protected static final String CRED = "\033[0;31m";
-    protected static final String CGREEN = "\033[0;32m";
-    protected static final String CYELLOW = "\033[0;33m";
-    protected static final String CRED_BOLD = "\033[1;31m";
-    protected static final String CGREEN_BOLD = "\033[1;32m";
-    protected static final String CYELLOW_BOLD = "\033[1;33m";
-    protected static final String CYELLOW_BRIGHT = "\033[0;93m";
+    protected static final String COLOR_RESET = "\033[0m";
+    protected static final String COLOR_RED = "\033[0;31m";
+    protected static final String COLOR_GREEN = "\033[0;32m";
+    protected static final String COLOR_YELLOW = "\033[0;33m";
+    protected static final String COLOR_RED_BOLD = "\033[1;31m";
+    protected static final String COLOR_GREEN_BOLD = "\033[1;32m";
+    protected static final String COLOR_YELLOW_BOLD = "\033[1;33m";
+    protected static final String COLOR_YELLOW_BRIGHT = "\033[0;93m";
 
 
 
@@ -65,7 +65,7 @@ public class WGCli {
     private static void mainScreen()
     {
         //Display the beggining of the game
-        System.out.print(CYELLOW);
+        System.out.print(COLOR_YELLOW);
         System.out.println("""
 
                 ██╗    ██╗ ██████╗ ██████╗ ██████╗ ██╗     ███████╗
@@ -75,16 +75,22 @@ public class WGCli {
                 ╚███╔███╔╝╚██████╔╝██║  ██║██████╔╝███████╗███████╗
                  ╚══╝╚══╝  ╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝
                 """);
-        System.out.print(CRESET);
-        System.out.println(" Welcome to Wordle ! \n Hope you enjoy your time with us. \n Are you ready Player One ?");
-        System.out.println(" Coded by Thanatos ");
+        System.out.print(COLOR_RESET);
         System.out.println("""
+                 Welcome to Wordle !
+                 Hope you enjoy your time with us.
+                 Are you ready Player One ?
+                 
                  This game present different option:\s
                  First, you can choose to have a random word or to use the pre-selected word (I'm not gonna give it to you :) )\s
-                 Then, you can choose to have a display mode: the selected word will be prompt on the console when you tape "display" at the beginnig of a turn.
-                 Finally, the last flag will display an error message and will let you give another word if you input is not in the wordle database. Choose wisely.
+                 Then, you can choose to have a display mode: the selected word will be prompt on the console when you tape "display" as an input.
+                 Finally, the last flag will display an error message and will let you give another word if you input is not in the wordle database. 
+                 Choose wisely.
+                 
+                 Ready to crack the word ?
+                 
+                 Coded by Thanatos
                 """);
-        System.out.println(" Ready to crack the word ?\n");
     }
 
     private static void prompt()
@@ -216,18 +222,18 @@ public class WGCli {
         {
             switch (model.getColors()[i]) {
                 case RED -> {
-                    System.out.print(CRED_BOLD);
+                    System.out.print(COLOR_RED_BOLD);
                 }
                 case GREEN -> {
-                    System.out.print(CGREEN_BOLD);
+                    System.out.print(COLOR_GREEN_BOLD);
                 }
                 case ORANGE -> {
-                    System.out.print(CYELLOW_BOLD);
+                    System.out.print(COLOR_YELLOW_BOLD);
                 }
                 default -> System.out.print("not suppose to happen");
             }
             System.out.print(model.getLastword().charAt(i));
-            System.out.print(CRESET);
+            System.out.print(COLOR_RESET);
         }
         System.out.println();
     }
@@ -238,20 +244,20 @@ public class WGCli {
         displayTheLetter(0);
         System.out.println();
         System.out.println("The letters that belong to the word and are in the right place:");
-        System.out.print(CGREEN);
+        System.out.print(COLOR_GREEN);
         displayTheLetter(GREEN);
         System.out.println();
-        System.out.print(CRESET);
+        System.out.print(COLOR_RESET);
         System.out.println("The letters that belong to the word but are not in the right place: ");
-        System.out.print(CYELLOW);
+        System.out.print(COLOR_YELLOW);
         displayTheLetter(ORANGE);
         System.out.println();
-        System.out.print(CRESET);
+        System.out.print(COLOR_RESET);
         System.out.println("The letter that doesn't belong tot the word");
-        System.out.print(CRED);
+        System.out.print(COLOR_RED);
         displayTheLetter(RED);
         System.out.println();
-        System.out.print(CRESET);
+        System.out.print(COLOR_RESET);
     }
 
     private static void newgame()
@@ -264,7 +270,7 @@ public class WGCli {
         if(model.isWin())
         {
             System.out.println("Congratulation ! You won !");
-            System.out.print(CYELLOW_BRIGHT);
+            System.out.print(COLOR_YELLOW_BRIGHT);
             System.out.println("""
                                                  .''.      \s
                           .''.      .        *''*    :_\\/_:     .\s
@@ -280,7 +286,7 @@ public class WGCli {
         else
         {
             System.out.println("I'm sorry, you lost...");
-            System.out.print(CRED);
+            System.out.print(COLOR_RED);
             System.out.println("""
                     ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
                     ┼┼┼┼███▀▀▀██┼ ███▀▀▀███┼ ███▀█▄█▀███┼ ██▀▀▀┼┼┼┼
@@ -309,7 +315,7 @@ public class WGCli {
                     ┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼┼
                     """);
         }
-        System.out.print(CRESET);
+        System.out.print(COLOR_RESET);
         System.out.println("Do you want to play again ?(y/n)");
         prompt();
         String input = sc.next();

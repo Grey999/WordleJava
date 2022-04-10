@@ -2,7 +2,7 @@
 //-------------------------------
 
 //UML Diagram
-[Main]-->[InputView]
+[WGGui]-->[FirstView]
 
 [WGView]->[WGModel]
 [WGView]->[WGController]
@@ -18,37 +18,39 @@
 [WGController]->[WGView]
 
 
-[InputView]-->[WGController]
-[InputView]<>->[WGController]
-[InputView]-->[WGModel]
-[InputView]<>->[WGModel]
-[InputView]-->[WGView]
-[InputView]<>->[WGView]
+[FirstView]-->[WGController]
+[FirstView]<>->[WGController]
+[FirstView]-->[WGModel]
+[FirstView]<>->[WGModel]
+[FirstView]-->[WGView]
+[FirstView]<>->[WGView]
 
 
 [WGCli]->[WGModel]
 [WGCli]<>->[WGModel]
-[CColor]->[WGCli]
 
 [WGView]^[Observer]
-[InputView]^[Observer]
+[FirstView]^[Observer]
+
 
 //Definition ViewClass
-[WGView| -WGController controller;-JFrame frame;-Jpanel panel; -GridView grid;-KeyBoardView keyboard|-createControls();-createPanel();+update(); -showErrorPannel()]
+[WGView| -controller: WGController;-frame: JFrame;-panel: JPanel; -grid: GridView;-keyboard: KeyBoardView; -JButton newgame|-createControls():void; -createPanel():void; +update():void; -showErrorPannel(): void; -applyColor(): Color]
 
-[KeyBoardView|-JButton array keyboard;-JPanel keyboardpanel;-JPanel keygridfirst;-JPanel keygridsecond;-JPanel keygridthird;-WGView view|-EnterKey();-BackSpace();-LetterKey();-createKeys(String label);-removeLastChar(String s);-addKeyToGrid(), -changBackGroundColor()]
+[KeyBoardView|-keyboard: JButton Array;-keyboardpanel: JPanel;-keygridfirst: JPanel;-keygridsecond: JPanel;-keygridthird: JPanel;-view: WGView|createPanel(): void; -EnterKey(): void;-BackSpace(): void;-LetterKey(): void;-createKeys(label: String);-removeLastChar(s: String);-addKeyToGrid(): void, -changBackGroundColor(): void]
 
-[GridView|-JLabel array lettercase;-JPanel gridpanel;-WGView view|-addLabelsView();-changeLabel(int index, String letter);-changeBackgroundColor(int colum)]
+[GridView|-lettercase: JLabel Array;-gridpanel: JPanel;-view: WGView|-addLabelsView(): void ;-changeLabel(index: int,letter: String): void;-changeBackgroundColor(colum: int): void]
 
-[InputView|-JButton yes;-JButton no;-JButton newgame;-boolean randomflag; -boolean errorflag; -boolean debbugflag; -boolean isnewgame;-WGModel model; -JPanel panel; -WGView view; -JFrame frame; -TextArea textondisplay|-createPanel(); -setUpFlag(boolean bool); -randomWord(boolean bool); -debbugMode(boolean bool); -displayError(boolean bool); -startGame(); -endGame(); +update(Observable o, Object arg)]
+[FirstView|-yes: JButton;-no: JButton;-newgame: JButton; exit: JButton;-randomflag: boolean; -errorflag: boolean; -debbugflag: boolean; -isnewgame: boolean;-model: WGModel; -view: WGView; -panel: JPanel; -frame: JFrame; -textondisplay: JLabel|-createPanel():void; -setUpFlag(bool: boolean): void; -randomWord(bool: boolean): void; -debbugMode(bool: boolean): void; -displayError(bool: boolean): void; -startGame(): void; -endGame(): void; +update(o: Observable, arg: Object): void]
+
 
 //Definition Controller and Model
-[WGController|-WGModel model|-change();-initialise(); -setRandomFlag(boolean bool); -setDebbugFlag(boolean bool); -setErrorFlag(boolean bool); -getPlayerWord(); -setPlayerWord(String s); -getGuess(); -isFirstflag(); -setPlayerWord(); -isDebbugFlag(); -getWordtoguess(); -isWordOnList(); -isErrorFlag(); -getColors()]
+[WGController|-model: WGModel; -view: WGView|-change(): void;-initialise(): void; -setRandomFlag(bool: boolean): void; -setDebbugFlag(bool: boolean): void; -setErrorFlag(bool: boolean): void; -getPlayerWord(): String; -setPlayerWord(s: String): void; -getGuess(): int; -isFirstflag(): boolean; -isDebbugFlag(): boolean; -getWordtoguess(): String; -isErrorFlag(): boolean; -getColors(): int Array; isWordAccept: int; enableGame: void; setNewGame(): void; setView(wgView: WGView): void; getLastWord(): String]
 
-[WGModel|-int GUESS;-boolean randomflag;-boolean debbugflag; -boolean errorflag; -boolean firstflag; -int RED; -int GREEN; -int ORANGE; -boolean newgame;-boolean win;-String wordtoguess;-int array colors;-String playerword;-int guess|+addObserver();-initialise(); -change(); -isWordOnList(); -checkList(); changeColors()]
+[WGModel|-GUESS : double;-randomflag: boolean;-debbugflag: boolean; -errorflag: boolean; -firstflag: boolean; -RED: int; -GREEN: int; -ORANGE: int; -newgame: boolean;-win: boolean;-asked: boolean ;-wordtoguess: String;-colors: int Array;-playerword: String; -lastWord: String;-guess: int|-initialise(): void; -setWordtoGuess(): void; -isWordAccept(): int; -askForNewGame(): void; -change() : void; -isWordOnList(): Boolean; -checkList(sc: Scanner): Boolean; -changeColors(): void]
+
 
 //Definition WGCli with a main function for the CLI mode
-[WGCli|-WGModel model;-boolean endgame;-int array letters| +main(String array args); -displayletters();-displaytheletter();-changeletters();-applyColors(); -mainScreen(); -prompt(); -inputFlags();-getInput();-initialiseWordle()|-setUpFlag(int number, String answer);-newgame()]
+[WGCli|-model: WGModel;-endgame: boolean;-letters: int Array; -COLOR_RESET: String; -COLOR_RED: String; -COLOR_GREEN: String; -COLOR_YELLOW: String; -COLOR_RED_BOLD: String; -COLOR_GREEN_BOLD: String; -COLOR_YELLOW_BOLD: String; -COLOR_YELLOW_BRIGHT: String| +main(args: String Array): void; -displayTheLetter(value: int): void;-displayLetters(): void;-changeLetters(): void;-applyColors(): void; -mainScreen(): void; -prompt(): void; -inputFlags(): void;-getInput(): String;-initialiseWordle(): void;-setUpFlag(number: int, answer: String): void;-newgame():void; -takeInput(): String; -isNotSpecialInput(): boolean]
 
-//Definition Main class for GUI mode
-[Main|+main();+createAndShowGUI()]
+//Definition WGGui class with a main function fot the GUI mode
+[WGGui|+main();+createAndShowGUI()]

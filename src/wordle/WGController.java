@@ -2,6 +2,9 @@ package wordle;
 
 import java.io.FileNotFoundException;
 
+//Controller of the Model
+//Call by WGView to enquire the model and ask for possible changes
+
 public class WGController {
     private final WGModel model;
     private WGView view;
@@ -60,10 +63,6 @@ public class WGController {
         return model.isFirstflag();
     }
 
-    public void setPlayerWord(String s) {
-        model.setPlayerword(s);
-    }
-
     public boolean isDebbugflag() {
         return model.isDebbugflag();
     }
@@ -72,9 +71,6 @@ public class WGController {
         return model.getWordtoguess();
     }
 
-    public boolean isWordOnList() throws FileNotFoundException {
-        return model.isWordOnList();
-    }
 
     public boolean isErrorflag() {
         return model.isErrorflag();
