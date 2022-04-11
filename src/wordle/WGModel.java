@@ -2,6 +2,7 @@ package wordle;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.Observable;
 
@@ -20,6 +21,7 @@ public class WGModel extends Observable {
     static final int RED = 1;
     static final int GREEN = 2;
     static final int ORANGE = 3;
+    static final int GRAY = 0;
 
     //Boolean that control the beginning of a new game
     private boolean newgame;
@@ -51,6 +53,10 @@ public class WGModel extends Observable {
         setLastword("");
 
         //call the update methods of the views
+        assert !getPlayerword().equals(""): "the player word hasn't been created";
+        assert getGuess() != 0: "the number of guess is different from 0";
+        assert !getLastword().equals(""): "the last word hasn't been created";
+
         setChanged();
         notifyObservers();
     }
@@ -58,6 +64,8 @@ public class WGModel extends Observable {
     protected void setWordtoGuess() throws FileNotFoundException
     {
         File file = new File("words.txt");
+        assert !file.exists(): "the file words.txt doesn't exist";
+
         Scanner sc = new Scanner(file);
         int number;
         if(randomflag) {
@@ -107,19 +115,16 @@ public class WGModel extends Observable {
     protected void change() throws FileNotFoundException {
        //update the game depending on the current actualword
         setFirstflag(false);
+        changeColors();
+        setGuess(getGuess() + 1);
         if(getPlayerword().equals(getWordtoguess()))
         {
-            //Game is Win
+            //Player won the game
             setWin(true);
             setNewgame(true);
-
-            changeColors();
-            setGuess(getGuess() + 1);
         }
         else
         {
-            changeColors();
-            setGuess(getGuess() + 1);
             //See if the game is over
             if(getGuess() == GUESS)
             {
@@ -139,11 +144,13 @@ public class WGModel extends Observable {
     protected boolean isWordOnList() throws FileNotFoundException {
         //verify is the actual word belong to the lists of word
         File file = new File("common.txt");
+        assert !file.exists(): "the file common.txt doesn't exist";
         Scanner sc = new Scanner(file);
         boolean found = checkList(sc);
         if(!found)
         {
             file = new File("words.txt");
+            assert !file.exists(): "the file words.txt doesn't exist";
             sc = new Scanner(file);
             found = checkList(sc);
         }
@@ -166,6 +173,8 @@ public class WGModel extends Observable {
         //This array will be used by the classes to display the correct
         //information to the player
         setColors(new int[5]);
+        assert getWordtoguess().equals(""): "the word to guess hasn't been assigned";
+        assert Arrays.equals(getColors(), new int[5]) : "the colors have not been clean";
         for (int c = 0; c < 5; c++)
         {
             getColors()[c] = RED;
@@ -183,6 +192,7 @@ public class WGModel extends Observable {
                 }
             }
         }
+        assert !Arrays.equals(getColors(), new int[5]) : "the colors have not changed";
     }
 
 

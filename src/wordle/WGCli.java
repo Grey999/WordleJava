@@ -189,14 +189,17 @@ public class WGCli {
         for(int i = 0; i < model.getLastword().length(); i++)
         {
             current = (model.getLastword().charAt(i) - 'a')%26;
-            if(letters[current] == 0)
+            if(letters[current] == GRAY)
             {
-                if(model.getColors()[i] != 0) {
+                if(model.getColors()[i] != GRAY) {
                     letters[current] = model.getColors()[i];
                 }
-                else
-                {
-                    letters[current] = 3;
+            }
+            else {
+                if (letters[current] == ORANGE) {
+                    if (model.getColors()[i] == GREEN) {
+                        letters[current] = model.getColors()[i];
+                    }
                 }
             }
         }
@@ -241,7 +244,7 @@ public class WGCli {
     private static void displayLetters()
     {
         System.out.println("The letter you haven't use yet: ");
-        displayTheLetter(0);
+        displayTheLetter(GRAY);
         System.out.println();
         System.out.println("The letters that belong to the word and are in the right place:");
         System.out.print(COLOR_GREEN);
