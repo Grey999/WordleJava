@@ -8,11 +8,23 @@ import static wordle.WGModel.*;
 //Main Program for the CLI Version
 //Use WGModel
 public class WGCli {
-    //Declaration
+    //Declaration of the model
     private static WGModel model;
+
+    //Boolean use to ask for a newgame
     private static boolean endgame;
+
+    //Array which contains the state of each letter
+    //Each number correspond to a color, as describe on the model
+    //this int[] will be use to display the letter used or not by the player
+    //and their status on the game:
+    //  -Not used
+    //  -Used, belong to the word and is on the correct spot
+    //  -Used, belong to the word and is not on the correct spot
+    //  -Used but doesn't belong to the word
     protected static int[] letters;
 
+    //String use to display the colors on the CMD
     protected static final String COLOR_RESET = "\033[0m";
     protected static final String COLOR_RED = "\033[0;31m";
     protected static final String COLOR_GREEN = "\033[0;32m";
@@ -25,10 +37,11 @@ public class WGCli {
 
 
     //Main Method
+    //Handle the game and the possibility to replay
     public static void main(String[] args) throws FileNotFoundException {
-        //declaration variable and rules of the game
-        mainScreen();
+        //declaration letters
         letters = new int[26];
+        mainScreen();
         Scanner sc = new Scanner(System.in);
         //first loop to play as many game as you want
         while(!endgame) {
@@ -46,12 +59,18 @@ public class WGCli {
                         case 2 -> System.out.println("Error: the game only accept letters.");
                         case 3 -> System.out.println("Error: the word isn't accept by the game. Try again");
                         default -> {
+                            //Not supposed to happen
                         }
                     }
+                    //ask for a new input
                     takeInput(sc);
                     wordcorrect = model.isWordAccept();
                 }
+                //the model change
                 model.change();
+                //display the change of the model by displaying
+                // the word on try and the letters
+                // with the correct colors
                 applyColors();
                 changeLetters();
                 displayLetters();
@@ -64,7 +83,7 @@ public class WGCli {
 
     private static void mainScreen()
     {
-        //Display the beggining of the game
+        //Display at the beginning of the game
         System.out.print(COLOR_YELLOW);
         System.out.println("""
 
@@ -96,11 +115,14 @@ public class WGCli {
     private static void prompt()
     {
         //display the prompt
+        //will be used every time we ask for an input
         System.out.print(">> ");
     }
 
     private static String getInput()
     {
+        //use to ask for the flags
+        //handle only 'y' and 'n' as an answer
         Scanner scanner = new Scanner(System.in);
         String input = scanner.next();
         while(!input.equals("y") && !input.equals("n"))
@@ -114,11 +136,13 @@ public class WGCli {
 
     private static void setUpFlags(int number, String answer)
     {
+        //set the flags necessary for the model
         switch (number) {
             case 0 -> model.setRandomflag(answer.equals("y"));
             case 1 -> model.setDebbugflag(answer.equals("y"));
             case 2 -> model.setErrorflag(answer.equals("y"));
             default -> {
+                //shouldn't happen because of the getInput()
                 System.err.println("Not supposed to happen");
             }
         }
@@ -131,26 +155,31 @@ public class WGCli {
         prompt();
         String input = getInput();
         setUpFlags(0,input);
-        System.out.println("Do you want to see the word ? ");
+        System.out.println("Do you want to see the word ?(y/n) ");
         prompt();
         input = getInput();
         setUpFlags(1,input);
-        System.out.println("Do you want to have an error message ?");
+        System.out.println("Do you want to have an error message ?(y/n)");
         prompt();
         input = getInput();
         setUpFlags(2,input);
     }
 
     private static void initialiseWordle() throws FileNotFoundException {
+        //create a new WGModel
         model = new WGModel();
+        //call for the flag to be set
         inputFlags();
+        //call the initialisation of wordle
         model.initialise();
+        //set the word depending on the state of the randomflag
         model.setWordtoGuess();
     }
 
     private static void takeInput(Scanner sc)
     {
         //Loop to take a valid input
+        //use when asking for a word
         prompt();
         model.setPlayerword(sc.next());
         boolean rightinput = isnotSpecialInput();
@@ -185,9 +214,14 @@ public class WGCli {
 
     private static void changeLetters()
     {
+        //change the state of the letters
+        //depend of the letters in the lastword
+        //look for the correct spot on the letters (in alphabetic order)
+        //then associate the int in colors[] depending on the index
         int current;
         for(int i = 0; i < model.getLastword().length(); i++)
         {
+            //give us the index in letters
             current = (model.getLastword().charAt(i) - 'a')%26;
             if(letters[current] == GRAY)
             {
@@ -198,6 +232,8 @@ public class WGCli {
             else {
                 if (letters[current] == ORANGE) {
                     if (model.getColors()[i] == GREEN) {
+                        //need to be change from ORANGE to GREEN because the player
+                        //find the right spot for the letter
                         letters[current] = model.getColors()[i];
                     }
                 }
@@ -205,13 +241,15 @@ public class WGCli {
         }
     }
 
-    private static void displayTheLetter(int value)
+    private static void displayTheLetter(int color)
     {
+        //color = GRAY or GREEN or RED or ORANGE (constant in the WGModel)
         //Look for the correct letters depending on the category we want
+        //use in displayLetters()
         char current;
         for(int i =0; i < letters.length; i++)
         {
-            if(letters[i] == value)
+            if(letters[i] == color)
             {
                 current = (char)(i+65);
                 System.out.print(current);
@@ -221,8 +259,10 @@ public class WGCli {
 
     private static void applyColors()
     {
+        //use to display the word with the correct colors
         for(int i = 0; i < 5; i++)
         {
+            //look for the right String to print before the letter
             switch (model.getColors()[i]) {
                 case RED -> {
                     System.out.print(COLOR_RED_BOLD);
@@ -235,7 +275,9 @@ public class WGCli {
                 }
                 default -> System.out.print("not suppose to happen");
             }
+            //print the letter of the lastword
             System.out.print(model.getLastword().charAt(i));
+            //use to reset the colors to normal
             System.out.print(COLOR_RESET);
         }
         System.out.println();
@@ -243,6 +285,7 @@ public class WGCli {
 
     private static void displayLetters()
     {
+        //will display the letter corresponding to each category
         System.out.println("The letter you haven't use yet: ");
         displayTheLetter(GRAY);
         System.out.println();
@@ -266,8 +309,10 @@ public class WGCli {
     private static void newgame()
     {
         //Display the endgame screen and ask for a new game
-        System.out.println();
-        System.out.println();
+        for(int i = 0; i < 4; i++)
+        {
+            System.out.println();
+        }
         System.out.println();
         Scanner sc = new Scanner(System.in);
         if(model.isWin())
