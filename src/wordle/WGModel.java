@@ -70,9 +70,9 @@ public class WGModel extends Observable {
         setLastword("");
 
         //call the update methods of the views
-        assert !getPlayerword().equals(""): "the player word hasn't been created";
-        assert getGuess() != 0: "the number of guess is different from 0";
-        assert !getLastword().equals(""): "the last word hasn't been created";
+        assert getPlayerword().equals(""): "the player word hasn't been created";
+        assert getGuess() == 0: "the number of guess is different from 0";
+        assert getLastword().equals(""): "the last word hasn't been created";
 
 
         //Notify the views
@@ -85,7 +85,7 @@ public class WGModel extends Observable {
         //use by the WGCli or the Controller to set the wordtoguess
         //depends on the randomflag
         File file = new File("words.txt");
-        assert !file.exists(): "the file words.txt doesn't exist";
+        assert file.exists(): "the file words.txt doesn't exist";
 
         Scanner sc = new Scanner(file);
         int number;
@@ -125,8 +125,8 @@ public class WGModel extends Observable {
                 return 3;
             }
         }
-        assert !(getPlayerword().length() == 5): "the playerword is not of length 5 and it hasn't been handled";
-        assert !isWordOnList(): "the word is not on the list and it hasn't been handled";
+        assert (getPlayerword().length() == 5): "the playerword is not of length 5 and it hasn't been handled";
+        assert isWordOnList(): "the word is not on the list and it hasn't been handled";
         return 0;
     }
 
@@ -134,13 +134,13 @@ public class WGModel extends Observable {
         //verify is the actual word belong to the lists of word
         //use by isWordAccept()
         File file = new File("common.txt");
-        assert !file.exists(): "the file common.txt doesn't exist";
+        assert file.exists(): "the file common.txt doesn't exist";
         Scanner sc = new Scanner(file);
         boolean found = checkList(sc);
         if(!found)
         {
             file = new File("words.txt");
-            assert !file.exists(): "the file words.txt doesn't exist";
+            assert file.exists(): "the file words.txt doesn't exist";
             sc = new Scanner(file);
             found = checkList(sc);
         }
@@ -163,9 +163,9 @@ public class WGModel extends Observable {
     protected void askForNewGame() {
         //Use by the Controller to ask for a newgame during a play
         //will change the FirstView and the WGView
-        assert newgame: "the flag newgame shouldn't be at true";
-        assert win: "the flag win shouldn't be at true";
-        assert asked: "the flag asked shouldn't be at true";
+        assert !newgame: "the flag newgame shouldn't be at true";
+        assert !win: "the flag win shouldn't be at true";
+        assert !asked: "the flag asked shouldn't be at true";
 
         setNewgame(true);
         setAsked(true);
@@ -213,7 +213,7 @@ public class WGModel extends Observable {
         //This array will be used by the classes to display the correct information to the player
         //necessary for both WGCli and WGView
         setColors(new int[5]);
-        assert getWordtoguess().equals(""): "the word to guess hasn't been assigned";
+        assert !getWordtoguess().equals(""): "the word to guess hasn't been assigned";
         assert Arrays.equals(getColors(), new int[5]) : "the colors have not been clean";
         for (int c = 0; c < 5; c++)
         {

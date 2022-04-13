@@ -46,7 +46,7 @@
 //Definition Controller and Model
 [WGController|-model: WGModel; -view: WGView|-change(): void;-initialise(): void; -setRandomFlag(bool: boolean): void; -setDebbugFlag(bool: boolean): void; -setErrorFlag(bool: boolean): void; -getPlayerWord(): String; -setPlayerWord(s: String): void; -getGuess(): int; -isFirstflag(): boolean; -isDebbugFlag(): boolean; -getWordtoguess(): String; -isErrorFlag(): boolean; -getColors(): int Array; isWordAccept: int; enableGame: void; setNewGame(): void; setView(wgView: WGView): void; getLastWord(): String]
 
-[WGModel|-GUESS : double;-randomflag: boolean;-debbugflag: boolean; -errorflag: boolean; -firstflag: boolean; -RED: int; -GREEN: int; -ORANGE: int; -newgame: boolean;-win: boolean;-asked: boolean ;-wordtoguess: String;-colors: int Array;-playerword: String; -lastWord: String;-guess: int|-initialise(): void; -setWordtoGuess(): void; -isWordAccept(): int; -askForNewGame(): void; -change() : void; -isWordOnList(): Boolean; -checkList(sc: Scanner): Boolean; -changeColors(): void]
+[WGModel|-GUESS : double;-randomflag: boolean;-debbugflag: boolean; -errorflag: boolean; -firstflag: boolean; -RED: int; -GREEN: int; -ORANGE: int; -GRAY: int; -newgame: boolean;-win: boolean;-asked: boolean ;-wordtoguess: String;-colors: int Array;-playerword: String; -lastWord: String;-guess: int|-initialise(): void; -setWordtoGuess(): void; -isWordAccept(): int; -askForNewGame(): void; -change() : void; -isWordOnList(): Boolean; -checkList(sc: Scanner): Boolean; -changeColors(): void]
 
 
 //Definition WGCli with a main function for the CLI mode
