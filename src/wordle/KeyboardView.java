@@ -13,6 +13,7 @@ import java.util.*;
 //Handle the creation and visual aspect of the keyboard
 //Handle the events link to a key being pressed
 public class KeyboardView {
+
     private final JButton[] keyboard;
     private final JPanel keyboardpanel;
     private  JPanel keygridfirst;
@@ -21,19 +22,24 @@ public class KeyboardView {
     private final WGView view;
 
     public KeyboardView(WGView view) throws InterruptedException, FileNotFoundException {
+        //link to the viw
         this.view = view;
+
+        //instantion of the different element necessary
         keyboard = new JButton[28];
         keyboardpanel = new JPanel();
         keyboardpanel.setBackground(Color.GRAY);
-        String qwerty = "QWERTYUIOPASDFGHJKL⌫ZXCVBNM";
+        String keyslabel = "QWERTYUIOPASDFGHJKL⌫ZXCVBNM";
 
-        for(int i = 0; i < qwerty.length(); i++)
+        //Creation of the keys with the character stock on keyslabel
+        for(int i = 0; i < keyslabel.length(); i++)
         {
-            createKeys(String.valueOf(qwerty.charAt(i)), i);
+            createKeys(String.valueOf(keyslabel.charAt(i)), i);
         }
+        //Creation of the Enter key
         createKeys("Enter",27);
 
-        //Use to create the physical keyboard
+        //Use to detect the physical keyboard
         keyboard[0].addKeyListener(new KeyListener()
         {
             @Override
@@ -68,15 +74,31 @@ public class KeyboardView {
             }
         });
 
-        CreatePanel();
+        //Creation of the panel and the visual element
+        CreateControl();
 
 
     }
 
+    protected void CreateControl()
+    {
+        Container contentPane = view.getFrame().getContentPane();
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+        contentPane.setMaximumSize(new Dimension(400,400));
+
+        CreatePanel();
+
+        contentPane.add(keyboardpanel);
+        addKeyToGrid();
+    }
+
     protected void CreatePanel()
     {
+        //Creation of the different panels and the visual elements
         keyboardpanel.setLayout(new BoxLayout(keyboardpanel, BoxLayout.Y_AXIS));
         keyboardpanel.setPreferredSize(new Dimension(1980,850));
+
+        //use to dispose the rows of keys on the keyboardpanel
         keygridfirst = new JPanel();
         keygridsecond = new JPanel();
         keygridthird = new JPanel();
@@ -91,12 +113,6 @@ public class KeyboardView {
         keygridthird.setLayout(new BoxLayout(keygridthird, BoxLayout.X_AXIS));
         keygridthird.setOpaque(true);
         keygridthird.setBackground(Color.GRAY);
-
-        Container contentPane = view.getFrame().getContentPane();
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
-        contentPane.setMaximumSize(new Dimension(400,400));
-        contentPane.add(keyboardpanel);
-        addKeyToGrid();
 
 
         keyboardpanel.add(keygridfirst);

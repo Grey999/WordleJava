@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 //Controller of the Model
 //Call by WGView to enquire the model and ask for possible changes
 
+//To further description, refers to the methods call on the model
 public class WGController {
     private final WGModel model;
     private WGView view;

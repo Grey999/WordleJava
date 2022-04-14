@@ -39,6 +39,7 @@ public class FirstView implements Observer{
     //first frame visible at the beginning
     public FirstView()
     {
+        //Creation of the frame
         this.setFrame(new JFrame("Play Mode"));
         getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getFrame().setSize(300,300);
@@ -46,6 +47,7 @@ public class FirstView implements Observer{
         getFrame().setLocationRelativeTo(null);
         getFrame().setVisible(true);
 
+        //Creation of the final visual element
         this.newgame = new JButton("New Game");
         this.exit = new JButton("Exit");
         this.textondisplay = new JLabel("", SwingConstants.CENTER);
@@ -64,6 +66,7 @@ public class FirstView implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
+        //update to see if the game is ended or have been asked to end
         if(model.isNewgame())
         {
             endGame();
@@ -73,8 +76,11 @@ public class FirstView implements Observer{
 
     private void createPanel()
     {
+        //Creation of the main panel
         this.panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+        //Creation of the subpanels to contain the buttons
         JPanel panelnorth = new JPanel();
         panelnorth.setLayout(new BorderLayout());
         panelnorth.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
@@ -83,25 +89,20 @@ public class FirstView implements Observer{
         panelsouth.setLayout(new BorderLayout());
         panelsouth.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
 
-        panel.add(panelnorth, BorderLayout.NORTH);
-        panel.add(panelsouth,BorderLayout.SOUTH);
-        panelsouth.add(new JPanel().add(yes), BorderLayout.WEST);
-        panelsouth.add(new JPanel().add(no), BorderLayout.EAST);
-
-
+        //Add the different visuals element to the subpanels
         panelnorth.add(textondisplay,BorderLayout.CENTER);
-
-        panelsouth.add(newgame,BorderLayout.NORTH);
-        panelsouth.add(exit,BorderLayout.SOUTH);
-        newgame.setVisible(false);
-        exit.setVisible(false);
-
         panelnorth.setPreferredSize(PANEL_SIZE);
 
-        textondisplay.setVisible(true);
-        yes.setVisible(true);
-        no.setVisible(true);
+        panelsouth.add(new JPanel().add(yes), BorderLayout.WEST);
+        panelsouth.add(new JPanel().add(no), BorderLayout.EAST);
+        panelsouth.add(newgame,BorderLayout.NORTH);
+        panelsouth.add(exit,BorderLayout.SOUTH);
 
+        //Add the subpanels to the main panel
+        panel.add(panelnorth, BorderLayout.NORTH);
+        panel.add(panelsouth,BorderLayout.SOUTH);
+
+        //Add Action to the buttons
         yes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -124,6 +125,7 @@ public class FirstView implements Observer{
                 yes.setVisible(true);
                 no.setVisible(true);
                 newgame.setVisible(false);
+                exit.setVisible(false);
                 getFrame().repaint();
             }
         });
@@ -136,10 +138,23 @@ public class FirstView implements Observer{
             }
         });
 
+        //Must be visible at the beginning of a game
+        textondisplay.setVisible(true);
+        yes.setVisible(true);
+        no.setVisible(true);
+
+        //Must be visible at the end of a game
+        newgame.setVisible(false);
+        exit.setVisible(false);
+
     }
 
     protected void setUpFlag(boolean bool)
     {
+        //Call by yes and no button
+        //Update the frame depending on the last sentence of textondisplay
+        //Set the right flag according to the bool value
+        //Will then change the sentence to the next before repainting the frame
         if (textondisplay.getText().equals("Do you want to have a random word ?")) {
             randomWord(bool);
             textondisplay.setText("Do you want to use the debbug mode ?");
@@ -169,16 +184,27 @@ public class FirstView implements Observer{
     }
 
     private void displayError(boolean error) throws InterruptedException, FileNotFoundException {
+        //Set the last flag before calling the beggining of the game
         this.errorflag = error;
+        startGame();
+    }
+
+    protected void endFrame()
+    {
+        //Call to make the first frame disappear
+        //Call before the beginning of a new game
         getFrame().setVisible(false);
         yes.setVisible(false);
         no.setVisible(false);
         textondisplay.setVisible(false);
         frame.repaint();
-        startGame();
     }
 
     protected void startGame() throws InterruptedException, FileNotFoundException {
+        endFrame();
+
+        //Creation of the newgame
+        //Instantiation of the model, the controller and the view
         model = new WGModel();
         WGController controller = new WGController(model);
         model.addObserver(this);
@@ -192,10 +218,12 @@ public class FirstView implements Observer{
 
     private void endGame()
     {
+        //Call when the game is ended or asked to be ended
         getFrame().setVisible(true);
         textondisplay.setVisible(true);
         if(model.isAsked())
         {
+            //the game have been asked to end
             view.getFrame().setVisible(false);
             textondisplay.setText("Do you want to have a random word ?");
             yes.setVisible(true);
@@ -204,11 +232,13 @@ public class FirstView implements Observer{
             getFrame().repaint();
         }
         else {
+            //the player won or lost the game
             if (model.isWin()) {
                 textondisplay.setText("You win ! \n Do you want to play again ?");
             } else {
                 textondisplay.setText("You lose ! \n Do you want to play again ?");
             }
+            //ask for a newgame or to exit the game
             newgame.setVisible(true);
             exit.setVisible(true);
             getFrame().repaint();

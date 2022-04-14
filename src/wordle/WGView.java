@@ -13,21 +13,28 @@ import static wordle.WGModel.*;
 
 public class WGView implements Observer
 {
+    //Declaration of the constant
     private static final Dimension PANEL_SIZE = new Dimension(500,500);
 
+    //Declaration of the variables
     private final WGController controller;
     private JFrame frame;
     private JPanel panel;
+    private JButton newgame;
+
+    //GridView and KeyBoardView
     private GridView grid;
     private KeyboardView keyboard;
-    private JButton newgame;
 
 
     public WGView(WGModel model, WGController controller) throws InterruptedException, FileNotFoundException {
         //Link the model, the controller and the view
         this.controller = controller;
         controller.setView(this);
+        model.addObserver(this);
 
+
+        //Creation of the Frame
         setFrame(new JFrame("Wordle"));
         getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -35,15 +42,17 @@ public class WGView implements Observer
         setGrid(new GridView(this));
         setKeyboard(new KeyboardView(this));
 
-
+        //Creation of the panels and the visual elements
         createControls();
-        model.addObserver(this);
+
+        //update of the view
         update(model,null);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        //update the grid and the keyboard
+        //update the grid and the keyboard before updating the frame
+        //only do it after the first model change
         if(!getController().isFirstflag()) {
             getGrid().changeBackgroundColor((getController().getGuess()-1)*5);
             getKeyboard().changeBackGroundColor();
@@ -53,6 +62,7 @@ public class WGView implements Observer
     }
 
     private void createPanel() {
+        //create the panel and place the visual element
         setPanel(new JPanel());
         getPanel().setLayout(new BoxLayout(getPanel(), BoxLayout.Y_AXIS));
         getPanel().setBackground(Color.GRAY);
@@ -65,7 +75,9 @@ public class WGView implements Observer
         JPanel invisible = new JPanel();
         invisible.setSize(new Dimension(800,800));
 
-        //Only if debbugflag is up
+        //Creation of the button dispose on the invisible panel
+        //Creation of the display button
+        // Only if debbugflag is up
         if(getController().isDebbugflag())
         {
             JButton display = new JButton("display");
@@ -79,6 +91,9 @@ public class WGView implements Observer
             });
             invisible.add(display);
         }
+        //Creation of the newgame button
+        //will appear after the first change of the model
+        //allow to ask for a newgame during the current game
         setNewgame(new JButton("newgame"));
         getNewgame().setFocusable(false);
         getNewgame().addActionListener(new ActionListener() {
@@ -99,10 +114,12 @@ public class WGView implements Observer
     }
 
     private void createControls() {
+        //Creation of the container
         Container contentPane = getFrame().getContentPane();
         contentPane.setBackground(Color.black);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
 
+        //Method to create the panel
         createPanel();
         contentPane.add(getPanel());
 
@@ -116,13 +133,8 @@ public class WGView implements Observer
     protected void showErrorPannel() throws FileNotFoundException {
         //Only if the error flag is up
         //Display a message to say the word on try is not on the list
-        //if (!getController().isWordOnList())
-            {
-                JOptionPane.showMessageDialog( getFrame(), "Word not found",
-                        "Error: Word not Found",JOptionPane.ERROR_MESSAGE);
-                //return false;
-            }
-            //return true;
+        JOptionPane.showMessageDialog( getFrame(), "Word not found",
+                "Error: Word not Found",JOptionPane.ERROR_MESSAGE);
     }
 
     protected Color applyColor(int index)

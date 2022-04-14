@@ -16,12 +16,17 @@ public class GridView {
     private final WGView view;
     public GridView(WGView view)
     {
+        //link to the view
         this.view = view;
+
+        //Instantiation of the necessary variables
         letterscase = new JLabel[30];
         gridpanel = new JPanel();
         gridpanel.setLayout(new GridLayout(6,5));
         gridpanel.setPreferredSize(new Dimension(2000,2000));
         gridpanel.setBackground(Color.GRAY);
+
+        //Creation of the visual grid
         addLabelsView();
     }
 
