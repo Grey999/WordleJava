@@ -36,7 +36,7 @@
 //Definition ViewClass
 [WGView| -controller: WGController;-frame: JFrame;-panel: JPanel; -grid: GridView;-keyboard: KeyBoardView; -JButton newgame|-createControls():void; -createPanel():void; +update():void; -showErrorPannel(): void; -applyColor(): Color]
 
-[KeyBoardView|-keyboard: JButton Array;-keyboardpanel: JPanel;-keygridfirst: JPanel;-keygridsecond: JPanel;-keygridthird: JPanel;-view: WGView|createPanel(): void; -EnterKey(): void;-BackSpace(): void;-LetterKey(): void;-createKeys(label: String);-removeLastChar(s: String);-addKeyToGrid(): void, -changBackGroundColor(): void]
+[KeyBoardView|-keyboard: JButton Array;-keyboardpanel: JPanel;-keygridfirst: JPanel;-keygridsecond: JPanel;-keygridthird: JPanel;-view: WGView|createControl():void;createPanel(): void; -EnterKey(): void;-BackSpace(): void;-LetterKey(): void;-createKeys(label: String);-removeLastChar(s: String);-addKeyToGrid(): void, -changBackGroundColor(): void]
 
 [GridView|-lettercase: JLabel Array;-gridpanel: JPanel;-view: WGView|-addLabelsView(): void ;-changeLabel(index: int,letter: String): void;-changeBackgroundColor(colum: int): void]
 
