@@ -281,7 +281,10 @@ public class WGModel extends Observable {
     }
 
     public void setGuess(int guess) {
+        assert guess >= 0: "the guess can't be negative";
+        assert guess <= GUESS: "the guess can't be superior to GUESS";
         this.guess = guess;
+
     }
 
     public boolean isDebbugflag() {
@@ -322,8 +325,9 @@ public class WGModel extends Observable {
 
     public void setLastword(String lastword) {
         this.lastword = lastword;
+        assert this.lastword.equals(getPlayerword()) || this.lastword.equals(""):
+                "the lastword doesn't equal to the current playerword or to an empty string";
     }
-
 
     public boolean isAsked() {
         return asked;

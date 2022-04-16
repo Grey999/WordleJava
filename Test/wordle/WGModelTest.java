@@ -17,6 +17,10 @@ public class WGModelTest {
     {
         model = new WGModel();
         model.initialise();
+
+        //will help test for the third test
+        //The word belongs to the list and we will add the last
+        //during the third game depending on the testing
         list = new ArrayList<>();
         list.add("robin");
         list.add("horse");
@@ -27,20 +31,26 @@ public class WGModelTest {
 
     @Test
     public void FirstTest () throws FileNotFoundException {
+        //Test the initialisation of the game
+        //Test if the word is different from the hardcoded word
         assertEquals(model.getPlayerword(),"");
         assertTrue(model.isFirstflag());
         assertEquals(model.getGuess(),0);
         assertEquals(model.getLastword(), "");
         model.setRandomflag(true);
 
-         model.setWordtoGuess();
+        model.setWordtoGuess();
 
-         assertNotEquals(model.getWordtoguess(), "absit");
+        assertNotEquals(model.getWordtoguess(), "absit");
     }
 
     @Test
     public void SecondTest() throws FileNotFoundException {
-        int code = 0;
+        //Test if the possible mistake for a word are handled
+        //Test if the word that doesn't belong to the list are not accepted
+        //by the game
+        //Test if the word that belong to the list are accepted by the game
+        int code ;
         model.setRandomflag(false);
         model.setErrorflag(true);
         model.setWordtoGuess();
@@ -64,6 +74,8 @@ public class WGModelTest {
 
     @Test
     public void ThirdTest() throws FileNotFoundException {
+        //Test with two game:
+        //The first is supposed to be lost
         model.setRandomflag(false);
         model.setWordtoGuess();
         list.add("evade");
@@ -84,7 +96,7 @@ public class WGModelTest {
         assertFalse(model.isWin());
         assertTrue(model.isNewgame());
 
-
+        //The second game is supposed to be win
         model.initialise();
         list.remove(5);
         model.setRandomflag(false);
