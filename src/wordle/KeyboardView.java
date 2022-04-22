@@ -29,6 +29,7 @@ public class KeyboardView {
         keyboard = new JButton[28];
         keyboardpanel = new JPanel();
         keyboardpanel.setBackground(Color.GRAY);
+        keyboardpanel.setFocusable(false);
         String keyslabel = "QWERTYUIOPASDFGHJKL⌫ZXCVBNM";
 
         //Creation of the keys with the character stock on keyslabel
@@ -40,14 +41,15 @@ public class KeyboardView {
         createKeys("Enter",27);
 
         //Use to detect the physical keyboard
-        keyboard[0].addKeyListener(new KeyListener()
+
+        KeyListener keyListener = new KeyListener()
         {
             @Override
             public void keyTyped(KeyEvent e) {
                 switch (e.getKeyChar())
                 {
                     case 10 -> {
-                            EnterKey();
+                        EnterKey();
                     }
                     case 8 -> BackSpaceKey();
                     default -> {
@@ -72,7 +74,10 @@ public class KeyboardView {
             public void keyReleased(KeyEvent e) {
 
             }
-        });
+        };
+        for (JButton jButton : keyboard) {
+            jButton.addKeyListener(keyListener);
+        }
 
         //Creation of the panel and the visual element
         CreateControl();
@@ -107,13 +112,17 @@ public class KeyboardView {
         keygridfirst.setLayout(new BoxLayout(keygridfirst, BoxLayout.X_AXIS));
         keygridfirst.setOpaque(true);
         keygridfirst.setBackground(Color.GRAY);
+        keygridfirst.setFocusable(false);
+
         keygridsecond.setLayout(new BoxLayout(keygridsecond, BoxLayout.X_AXIS));
         keygridsecond.setOpaque(true);
         keygridsecond.setBackground(Color.GRAY);
+        keygridsecond.setFocusable(false);
+
         keygridthird.setLayout(new BoxLayout(keygridthird, BoxLayout.X_AXIS));
         keygridthird.setOpaque(true);
         keygridthird.setBackground(Color.GRAY);
-
+        keygridthird.setFocusable(false);
 
         keyboardpanel.add(keygridfirst);
         keyboardpanel.add(keygridsecond);

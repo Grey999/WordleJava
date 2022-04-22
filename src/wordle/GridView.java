@@ -25,6 +25,7 @@ public class GridView {
         gridpanel.setLayout(new GridLayout(6,5));
         gridpanel.setPreferredSize(new Dimension(2000,2000));
         gridpanel.setBackground(Color.GRAY);
+        gridpanel.setFocusable(false);
 
         //Creation of the visual grid
         addLabelsView();

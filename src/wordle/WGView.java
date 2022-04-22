@@ -37,6 +37,7 @@ public class WGView implements Observer
         //Creation of the Frame
         setFrame(new JFrame("Wordle"));
         getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getFrame().setFocusable(false);
 
         //creation of grid and the keyboard
         setGrid(new GridView(this));
@@ -67,6 +68,7 @@ public class WGView implements Observer
         getPanel().setLayout(new BoxLayout(getPanel(), BoxLayout.Y_AXIS));
         getPanel().setBackground(Color.GRAY);
         getPanel().setSize(PANEL_SIZE);
+        getPanel().setFocusable(false);
         JLabel title = new JLabel("WORDLE", SwingConstants.CENTER);
         title.setBackground(Color.WHITE);
         title.setSize(new Dimension(40,40));

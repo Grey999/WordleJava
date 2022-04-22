@@ -21,7 +21,7 @@ public class WGModel extends Observable {
     private boolean firstflag;
 
     //Constant for the colors
-    //Will be placed in the colors and read by the WGView
+    //Will be placed in the colors[] and read by the WGView
     static final int RED = 1;
     static final int GREEN = 2;
     static final int ORANGE = 3;
